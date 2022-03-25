@@ -159,7 +159,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/25/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2022/03/25/hello-world/" class="post-title-link" itemprop="url">Collection</a>
         </h2>
 
         <div class="post-meta">
@@ -168,8 +168,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-03-25 14:17:11" itemprop="dateCreated datePublished" datetime="2022-03-25T14:17:11-04:00">2022-03-25</time>
+              <time title="Created: 2022-03-25 14:17:11 / Modified: 18:12:44" itemprop="dateCreated datePublished" datetime="2022-03-25T14:17:11-04:00">2022-03-25</time>
             </span>
 
           
@@ -183,19 +184,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+          <p><img src="/../image/collection/collection_framework.png" alt="Collection Framework"></p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ul>
+<li>ArrayList: Object[]</li>
+<li>Vector: Object[], thread-safe</li>
+<li>LinkedList: doubly-linked</li>
+</ul>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><ul>
+<li>HashSet: based on HashMap</li>
+<li>LinkedHashSet: extends HashSet, use LinkedHashMap</li>
+<li>TreeSet: RedBlackTree</li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
+<li>HashMap: if array length &lt; 64, array + linked list, resizes the array, otherwise converts the linked list to RedBlackTree</li>
+<li>LinkedHashMap: extends HashMap, adds a doubly-linked list to save the order of keys</li>
+<li>HashTable: array + linked list; thread-safe</li>
+<li>TreeMap: RedBlackTree</li>
+</ul>
+<h1 id="Thread-safe"><a href="#Thread-safe" class="headerlink" title="Thread-safe"></a>Thread-safe</h1><ul>
+<li><p>CopyOnWriteArrayList</p>
+</li>
+<li><p>ConcurrentLinkedQueue</p>
+</li>
+<li><p>BlockingQueue</p>
+</li>
+<li><p>ConcurrentHashMap</p>
+</li>
+<li><p>ConcurrentSkipListMap</p>
+</li>
+</ul>
+<h2 id="Why-not-array"><a href="#Why-not-array" class="headerlink" title="Why not array?"></a>Why not array?</h2><ul>
+<li>fixed length</li>
+</ul>
+<h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>Safe: when an element is modified, throws concurrentModificationException</p>
 
       
     </div>
@@ -280,6 +301,10 @@
           <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
