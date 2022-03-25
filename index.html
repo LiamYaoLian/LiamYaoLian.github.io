@@ -366,7 +366,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-25 18:24:02 / Modified: 18:47:38" itemprop="dateCreated datePublished" datetime="2022-03-25T18:24:02-04:00">2022-03-25</time>
+              <time title="Created: 2022-03-25 18:24:02 / Modified: 19:26:25" itemprop="dateCreated datePublished" datetime="2022-03-25T18:24:02-04:00">2022-03-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -405,7 +405,35 @@
 <li>@RestController returns JSON or XML</li>
 <li>@Controller + @ResponseBody &#x3D; @RestController</li>
 </ul>
-<h2 id="Spring-IoC"><a href="#Spring-IoC" class="headerlink" title="Spring IoC"></a>Spring IoC</h2><h2 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h2><h2 id="Spring-AOP-vs-AspectJ-AOP"><a href="#Spring-AOP-vs-AspectJ-AOP" class="headerlink" title="Spring AOP vs AspectJ AOP"></a>Spring AOP vs AspectJ AOP</h2><h2 id="Bean"><a href="#Bean" class="headerlink" title="Bean"></a>Bean</h2><h3 id="Bean-Scope"><a href="#Bean-Scope" class="headerlink" title="Bean Scope"></a>Bean Scope</h3><h3 id="Bean-Lifecycle"><a href="#Bean-Lifecycle" class="headerlink" title="Bean Lifecycle"></a>Bean Lifecycle</h3><h3 id="Component-vs-Bean"><a href="#Component-vs-Bean" class="headerlink" title="@Component vs @Bean"></a>@Component vs @Bean</h3><h3 id="Spring-Framework-Stereotype-Annotations"><a href="#Spring-Framework-Stereotype-Annotations" class="headerlink" title="Spring Framework Stereotype Annotations"></a>Spring Framework Stereotype Annotations</h3><p> Reference: <a target="_blank" rel="noopener" href="https://springframework.guru/spring-framework-annotations/">https://springframework.guru/spring-framework-annotations/</a></p>
+<h1 id="Configure-Application-Context"><a href="#Configure-Application-Context" class="headerlink" title="Configure Application Context"></a>Configure Application Context</h1><ul>
+<li>XML</li>
+<li>Java config</li>
+</ul>
+<h2 id="Spring-IoC"><a href="#Spring-IoC" class="headerlink" title="Spring IoC"></a>Spring IoC</h2><h2 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h2><h2 id="Spring-AOP-vs-AspectJ-AOP"><a href="#Spring-AOP-vs-AspectJ-AOP" class="headerlink" title="Spring AOP vs AspectJ AOP"></a>Spring AOP vs AspectJ AOP</h2><h2 id="Bean"><a href="#Bean" class="headerlink" title="Bean"></a>Bean</h2><h2 id="Configure-Bean"><a href="#Configure-Bean" class="headerlink" title="Configure Bean"></a>Configure Bean</h2><ul>
+<li>XML: better for maintenance at a large company</li>
+<li>Annotation: faster to write, more readable, suitable for light app</li>
+<li>Java config: avoid XML, avoid making annotations everywhere, check dependencies during compilation to prevent errors, agile</li>
+</ul>
+<h3 id="Bean-Scope"><a href="#Bean-Scope" class="headerlink" title="Bean Scope"></a>Bean Scope</h3><h3 id="Bean-Lifecycle"><a href="#Bean-Lifecycle" class="headerlink" title="Bean Lifecycle"></a>Bean Lifecycle</h3><h3 id="Component-vs-Bean"><a href="#Component-vs-Bean" class="headerlink" title="@Component vs @Bean"></a>@Component vs @Bean</h3><h3 id="Spring-Framework-Stereotype-Annotations"><a href="#Spring-Framework-Stereotype-Annotations" class="headerlink" title="Spring Framework Stereotype Annotations"></a>Spring Framework Stereotype Annotations</h3><ul>
+<li>@Component: will be created and managed by IoC container</li>
+<li>@Controller: request and response</li>
+<li>@service: business logic</li>
+<li>@Repository: persistency</li>
+</ul>
+<h3 id="Injection-Annotations"><a href="#Injection-Annotations" class="headerlink" title="Injection Annotations"></a>Injection Annotations</h3><ul>
+<li>@Autowired: by class</li>
+<li>@Inject: by class, not support “required”</li>
+<li>@Named: by name</li>
+<li>@Resource: by name first, then by class</li>
+</ul>
+<h3 id="Meta-Annotations"><a href="#Meta-Annotations" class="headerlink" title="Meta Annotations"></a>Meta Annotations</h3><ul>
+<li>@Primary: inject this object among objects of the same type</li>
+<li>@PostConstruct: on a method, “init-method”</li>
+<li>@PreDestroy: on a method, “destroy-method”</li>
+<li>@Scope</li>
+<li>@Value: inject value</li>
+</ul>
+<p>Reference: <a target="_blank" rel="noopener" href="https://springframework.guru/spring-framework-annotations/">https://springframework.guru/spring-framework-annotations/</a></p>
 <p> … To be continued</p>
 
       
