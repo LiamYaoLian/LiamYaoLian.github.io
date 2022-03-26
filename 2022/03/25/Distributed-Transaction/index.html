@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="What table -&gt; class record -&gt; object field -&gt; attribute  Pros use MVC as architecture automation more flexibility for programming  Cons need time to config as to complex queries, hard to writ">
+  <meta name="description" content="Transactiona programming execution unit to manipulate data in the databases  Atomic: all succeed or all fail Consistency: does not change the data integrity of database. ? Isolation: not disturb other">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ORM">
-<meta property="og:url" content="https://liamyaolian.github.io/2022/03/25/ORM/index.html">
+<meta property="og:title" content="Distributed Transaction">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/03/25/Distributed-Transaction/index.html">
 <meta property="og:site_name" content="Liam Lian&#39;s Blog">
-<meta property="og:description" content="What table -&gt; class record -&gt; object field -&gt; attribute  Pros use MVC as architecture automation more flexibility for programming  Cons need time to config as to complex queries, hard to writ">
+<meta property="og:description" content="Transactiona programming execution unit to manipulate data in the databases  Atomic: all succeed or all fail Consistency: does not change the data integrity of database. ? Isolation: not disturb other">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-03-25T23:06:05.000Z">
-<meta property="article:modified_time" content="2022-03-25T23:13:58.528Z">
+<meta property="article:published_time" content="2022-03-25T23:56:36.000Z">
+<meta property="article:modified_time" content="2022-03-26T00:45:52.654Z">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://liamyaolian.github.io/2022/03/25/ORM/">
+<link rel="canonical" href="https://liamyaolian.github.io/2022/03/25/Distributed-Transaction/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>ORM | Liam Lian's Blog</title>
+  <title>Distributed Transaction | Liam Lian's Blog</title>
   
 
 
@@ -150,7 +150,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/ORM/">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Distributed-Transaction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -163,7 +163,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ORM
+          Distributed Transaction
         </h1>
 
         <div class="post-meta">
@@ -174,16 +174,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-25 19:06:05 / Modified: 19:13:58" itemprop="dateCreated datePublished" datetime="2022-03-25T19:06:05-04:00">2022-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/framework-fundamental/" itemprop="url" rel="index"><span itemprop="name">framework fundamental</span></a>
-                </span>
+              <time title="Created: 2022-03-25 19:56:36 / Modified: 20:45:52" itemprop="dateCreated datePublished" datetime="2022-03-25T19:56:36-04:00">2022-03-25</time>
             </span>
 
           
@@ -197,22 +188,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><ul>
-<li>table -&gt; class</li>
-<li>record -&gt; object</li>
-<li>field -&gt; attribute</li>
+        <h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><p>a programming execution unit to manipulate data in the databases</p>
+<ul>
+<li>Atomic: all succeed or all fail</li>
+<li>Consistency: does not change the data integrity of database. ?</li>
+<li>Isolation: not disturb other transactions</li>
+<li>Durability: permanently change</li>
 </ul>
-<h2 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h2><ul>
-<li>use MVC as architecture</li>
-<li>automation</li>
-<li>more flexibility for programming</li>
+<h3 id="Isolation"><a href="#Isolation" class="headerlink" title="Isolation"></a>Isolation</h3><ul>
+<li>Read uncommitted</li>
+<li>Read committed: ?</li>
+<li>Repeatable read: ?</li>
+<li>Serializable: ?</li>
 </ul>
-<h2 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h2><ul>
-<li>need time to config</li>
-<li>as to complex queries, hard to write or will have worse performance than SQL</li>
-<li>hide the details about how to manipulate databases</li>
+<h2 id="How-to-ensure-ACID"><a href="#How-to-ensure-ACID" class="headerlink" title="How to ensure ACID"></a>How to ensure ACID</h2><p>InnoDB:</p>
+<ul>
+<li>A: Undo log</li>
+<li>C: Undo log</li>
+<li>I: lock</li>
+<li>D: Redo log</li>
 </ul>
-
+<h3 id="Undo-log"><a href="#Undo-log" class="headerlink" title="Undo log"></a>Undo log</h3><p>record data before manipulation in undo log, rollback</p>
+<h3 id="Redo-log"><a href="#Redo-log" class="headerlink" title="Redo log"></a>Redo log</h3><p>record new data in redo log</p>
+<h3 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h3><h2 id="Dirty-Read"><a href="#Dirty-Read" class="headerlink" title="Dirty Read"></a>Dirty Read</h2><h2 id="Phantom-Read"><a href="#Phantom-Read" class="headerlink" title="Phantom Read"></a>Phantom Read</h2><h2 id="Unrepeatable-Read"><a href="#Unrepeatable-Read" class="headerlink" title="Unrepeatable Read"></a>Unrepeatable Read</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><ul>
+<li>Make sure data consistent in sub-system.</li>
+<li>A big operation consists of small operations on many nodes. Make sure all succeed or fail.</li>
+<li>Example: Create order and decrement stock count. All succeed or fail.</li>
+</ul>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><ul>
+<li>Multiple databases</li>
+<li>Sharding</li>
+<li>Microservices</li>
+</ul>
+<h2 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h2><ul>
+<li>Consistency: all nodes see the same data at the same time.</li>
+<li>Availability: return normal result (success or failure) within reasonable time</li>
+<li>Partition tolerance: ?<br>CP or AP<br>Money: CP<br>Internet: AP</li>
+</ul>
+<h3 id="Consistency"><a href="#Consistency" class="headerlink" title="Consistency"></a>Consistency</h3><ul>
+<li>Strong: The data in all nodes is the same at any time</li>
+<li>Weak: ?</li>
+<li>Eventual: ?</li>
+</ul>
+<h2 id="BASE"><a href="#BASE" class="headerlink" title="BASE"></a>BASE</h2><p>For AP<br>Eventual instead of strong consistency</p>
+<ul>
+<li>Basically available: some available: longer response time; lose some functions</li>
+<li>Soft state: allow middle state, 即允许系统在不同节点的数据副本之间进⾏数据同步的过程存在延时</li>
+<li>Eventually consistent: ?</li>
+</ul>
+<h3 id="BASE-vs-ACID"><a href="#BASE-vs-ACID" class="headerlink" title="BASE vs ACID"></a>BASE vs ACID</h3><ul>
+<li>ACID: strong consistency</li>
+<li>BASE: sacrifice consistency for availability</li>
+</ul>
+<h2 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h2>
     </div>
 
     
@@ -227,13 +255,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/25/SpringBoot/" rel="prev" title="SpringBoot">
-      <i class="fa fa-chevron-left"></i> SpringBoot
+    <a href="/2022/03/25/ORM/" rel="prev" title="ORM">
+      <i class="fa fa-chevron-left"></i> ORM
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/03/25/Distributed-Transaction/" rel="next" title="Distributed Transaction">
-      Distributed Transaction <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -292,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">1.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pros"><span class="nav-number">2.</span> <span class="nav-text">Pros</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cons"><span class="nav-number">3.</span> <span class="nav-text">Cons</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">1.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation"><span class="nav-number">1.1.</span> <span class="nav-text">Isolation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-ensure-ACID"><span class="nav-number">2.</span> <span class="nav-text">How to ensure ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">2.1.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-log"><span class="nav-number">2.2.</span> <span class="nav-text">Redo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Issues"><span class="nav-number">2.3.</span> <span class="nav-text">Issues</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirty-Read"><span class="nav-number">3.</span> <span class="nav-text">Dirty Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phantom-Read"><span class="nav-number">4.</span> <span class="nav-text">Phantom Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unrepeatable-Read"><span class="nav-number">5.</span> <span class="nav-text">Unrepeatable Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">7.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">8.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP"><span class="nav-number">9.</span> <span class="nav-text">CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consistency"><span class="nav-number">9.1.</span> <span class="nav-text">Consistency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASE"><span class="nav-number">10.</span> <span class="nav-text">BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BASE-vs-ACID"><span class="nav-number">10.1.</span> <span class="nav-text">BASE vs ACID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Type"><span class="nav-number">11.</span> <span class="nav-text">Type</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
