@@ -28,7 +28,7 @@
 <meta property="og:description" content="Transactiona programming execution unit to manipulate data in the databases  Atomic: all succeed or all fail Consistency: does not change the data integrity of database. ? Isolation: not disturb other">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-25T23:56:36.000Z">
-<meta property="article:modified_time" content="2022-03-26T00:45:52.654Z">
+<meta property="article:modified_time" content="2022-03-26T00:55:42.223Z">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
@@ -174,7 +174,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-25 19:56:36 / Modified: 20:45:52" itemprop="dateCreated datePublished" datetime="2022-03-25T19:56:36-04:00">2022-03-25</time>
+              <time title="Created: 2022-03-25 19:56:36 / Modified: 20:55:42" itemprop="dateCreated datePublished" datetime="2022-03-25T19:56:36-04:00">2022-03-25</time>
             </span>
 
           
@@ -240,7 +240,18 @@
 <li>ACID: strong consistency</li>
 <li>BASE: sacrifice consistency for availability</li>
 </ul>
-<h2 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h2>
+<h2 id="How-to-solve-the-consistency-problem"><a href="#How-to-solve-the-consistency-problem" class="headerlink" title="How to solve the consistency problem"></a>How to solve the consistency problem</h2><ul>
+<li>avoid distribution</li>
+<li>distributed transaction</li>
+</ul>
+<h2 id="Distributed-Transaction-Type"><a href="#Distributed-Transaction-Type" class="headerlink" title="Distributed Transaction Type"></a>Distributed Transaction Type</h2><ul>
+<li>Hard transaction: CP. Suitable for low concurrency and short transaction</li>
+<li>Soft transaction: BASE.</li>
+</ul>
+<h3 id="Hard-transaction"><a href="#Hard-transaction" class="headerlink" title="Hard transaction"></a>Hard transaction</h3><ul>
+<li>XA: 2PC, JTA, JTS; 3PC; due to synchronous blocking, low efficiency.</li>
+</ul>
+
     </div>
 
     
@@ -317,7 +328,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">1.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation"><span class="nav-number">1.1.</span> <span class="nav-text">Isolation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-ensure-ACID"><span class="nav-number">2.</span> <span class="nav-text">How to ensure ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">2.1.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-log"><span class="nav-number">2.2.</span> <span class="nav-text">Redo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Issues"><span class="nav-number">2.3.</span> <span class="nav-text">Issues</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirty-Read"><span class="nav-number">3.</span> <span class="nav-text">Dirty Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phantom-Read"><span class="nav-number">4.</span> <span class="nav-text">Phantom Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unrepeatable-Read"><span class="nav-number">5.</span> <span class="nav-text">Unrepeatable Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">7.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">8.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP"><span class="nav-number">9.</span> <span class="nav-text">CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consistency"><span class="nav-number">9.1.</span> <span class="nav-text">Consistency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASE"><span class="nav-number">10.</span> <span class="nav-text">BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BASE-vs-ACID"><span class="nav-number">10.1.</span> <span class="nav-text">BASE vs ACID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Type"><span class="nav-number">11.</span> <span class="nav-text">Type</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">1.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation"><span class="nav-number">1.1.</span> <span class="nav-text">Isolation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-ensure-ACID"><span class="nav-number">2.</span> <span class="nav-text">How to ensure ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">2.1.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-log"><span class="nav-number">2.2.</span> <span class="nav-text">Redo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Issues"><span class="nav-number">2.3.</span> <span class="nav-text">Issues</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirty-Read"><span class="nav-number">3.</span> <span class="nav-text">Dirty Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phantom-Read"><span class="nav-number">4.</span> <span class="nav-text">Phantom Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unrepeatable-Read"><span class="nav-number">5.</span> <span class="nav-text">Unrepeatable Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">7.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">8.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP"><span class="nav-number">9.</span> <span class="nav-text">CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consistency"><span class="nav-number">9.1.</span> <span class="nav-text">Consistency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASE"><span class="nav-number">10.</span> <span class="nav-text">BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BASE-vs-ACID"><span class="nav-number">10.1.</span> <span class="nav-text">BASE vs ACID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-solve-the-consistency-problem"><span class="nav-number">11.</span> <span class="nav-text">How to solve the consistency problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Distributed-Transaction-Type"><span class="nav-number">12.</span> <span class="nav-text">Distributed Transaction Type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hard-transaction"><span class="nav-number">12.1.</span> <span class="nav-text">Hard transaction</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
