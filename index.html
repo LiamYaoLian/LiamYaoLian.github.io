@@ -145,6 +145,353 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/07/Design-Pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/07/Design-Pattern/" class="post-title-link" itemprop="url">Design Pattern</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-04-07 17:51:29 / Modified: 19:50:28" itemprop="dateCreated datePublished" datetime="2022-04-07T17:51:29-04:00">2022-04-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Code-Quality"><a href="#Code-Quality" class="headerlink" title="Code Quality"></a>Code Quality</h2><ul>
+<li>maintainability: quickly update without bugs<ul>
+<li>well layered</li>
+<li>modularity</li>
+<li>high cohesion loose coupling</li>
+<li>well-documented</li>
+<li>interface-oriented programming</li>
+</ul>
+</li>
+<li>readability</li>
+<li>extensibility</li>
+<li>simplicity</li>
+<li>reusability<ul>
+<li>inheritance, polymorphism</li>
+<li>SRP</li>
+<li>high cohesion loose coupling</li>
+<li>modularity</li>
+</ul>
+</li>
+<li>testability</li>
+</ul>
+<h2 id="Paradigm"><a href="#Paradigm" class="headerlink" title="Paradigm"></a>Paradigm</h2><ul>
+<li>Process-oriented programming: a process is a unit, featuring separation of data structures and methods.</li>
+<li>Object-oriented programming: based on class and object. Data structures and methods are in a class.   </li>
+<li>Functional programming</li>
+</ul>
+<h3 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h3><h4 id="Four-features"><a href="#Four-features" class="headerlink" title="Four features"></a>Four features</h4><ul>
+<li>encapsulation: control how to access (get and set) and hide details</li>
+</ul>
+<ul>
+<li>to increase maintainability</li>
+</ul>
+<ul>
+<li><p>abstraction: hide details of implementation and only expose what to do</p>
+<ul>
+<li>may use <code>interface</code>, <code>abstract</code>, or function</li>
+<li>when naming a function, avoid implementation details. E.g. <code>getPictureUrl()</code> is better than <code>getAWSPictureUrl()</code> is bad, in case later we change AWS to something else</li>
+<li>to increase maintainability and extensibility</li>
+</ul>
+</li>
+<li><p>inheritance: is-a, e.g. dog is an animal</p>
+<ul>
+<li>Java: a class can only extend a superclass rater than multiple superclasses</li>
+<li>to increase reusability</li>
+<li>if there are too many inheritance layers, maintainability and readability suffer</li>
+</ul>
+</li>
+<li><p>polymorphism: a subclass can replace a superclass</p>
+<ul>
+<li>override</li>
+<li>to increase extensibility and reusability</li>
+</ul>
+</li>
+</ul>
+<h4 id="Compared-to-Process-oriented-Programming"><a href="#Compared-to-Process-oriented-Programming" class="headerlink" title="Compared to Process-oriented Programming"></a>Compared to Process-oriented Programming</h4><p>pros:</p>
+<ul>
+<li>complex application, not linear but like a network</li>
+<li>modularity</li>
+<li>four features</li>
+<li>think like a human</li>
+</ul>
+<h4 id="Fake-OOP"><a href="#Fake-OOP" class="headerlink" title="Fake OOP"></a>Fake OOP</h4><ul>
+<li>add unnecessary getter and setter</li>
+<li>the getter returns an object, which may be modified unintendedly. Can use <code>Collections.unmodifiableList()</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCart</span> &#123;</span><br><span class="line">  <span class="comment">// ...other codes...</span></span><br><span class="line">  <span class="keyword">public</span> List&lt;ShoppingCartItem&gt; <span class="title function_">getItems</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Collections.unmodifiableList(<span class="built_in">this</span>.items);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UnmodifiableList</span>&lt;E&gt; <span class="keyword">extends</span> <span class="title class_">UnmodifiableCollection</span>&lt;E&gt; <span class="keyword">implements</span> <span class="title class_">List</span>&lt;E&gt; &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">add</span><span class="params">(E e)</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnsupportedOperationException</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">clear</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnsupportedOperationException</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...other codes...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">ShoppingCart</span> <span class="variable">cart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShoppingCart</span>();</span><br><span class="line">List&lt;ShoppingCartItem&gt; items = cart.getItems();</span><br><span class="line">items.clear();<span class="comment">//will throw UnsupportedOperationException</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>global variable and method<ul>
+<li>singleton</li>
+<li>static attribute</li>
+<li>static method: used to manipulate static attribute or data outside</li>
+<li>constant: can put config attributes in a class <code>Constants</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="POP-example-Constants"><a href="#POP-example-Constants" class="headerlink" title="POP example: Constants"></a>POP example: Constants</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class Constants &#123;</span><br><span class="line">  public static final String MYSQL_ADDR_KEY = &quot;mysql_addr&quot;;</span><br><span class="line">  public static final String MYSQL_DB_NAME_KEY = &quot;db_name&quot;;</span><br><span class="line">  public static final String MYSQL_USERNAME_KEY = &quot;mysql_username&quot;;</span><br><span class="line">  public static final String MYSQL_PASSWORD_KEY = &quot;mysql_password&quot;;</span><br><span class="line"></span><br><span class="line">  public static final String REDIS_DEFAULT_ADDR = &quot;192.168.7.2:7234&quot;;</span><br><span class="line">  public static final int REDIS_DEFAULT_MAX_TOTAL = 50;</span><br><span class="line">  public static final int REDIS_DEFAULT_MAX_IDLE = 50;</span><br><span class="line">  public static final int REDIS_DEFAULT_MIN_IDLE = 20;</span><br><span class="line">  public static final String REDIS_DEFAULT_KEY_PREFIX = &quot;rt:&quot;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Using a single Constants may be bad because:</p>
+<ul>
+<li>when there are too many lines, hard to find one and may conflict with others</li>
+<li>long compilation time. Each time <code>Constants</code> is changed, other classes depend on that will be compiled again. When the project is large and we need to do unit test, it will take long.</li>
+<li>reusability. If we need to use only some variables in  <code>Constants</code> in another project, we have to import the whole file, which is a waste.</li>
+</ul>
+<p> How to improve?</p>
+<ul>
+<li>method 1: Break down  <code>Constants</code> into <code>MysqlConstants</code>, <code>RedisConstants</code>, etc</li>
+<li>method 2: put constant in the class that uses it. E.g.  <code>RedisConfig</code> class</li>
+</ul>
+<h5 id="POP-example-Utils"><a href="#POP-example-Utils" class="headerlink" title="POP example: Utils"></a>POP example: Utils</h5><p>Class A and class B use the same methods. To avoid repetition, we put it in <code>XxxUtils</code>. Use static methods.</p>
+<h5 id="POP-example-VO-x2F-BO-x2F-Entity-and-Controller-x2F-Service-x2F-Repository"><a href="#POP-example-VO-x2F-BO-x2F-Entity-and-Controller-x2F-Service-x2F-Repository" class="headerlink" title="POP example: VO&#x2F;BO&#x2F;Entity and Controller&#x2F;Service&#x2F;Repository"></a>POP example: VO&#x2F;BO&#x2F;Entity and Controller&#x2F;Service&#x2F;Repository</h5><ul>
+<li>Anemic Demain Model: separation of data and logic<ul>
+<li>Entity and Repository</li>
+<li>BO and Service</li>
+<li>VO and Controller</li>
+</ul>
+</li>
+<li>Rich Demain Model: data and logic are in the same class. Service layer includes service classes and domain classes (similar to BO). 贫血模式重Service轻BO，充血模式轻Service重Domain。适合业务复杂，improve reusability.</li>
+</ul>
+<h4 id="SOLID-principles"><a href="#SOLID-principles" class="headerlink" title="SOLID principles"></a>SOLID principles</h4><h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
+<li>reference: 《重构》《代码大全》《代码简洁之道》</li>
+</ul>
+<h2 id="Refactoring"><a href="#Refactoring" class="headerlink" title="Refactoring"></a>Refactoring</h2><ul>
+<li>why, what, when, how</li>
+<li>unit test, testability</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/26/OOD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/26/OOD/" class="post-title-link" itemprop="url">OOD</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-26 13:13:23 / Modified: 13:19:21" itemprop="dateCreated datePublished" datetime="2022-03-26T13:13:23-04:00">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OOD/" itemprop="url" rel="index"><span itemprop="name">OOD</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="three-features"><a href="#three-features" class="headerlink" title="three features"></a>three features</h2><ul>
+<li>encapsulation: private attribute, getter and setter</li>
+<li>inheritance:<ul>
+<li>has all attributes and methods of the base class, but cannot access the private members of the base class</li>
+<li>can have its own members</li>
+<li>can override methods of base class</li>
+</ul>
+</li>
+<li>poly: 所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编<br>程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该<br>引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Project-SpringBoot-E-commerce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/Project-SpringBoot-E-commerce/" class="post-title-link" itemprop="url">Project: SpringBoot E-commerce</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-25 21:58:28 / Modified: 22:18:21" itemprop="dateCreated datePublished" datetime="2022-03-25T21:58:28-04:00">2022-03-25</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><ul>
+<li>User</li>
+<li>Product</li>
+<li>Category</li>
+<li>Cart</li>
+</ul>
+<h3 id="User"><a href="#User" class="headerlink" title="User"></a>User</h3><ul>
+<li>Log-in</li>
+<li>Log-out</li>
+<li>Register</li>
+<li>Duplicate name check</li>
+<li>Password encrypted storage</li>
+<li>Session<ul>
+<li>to remember log-in status, save user information in session</li>
+</ul>
+</li>
+<li>Access control</li>
+<li>Unified response object</li>
+<li>lomlock</li>
+<li>Exception enum</li>
+<li>Postman</li>
+<li>Unified exception handler</li>
+<li>Update personal info</li>
+</ul>
+<h4 id="API"><a href="#API" class="headerlink" title="API"></a>API</h4><h4 id="Challenge"><a href="#Challenge" class="headerlink" title="Challenge"></a>Challenge</h4><ul>
+<li>Unified response object</li>
+<li>Remembering log-in status</li>
+<li>Unified exception handler</li>
+</ul>
+<h3 id="Product"><a href="#Product" class="headerlink" title="Product"></a>Product</h3><ul>
+<li></li>
+</ul>
+<h4 id="Highlight"><a href="#Highlight" class="headerlink" title="Highlight"></a>Highlight</h4><ul>
+<li>UUID: Universally Unique Identifier</li>
+<li>MyBatis PageHelper<h4 id="Challenge-1"><a href="#Challenge-1" class="headerlink" title="Challenge"></a>Challenge</h4></li>
+<li>search and sort products and query a product by category</li>
+</ul>
+<h3 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h3><ul>
+<li>set category</li>
+<li>associate a product to a category<h4 id="Challenge-2"><a href="#Challenge-2" class="headerlink" title="Challenge"></a>Challenge</h4></li>
+<li>Swagger</li>
+<li>Parameter check</li>
+<li>Redis integration</li>
+<li>Debug using log</li>
+</ul>
+<h4 id="Why-use-three-levels"><a href="#Why-use-three-levels" class="headerlink" title="Why use three levels?"></a>Why use three levels?</h4><ul>
+<li>To deep, hard to find and manage</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Distributed-Transaction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -739,16 +1086,16 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
