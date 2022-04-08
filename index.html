@@ -145,6 +145,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/07/MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/07/MySQL/" class="post-title-link" itemprop="url">MySQL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-04-07 20:25:28 / Modified: 21:07:40" itemprop="dateCreated datePublished" datetime="2022-04-07T20:25:28-04:00">2022-04-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><ul>
+<li>server layer + storage engine layer<ul>
+<li><p>server layer</p>
+<ul>
+<li>connector: connects client to server; wait_timeout can decide how long it will wait before disconnecting if the client has not sent a query.</li>
+<li>cache: After MySQL 8.0, not have this.</li>
+<li>analyzer: lexical and syntax analysis</li>
+<li>optimizer: which index to use, which table to be joined first</li>
+<li>executor: execute; update binlog in disk<br>the server layer has functions, stored procedures, trigger, view, etc</li>
+</ul>
+</li>
+<li><p>storage engine: store, update log</p>
+<ul>
+<li>engines: InnoDb, MyISAM, Memory, etc</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h2><h3 id="Redo-Log-in-InnoDB"><a href="#Redo-Log-in-InnoDB" class="headerlink" title="Redo Log in InnoDB"></a>Redo Log in InnoDB</h3><ul>
+<li>Write-ahead logging<ul>
+<li>write to redo log, update memory, then disk</li>
+<li>when the redo log is full, move to disk to clean some space</li>
+</ul>
+</li>
+<li>Crash-safe: innodb_flush_log_at_trx_commit &#x3D; 1<h3 id="binlog-in-the-server-layer"><a href="#binlog-in-the-server-layer" class="headerlink" title="binlog in the server layer"></a>binlog in the server layer</h3></li>
+<li>can be used by all engines</li>
+<li>记录语句逻辑，如“给id &#x3D; 2的行的c字段加1”</li>
+<li>append</li>
+<li>sync_binlog &#x3D; 1 to make sure binlog is not lost</li>
+</ul>
+<p>InnoDB prepares redo log. Executor updates binlog. InnoDB commits redo log.</p>
+<h3 id="How-to-restore"><a href="#How-to-restore" class="headerlink" title="How to restore"></a>How to restore</h3><ul>
+<li>按找最近的全量备份恢复。然后，从最近备份时间点开始，根据binlog恢复。</li>
+</ul>
+<h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><ul>
+<li>high isolation will lead to low efficiency<h3 id="Isolation-levels"><a href="#Isolation-levels" class="headerlink" title="Isolation levels"></a>Isolation levels</h3></li>
+<li>read uncommitted: no view.</li>
+<li>read committed: a view is created when a SQL query executes</li>
+<li>repeatable read: data seen in this transaction are the same as what they were when this transaction started (view created at that time).</li>
+<li>serializable: read write will add lock. After a transaction finishes, another transaction can execute.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/07/Design-Pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1086,7 +1186,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1095,7 +1195,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
