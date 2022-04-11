@@ -28,7 +28,7 @@
 <meta property="og:description" content="Code Quality maintainability: quickly update without bugs well layered modularity high cohesion loose coupling well-documented interface-oriented programming   readability extensibility simplicity reu">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-04-07T21:51:29.000Z">
-<meta property="article:modified_time" content="2022-04-07T23:50:28.108Z">
+<meta property="article:modified_time" content="2022-04-10T15:10:55.624Z">
 <meta property="article:author" content="Liam Lian">
 <meta property="article:tag" content="Design Pattern">
 <meta name="twitter:card" content="summary">
@@ -173,10 +173,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-04-07 17:51:29 / Modified: 19:50:28" itemprop="dateCreated datePublished" datetime="2022-04-07T17:51:29-04:00">2022-04-07</time>
+              <time title="Created: 2022-04-07 17:51:29" itemprop="dateCreated datePublished" datetime="2022-04-07T17:51:29-04:00">2022-04-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-10 11:10:55" itemprop="dateModified" datetime="2022-04-10T11:10:55-04:00">2022-04-10</time>
+              </span>
 
           
 
@@ -288,7 +294,34 @@
 </li>
 <li>Rich Demain Model: data and logic are in the same class. Service layer includes service classes and domain classes (similar to BO). 贫血模式重Service轻BO，充血模式轻Service重Domain。适合业务复杂，improve reusability.</li>
 </ul>
-<h4 id="SOLID-principles"><a href="#SOLID-principles" class="headerlink" title="SOLID principles"></a>SOLID principles</h4><h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
+<h4 id="Interface-vs-Abstract-Class"><a href="#Interface-vs-Abstract-Class" class="headerlink" title="Interface vs Abstract Class"></a>Interface vs Abstract Class</h4><h5 id="Abstract-Class"><a href="#Abstract-Class" class="headerlink" title="Abstract Class"></a>Abstract Class</h5><ul>
+<li>is-a</li>
+<li>抽象类不允许被实例化，只能被继承</li>
+<li>抽象类可以包含属性和方法。方法既可以包含代码实现（比如 Logger 中的 log() 方法），也可以不包含代码实现（比如 Logger 中的 doLog() 方法）。不包含代码实现的方法叫作抽象方法。</li>
+<li>子类继承抽象类，必须实现抽象类中的所有抽象方法。<h5 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h5></li>
+<li>has a, contract</li>
+<li>接口不能包含属性（也就是成员变量）。</li>
+<li>接口只能声明方法，方法不能包含代码实现。</li>
+<li>类实现接口的时候，必须实现接口中声明的所有方法。</li>
+</ul>
+<h4 id="Program-to-interface"><a href="#Program-to-interface" class="headerlink" title="Program to interface"></a>Program to interface</h4><p>Program to an interface, not an implementation</p>
+<h4 id="SOLID-principles"><a href="#SOLID-principles" class="headerlink" title="SOLID principles"></a>SOLID principles</h4><ul>
+<li>Single Responsibility Principle: A class or module should have a single responsibility. Whether the module is too big depends on the situation. At the beginning, can have a big module. Later when the module becomes too big, we can break it down. Usually should be less than 200 lines and 10 members.</li>
+<li>Open Closed Principle: software entities (modules, classes, functions, etc.) should be open for extension , but closed for modification. 没有破坏原有代码的正常运行和单元测试。时刻具备扩展意识、抽象意识、封装意识。在识别出代码可变部分和不可变部分之后，我们要将可变部分封装起来，隔离变化，提供抽象化的不可变接口，给上层系统使用。当具体的实现发生变化的时候，我们只需要基于相同的抽象接口，扩展一个新的实现，替换掉老的实现即可，上游系统的代码几乎不需要修改。多态、依赖注入、基于接口而非实现编程。</li>
+</ul>
+<p>最合理的做法是，对于一些比较确定的、短期内可能就会扩展，或者需求改动对代码结构影响比较大的情况，或者实现成本不高的扩展点，在编写代码的时候之后，我们就可以事先做些扩展性设计。但对于一些不确定未来是否要支持的需求，或者实现起来比较复杂的扩展点，我们可以等到有需求驱动的时候，再通过重构代码的方式来支持扩展的需求。</p>
+<p>在扩展性和可读性之间做权衡</p>
+<ul>
+<li><p>Liskov Substitution Principle: Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it<br>子类在设计的时候，要遵守父类的行为约定（或者叫协议）。父类定义了函数的行为约定，那子类可以改变函数的内部实现逻辑，但不能改变函数原有的行为约定。这里的行为约定包括：函数声明要实现的功能；对输入、输出、异常的约定；甚至包括注释中所罗列的任何特殊说明。实际上，定义中父类和子类之间的关系，也可以替换成接口和实现类之间的关系。</p>
+</li>
+<li><p>Interface Segregation Principle: Clients should not be forced to depend upon interfaces that they do not use</p>
+</li>
+<li><p>Dependency Inversion Principle: High-level modules shouldn’t depend on low-level modules. Both modules should depend on abstractions. In addition, abstractions shouldn’t depend on details. Details depend on abstractions.调用者属于高层，被调用者属于低层。</p>
+</li>
+</ul>
+<p>“控制”指的是对程序执行流程的控制，而“反转”指的是在没有使用框架之前，程序员自己控制整个程序的执行。在使用框架之后，整个程序的执行流程通过框架来控制。流程的控制权从程序员“反转”给了框架。</p>
+<p>依赖注入和控制反转恰恰相反，它是一种具体的编码技巧。我们不通过 new 的方式在类内部创建依赖类的对象，而是将依赖的类对象在外部创建好之后，通过构造函数、函数参数等方式传递（或注入）给类来使用。</p>
+<h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
 <li>reference: 《重构》《代码大全》《代码简洁之道》</li>
 </ul>
 <h2 id="Refactoring"><a href="#Refactoring" class="headerlink" title="Refactoring"></a>Refactoring</h2><ul>
@@ -378,7 +411,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Quality"><span class="nav-number">1.</span> <span class="nav-text">Code Quality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paradigm"><span class="nav-number">2.</span> <span class="nav-text">Paradigm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OOP"><span class="nav-number">2.1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Four-features"><span class="nav-number">2.1.1.</span> <span class="nav-text">Four features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compared-to-Process-oriented-Programming"><span class="nav-number">2.1.2.</span> <span class="nav-text">Compared to Process-oriented Programming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fake-OOP"><span class="nav-number">2.1.3.</span> <span class="nav-text">Fake OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Constants"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">POP example: Constants</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Utils"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">POP example: Utils</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-VO-x2F-BO-x2F-Entity-and-Controller-x2F-Service-x2F-Repository"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">POP example: VO&#x2F;BO&#x2F;Entity and Controller&#x2F;Service&#x2F;Repository</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SOLID-principles"><span class="nav-number">2.1.4.</span> <span class="nav-text">SOLID principles</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern"><span class="nav-number">3.</span> <span class="nav-text">Design Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coding-Standards"><span class="nav-number">4.</span> <span class="nav-text">Coding Standards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refactoring"><span class="nav-number">5.</span> <span class="nav-text">Refactoring</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Quality"><span class="nav-number">1.</span> <span class="nav-text">Code Quality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paradigm"><span class="nav-number">2.</span> <span class="nav-text">Paradigm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OOP"><span class="nav-number">2.1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Four-features"><span class="nav-number">2.1.1.</span> <span class="nav-text">Four features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compared-to-Process-oriented-Programming"><span class="nav-number">2.1.2.</span> <span class="nav-text">Compared to Process-oriented Programming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fake-OOP"><span class="nav-number">2.1.3.</span> <span class="nav-text">Fake OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Constants"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">POP example: Constants</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Utils"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">POP example: Utils</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-VO-x2F-BO-x2F-Entity-and-Controller-x2F-Service-x2F-Repository"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">POP example: VO&#x2F;BO&#x2F;Entity and Controller&#x2F;Service&#x2F;Repository</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Interface-vs-Abstract-Class"><span class="nav-number">2.1.4.</span> <span class="nav-text">Interface vs Abstract Class</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Abstract-Class"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">Abstract Class</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#interface"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">interface</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Program-to-interface"><span class="nav-number">2.1.5.</span> <span class="nav-text">Program to interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SOLID-principles"><span class="nav-number">2.1.6.</span> <span class="nav-text">SOLID principles</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern"><span class="nav-number">3.</span> <span class="nav-text">Design Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coding-Standards"><span class="nav-number">4.</span> <span class="nav-text">Coding Standards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refactoring"><span class="nav-number">5.</span> <span class="nav-text">Refactoring</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

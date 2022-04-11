@@ -27,11 +27,15 @@
 <meta property="og:site_name" content="Liam Lian&#39;s Blog">
 <meta property="og:description" content="Overview server layer + storage engine layer server layer  connector: connects client to server; wait_timeout can decide how long it will wait before disconnecting if the client has not sent a query.">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liamyaolian.github.io/image/mysql/2.webp">
+<meta property="og:image" content="https://liamyaolian.github.io/image/mysql/1.webp">
+<meta property="og:image" content="https://liamyaolian.github.io/image/mysql/3.webp">
 <meta property="article:published_time" content="2022-04-08T00:25:28.000Z">
-<meta property="article:modified_time" content="2022-04-08T01:07:40.762Z">
+<meta property="article:modified_time" content="2022-04-08T14:44:23.970Z">
 <meta property="article:author" content="Liam Lian">
 <meta property="article:tag" content="DB">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liamyaolian.github.io/image/mysql/2.webp">
 
 <link rel="canonical" href="https://liamyaolian.github.io/2022/04/07/MySQL/">
 
@@ -173,10 +177,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-04-07 20:25:28 / Modified: 21:07:40" itemprop="dateCreated datePublished" datetime="2022-04-07T20:25:28-04:00">2022-04-07</time>
+              <time title="Created: 2022-04-07 20:25:28" itemprop="dateCreated datePublished" datetime="2022-04-07T20:25:28-04:00">2022-04-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-08 10:44:23" itemprop="dateModified" datetime="2022-04-08T10:44:23-04:00">2022-04-08</time>
+              </span>
 
           
 
@@ -216,20 +226,48 @@
 </li>
 <li>Crash-safe: innodb_flush_log_at_trx_commit &#x3D; 1<h3 id="binlog-in-the-server-layer"><a href="#binlog-in-the-server-layer" class="headerlink" title="binlog in the server layer"></a>binlog in the server layer</h3></li>
 <li>can be used by all engines</li>
-<li>记录语句逻辑，如“给id &#x3D; 2的行的c字段加1”</li>
+<li>Has statement-based logging: Events contain SQL statements that produce data changes (inserts, updates, deletes)</li>
 <li>append</li>
 <li>sync_binlog &#x3D; 1 to make sure binlog is not lost</li>
 </ul>
 <p>InnoDB prepares redo log. Executor updates binlog. InnoDB commits redo log.</p>
+<h3 id="Undo-log"><a href="#Undo-log" class="headerlink" title="Undo log"></a>Undo log</h3><ul>
+<li><p>When there are no read-views earlier than this undo log record, it will be deleted.<br><img src="/../image/mysql/2.webp" alt="undo log and read-view"><br>Source: <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/68963">https://time.geekbang.org/column/article/68963</a></p>
+</li>
+<li><p>Long transaction will cause too many undo log records to stay</p>
+</li>
+<li><p>To avoid long transaction, set autocommit&#x3D;1</p>
+</li>
+<li><p>To find long transaction (e.g. 60s):</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))&gt;60</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Analyze general log to avoid long transaction issues</li>
+<li>SET_MAX_EXECUTION_TIME</li>
+</ul>
 <h3 id="How-to-restore"><a href="#How-to-restore" class="headerlink" title="How to restore"></a>How to restore</h3><ul>
-<li>按找最近的全量备份恢复。然后，从最近备份时间点开始，根据binlog恢复。</li>
+<li>Find the most recent full backup. Then based on binlog records later than the most recent full backup, restore data.</li>
+<li>back up every day or every week? More frequent, more storage, less RTO(Recovery Time Objective).</li>
 </ul>
 <h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><ul>
-<li>high isolation will lead to low efficiency<h3 id="Isolation-levels"><a href="#Isolation-levels" class="headerlink" title="Isolation levels"></a>Isolation levels</h3></li>
-<li>read uncommitted: no view.</li>
-<li>read committed: a view is created when a SQL query executes</li>
-<li>repeatable read: data seen in this transaction are the same as what they were when this transaction started (view created at that time).</li>
-<li>serializable: read write will add lock. After a transaction finishes, another transaction can execute.</li>
+<li>high isolation will lead to low efficiency<h3 id="Isolation-Levels"><a href="#Isolation-Levels" class="headerlink" title="Isolation Levels"></a>Isolation Levels</h3></li>
+<li>read uncommitted: no read-view.</li>
+<li>read committed: a read-view is created when a SQL query executes</li>
+<li>repeatable read: a read-view is created when the transaction starts , so data seen in this transaction are the same as what they were when this transaction started.</li>
+<li>serializable: read and write will add lock. After a transaction finishes, another transaction can execute.<br><img src="/../image/mysql/1.webp" alt="isolation levels"><br>Source: <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/68963">https://time.geekbang.org/column/article/68963</a></li>
+</ul>
+<h2 id="index"><a href="#index" class="headerlink" title="index"></a>index</h2><ul>
+<li>different storage engines may have different index implementation.<h3 id="InnoDB-index-model"><a href="#InnoDB-index-model" class="headerlink" title="InnoDB index model"></a>InnoDB index model</h3></li>
+<li>B+ tree<br><img src="/../image/mysql/3.webp" alt="InnoDB index model"></li>
+<li>primary key index (called clustered index in InnoDB): leaves store records</li>
+<li>non primary key index (called secondary index in InnoDB): leaves store primary key values. If search based on non primary key index, will search the B+ tree of the non primary key index first, find the primary key value, and then search the B+ tree of the primary key index.</li>
+<li>index maintenance<ul>
+<li>inserting may cause some records to be moved</li>
+<li>if a data page is full, inserting will create a new data page</li>
+</ul>
+</li>
+<li>Usually using auto increment as the primary key leads to better performance and less storage. However, for the k-v situation, may use a business column as the primary key</li>
 </ul>
 
     </div>
@@ -311,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log"><span class="nav-number">2.</span> <span class="nav-text">Log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log-in-InnoDB"><span class="nav-number">2.1.</span> <span class="nav-text">Redo Log in InnoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binlog-in-the-server-layer"><span class="nav-number">2.2.</span> <span class="nav-text">binlog in the server layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-restore"><span class="nav-number">2.3.</span> <span class="nav-text">How to restore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">3.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation-levels"><span class="nav-number">3.1.</span> <span class="nav-text">Isolation levels</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log"><span class="nav-number">2.</span> <span class="nav-text">Log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log-in-InnoDB"><span class="nav-number">2.1.</span> <span class="nav-text">Redo Log in InnoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binlog-in-the-server-layer"><span class="nav-number">2.2.</span> <span class="nav-text">binlog in the server layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">2.3.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-restore"><span class="nav-number">2.4.</span> <span class="nav-text">How to restore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">3.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation-Levels"><span class="nav-number">3.1.</span> <span class="nav-text">Isolation Levels</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index"><span class="nav-number">4.</span> <span class="nav-text">index</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB-index-model"><span class="nav-number">4.1.</span> <span class="nav-text">InnoDB index model</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
