@@ -145,6 +145,390 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/12/Java-Core-Test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/12/Java-Core-Test/" class="post-title-link" itemprop="url">Java Core Test</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-12 17:43:13" itemprop="dateCreated datePublished" datetime="2022-04-12T17:43:13-04:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-14 20:15:35" itemprop="dateModified" datetime="2022-04-14T20:15:35-04:00">2022-04-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h2><h3 id="Primitive"><a href="#Primitive" class="headerlink" title="Primitive"></a>Primitive</h3><p><img src="/../image/java-core-test/1.png" alt="Primitive"></p>
+<h3 id="Non-Primitive"><a href="#Non-Primitive" class="headerlink" title="Non-Primitive"></a>Non-Primitive</h3><h4 id="BigDecimal"><a href="#BigDecimal" class="headerlink" title="BigDecimal"></a>BigDecimal</h4><p>to do</p>
+<h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><ul>
+<li>if the integer &#x2F; integer (byte, short, char, int, long), result is integer</li>
+<li>i++(return and increment) vs ++i</li>
+<li>logical operator: short circuit; &amp; vs &amp;&amp;</li>
+<li>priority<ul>
+<li>member. index[] call function()</li>
+<li>positive+ negative- ++ – bitwise complement ~ !</li>
+<li><ul>
+<li>&#x2F; %</li>
+</ul>
+</li>
+<li>add+ deduct-  </li>
+<li>&lt;&lt; signed right shift&gt;&gt;  unsigned right shift&gt;&gt;&gt;</li>
+<li>&lt; &lt;&#x3D; &gt; &gt;&#x3D; instanceof</li>
+<li>&#x3D;&#x3D; !&#x3D;</li>
+<li>&amp;</li>
+<li>|</li>
+<li>bitwise XOR^</li>
+<li>&amp;&amp;</li>
+<li>||</li>
+<li>? :</li>
+<li>&#x3D; +&#x3D; -&#x3D; *&#x3D; &#x2F;&#x3D; %&#x3D; &amp;&#x3D; |&#x3D; ^&#x3D; &lt;&lt;&#x3D; &gt;&gt;&#x3D; &gt;&gt;&gt;&#x3D;</li>
+</ul>
+</li>
+</ul>
+<h2 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h2><ul>
+<li>Labeled break and continue statements</li>
+</ul>
+<h2 id="Modifier"><a href="#Modifier" class="headerlink" title="Modifier"></a>Modifier</h2><h3 id="Access"><a href="#Access" class="headerlink" title="Access"></a>Access</h3><ul>
+<li>public</li>
+<li>private</li>
+<li>default<ul>
+<li>class and method: same package</li>
+</ul>
+</li>
+<li>protected<ul>
+<li>method: same package or subclasses</li>
+</ul>
+</li>
+</ul>
+<h3 id="Non-Access"><a href="#Non-Access" class="headerlink" title="Non-Access"></a>Non-Access</h3><h4 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h4><ul>
+<li>final: no inheritance</li>
+<li>abstract: no instantiation</li>
+</ul>
+<h4 id="Member"><a href="#Member" class="headerlink" title="Member"></a>Member</h4><ul>
+<li>final<ul>
+<li>variable<ul>
+<li><p>primitive: cannot be modified</p>
+</li>
+<li><p>non-primitive: cannot refer to another object but the object can be modified</p>
+</li>
+<li><p>variable as member: should be initialized when being declared or in instance initialization block or constructor</p>
+</li>
+<li><p>variable in method: should be initialized before using</p>
+</li>
+</ul>
+</li>
+<li>method: can be inherited but can’t be overridden; cannot be used on a constructor</li>
+</ul>
+</li>
+<li>static: belong to the class rather than an object; cannot be added to a variable in a method</li>
+<li>abstract:<ul>
+<li>class: abstract class cannot have <code>final</code></li>
+<li>method<ul>
+<li>can only be used on methods in an abstract class or an interface.</li>
+<li>not have a body.</li>
+<li>must be implemented in the subclass unless the subclass is abstract.</li>
+<li>cannot have <code>static</code> or <code>private</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>transient: attributes and methods are skipped when serializing the object</li>
+<li>synchronized: accessed by only one thread at a time</li>
+<li>volatile: the value of an attribute is not cached thread-locally, and is always read from the “main memory”</li>
+</ul>
+<h3 id="Class-1"><a href="#Class-1" class="headerlink" title="Class"></a>Class</h3><p><img src="/../image/java-core-test/2.png" alt="instantiation"></p>
+<ul>
+<li>can call a constructor in the first line of another constructor, but cannot call a constructor in a method</li>
+<li>Use multiple classes: try to find an accessible class in the current class, if not successful, try to find in the current package<h4 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h4></li>
+<li>execution sequence: static block -&gt; instance initialization block -&gt; constructor</li>
+<li>static block: cannot assign non-static member variable and declare static member; member declared in static block cannot be accessed from outside</li>
+<li>the scope of the variable declared in a method is throughout the method, so we cannot declare the same variable in a block inside the method<h4 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h4></li>
+<li>method and block: stack</li>
+</ul>
+<h4 id="Inner-class"><a href="#Inner-class" class="headerlink" title="Inner class"></a>Inner class</h4><ul>
+<li><p>Non-static member inner classes</p>
+<ul>
+<li>outer$inner.class</li>
+<li>cannot have static members</li>
+<li><code>Person.Heart heart = new Person().new Heart();</code> or  <code>Person.Heart heart = new Person().getHeart();</code></li>
+<li>can access members of the outer class.</li>
+<li>方法访问某个变量<ul>
+<li>该方法有该名字的成员变量 -&gt; 直接用该变量名</li>
+<li>内部类中有该名字的成员变量 -&gt; 使用this.变量名</li>
+<li>外部类中有该名字的成员变量 -&gt; 使用外部类的类名.this.非静态变量名 or 外部类的类名.静态变量 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class Outer &#123;</span><br><span class="line"></span><br><span class="line">    private int i = 1;</span><br><span class="line"></span><br><span class="line">    public class Inner &#123;</span><br><span class="line">        private int i = 2;</span><br><span class="line"></span><br><span class="line">        public void print() &#123;</span><br><span class="line">            int i = 3;</span><br><span class="line">            System.out.println(i);</span><br><span class="line">            System.out.println(this.i);</span><br><span class="line">            System.out.println(Outer.this.i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Outer outer = new Outer();</span><br><span class="line">        Inner inner = outer.new Inner();</span><br><span class="line">        inner.print();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Static member inner class</p>
+<ul>
+<li>cannot directly access non-static members of the outer class but can access them through an instance of the outer class</li>
+<li><code>Person.Heart heart = new Person.Heart();</code></li>
+<li>方法访问某个变量<ul>
+<li>该方法有该名字的成员变量 -&gt; 直接用该变量名</li>
+<li>内部类中有该名字的成员变量 -&gt; 使用this.变量名</li>
+<li>外部类中有该名字的static 成员变量 -&gt; 使用外部类的类名.变量名</li>
+<li>外部类中有该名字的non-static 成员变量 -&gt; 使用new 外部类的类名().变量名</li>
+</ul>
+</li>
+<li>when to used: when the inner class does not need to access the members of the outer class</li>
+<li>outer$inner.class</li>
+</ul>
+</li>
+<li><p>Method inner class</p>
+<ul>
+<li><p>scope: method</p>
+</li>
+<li><p>cannot have access modifier and static</p>
+</li>
+<li><p>cannot have static member but can have final and abstract member</p>
+</li>
+<li><p>类中普通方法如需访问外部方法中的局部变量，则该变量也需定义为final（jdk1.8之后底层默认会给该变量加上final）<br>···<br>public class Outer {<br>   private int s &#x3D; 100;<br>   private int out_i &#x3D; 1;<br>   public void f(final int k){<br> final int s &#x3D; 200;<br> final int j &#x3D; 10;<br> class Inner{ &#x2F;&#x2F;定义在方法内部<br>     int s &#x3D; 300;&#x2F;&#x2F;可以定义与外部类同名的变量<br>     &#x2F;&#x2F;static int m &#x3D; 20;&#x2F;&#x2F;不可以定义静态变量<br>     Inner(int k){<br>         inner_f(k);<br>     }<br>     int inner_i &#x3D; 100;<br>     void inner_f(int k){<br>         System.out.println(out_i);&#x2F;&#x2F;如果内部类没有与外部类同名的变量，在内部类中可以直接访问外部类的实例变量<br>         System.out.println(k);&#x2F;&#x2F;<em><strong><strong>可以访问外部类的局部变量(即方法内的变量)，但是变量必须是final的</strong></strong></em><br>         &#x2F;&#x2F;System.out.println(i);<br>         System.out.println(s);&#x2F;&#x2F;如果内部类中有与外部类同名的变量，直接用变量名访问的是内部类的变量<br>         System.out.println(this.s);&#x2F;&#x2F;用”this.变量名” 访问的也是内部类变量<br>         System.out.println(Outer.this.s);&#x2F;&#x2F;用外部”外部类类名.this.变量名” 访问的是外部类变量<br>     }<br>}<br>new Inner(k);<br>}</p>
+<p>  public static void main(String[] args) {<br>  &#x2F;&#x2F;访问局部内部类必须先有外部类对象<br>  Outer out &#x3D; new Outer();<br>  out.f(3);<br>  }</p>
+</li>
+</ul>
+<p> }<br>   ···</p>
+<ul>
+<li>outer$1inner.class</li>
+<li>when to used: the class only used in this method</li>
+</ul>
+</li>
+<li><p>Anonymous inner class</p>
+<ul>
+<li>must inherit a class or implement an interface</li>
+<li>cannot have access modifier, static, abstract, or final</li>
+<li>cannot have static members</li>
+<li>cannot have constructor, but can have instance initialization block</li>
+<li>outer$1.class</li>
+</ul>
+</li>
+</ul>
+<h4 id="Inner-class-in-interface"><a href="#Inner-class-in-interface" class="headerlink" title="Inner class in interface"></a>Inner class in interface</h4><ul>
+<li>non-abstract inner: <code>new InterfaceName.Inner();</code>; or import and then <code>new Inner();</code>; or create a “get” method</li>
+<li>abstract inner:<ul>
+<li>implementation method 1: create a non-abstract class implements the interface. Inside this class, create a non-abstract class to inherit the abstract inner class in the interface.</li>
+<li>implementation method 2: Anonymous inner class</li>
+</ul>
+</li>
+</ul>
+<h3 id="Wrapper-Class"><a href="#Wrapper-Class" class="headerlink" title="Wrapper Class"></a>Wrapper Class</h3><h4 id="boxing"><a href="#boxing" class="headerlink" title="boxing"></a>boxing</h4><ul>
+<li><p>manual boxing</p>
+<ul>
+<li>new Integer(1);</li>
+<li>Integer.valueOf(1);</li>
+</ul>
+</li>
+<li><p>manual unboxing</p>
+<ul>
+<li>xxValue(): i1.intValue();</li>
+</ul>
+</li>
+</ul>
+<h4 id="unboxing"><a href="#unboxing" class="headerlink" title="unboxing"></a>unboxing</h4><ul>
+<li><p>&#x3D;, pass pamameter, use operator to do operations</p>
+</li>
+<li><p>autoboxing: use valueOf()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int intVal = 1;</span><br><span class="line">Integer integerVal = intVal;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>auto unboxing: use xxValue()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int intVal = integerVal;</span><br></pre></td></tr></table></figure>
+<h4 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h4></li>
+<li><p>.valueOf()</p>
+</li>
+<li><p>-128 &lt;&#x3D; x &lt;&#x3D; 127</p>
+</li>
+<li><p>except Float and Double</p>
+<h4 id="Compare"><a href="#Compare" class="headerlink" title="Compare"></a>Compare</h4></li>
+<li><p>&#x3D;&#x3D; compares addresses</p>
+</li>
+<li><p><code>a.equals(b)</code> compares type and value. If b is primitive, auto-box it.</p>
+<h4 id="Frequently-used-methods"><a href="#Frequently-used-methods" class="headerlink" title="Frequently used methods"></a>Frequently used methods</h4><h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4></li>
+<li><p><code>Integer.toString(1);</code></p>
+</li>
+<li><p><code>Integer.parseInt(&quot;1&quot;);</code> to <code>int</code></p>
+</li>
+<li><p><code>Integer.valueOf(&quot;1&quot;);</code> to <code>Integer</code></p>
+</li>
+</ul>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><ul>
+<li>overload: same name, different parameter numbers or types</li>
+<li>override<ul>
+<li>in subclasses</li>
+<li>same name, same parameters (sequence, number, type)</li>
+<li>modifier &gt;&#x3D; that of superclass</li>
+<li>return<ul>
+<li>if return void or primitive: return type should be same as that of superclass</li>
+<li>if return non-primitive: return type can be the same of that of the overridden method or its subclass</li>
+</ul>
+</li>
+<li>cannot override constructor, final, and static methods (can declare static methods again)</li>
+<li>if subclass and its superclass are in the same package, can override non-private methods except those mentioned above</li>
+<li>if subclass and its superclass are not in the same package, can override public or protected methods except those mentioned above</li>
+<li>overriding method can throw any unchecked exception</li>
+<li>overriding method cannot throw a checked exception that is new or more general than that in the overridden method</li>
+</ul>
+</li>
+<li>variable arguments: <code>int... args</code></li>
+</ul>
+<h3 id="String-1"><a href="#String-1" class="headerlink" title="String"></a>String</h3><ul>
+<li>immutable</li>
+<li>&#x3D;&#x3D; address; equals() content</li>
+<li>“s” is constant is in the constant pool. <code>String s = new String(&quot;s&quot;)</code> will check the constant pool first. If exist, use directly.</li>
+<li><code>new String(&quot;s&quot;)</code> creates “s” in the constant pool first and then create an object on heap.</li>
+<li>char array or byte array<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">char[] chars = &#123;&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;,&#x27;e&#x27;&#125;;</span><br><span class="line">String s1 = new String(chars);</span><br><span class="line">String s2 = new String(chars, 1, 2); // bc</span><br><span class="line"></span><br><span class="line">byte[] b = &#123;54, 69, 70, 71, 72&#125;; // ASCII</span><br><span class="line">String s3 = new String(b);</span><br><span class="line">String s4 = new String(b, 1, 2);</span><br><span class="line">String s5 = new String(b, &quot;utf-8&quot;);</span><br><span class="line">String s6 = new String(b, 1, 2, &quot;utf-8&quot;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="Frequently-Used-Methods"><a href="#Frequently-Used-Methods" class="headerlink" title="Frequently Used Methods"></a>Frequently Used Methods</h4><p><img src="/../image/java-core-test/7.png" alt="Primitive"></p>
+<ul>
+<li><code>.getBytes()</code> or <code>.getBytes(&quot;utf-8&quot;)</code></li>
+<li>firstName.concat(lastName)</li>
+</ul>
+<h4 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h4><ul>
+<li>mutable, thread-unsafe<h5 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h5></li>
+<li>StringBuilder append(“s”)</li>
+<li>StringBuilder insert(position, “s”)</li>
+<li>String toString()</li>
+<li>int length()</li>
+</ul>
+<h4 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h4><ul>
+<li>mutable, thread-safe</li>
+</ul>
+<h3 id="Object-Class"><a href="#Object-Class" class="headerlink" title="Object Class"></a>Object Class</h3><ul>
+<li>superclass of any class</li>
+<li>equals: addresse1 &#x3D;&#x3D; addresse2</li>
+<li>toString: <code>getClass().getName() + &#39;@&#39; + Integer.toHexString(hashCode())</code>; when using sout, used by default</li>
+<li>hashCode: This is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not required by the Java™ programming language.</li>
+<li>getClass: Returns the runtime class of this object</li>
+</ul>
+<h3 id="Polymorphism"><a href="#Polymorphism" class="headerlink" title="Polymorphism"></a>Polymorphism</h3><ul>
+<li>decide which class’ method to use based on the type of instance that calls a method</li>
+<li>need to have<ul>
+<li>inheritance</li>
+<li>superclass reference refers to subclass instance</li>
+</ul>
+</li>
+<li>upcast: <code>Animal animal = new Cat();</code>. cannot call a method that is not declared in superclass</li>
+<li>downcast: <code>Cat cat = (Cat)(new Animal());</code>. can use a method not declared in superclass but declared in subclass. Note the operation priority: <code>((Chinese)person).kungfu();</code>.</li>
+<li><code>instanceof</code>: <code>cat instanceof Animal; //true</code>. can only be converted into its original type.</li>
+</ul>
+<h3 id="Inheritance"><a href="#Inheritance" class="headerlink" title="Inheritance"></a>Inheritance</h3><ul>
+<li>is-a</li>
+<li>only one superclass</li>
+<li>super</li>
+<li>constructor<ul>
+<li>When construct a subclass, must use the constructor of its superclass. Default is the superclass constructor without parameters. Error if it does not exist.</li>
+<li>Use <code>super</code> to call a superclass constructor. Must be put in the first line of the constructor.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Interface-vs-Abstract"><a href="#Interface-vs-Abstract" class="headerlink" title="Interface vs Abstract"></a>Interface vs Abstract</h3><h4 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h4><p>···<br>[default or public] interface InterfaceName [extends SuperInterfaceName1, SuperInterfaceName2, …] {<br>    [public static final] TypeName CONSTANT &#x3D; ;<br>    [public abstract] TypeName abstractMethod([args]); &#x2F;&#x2F; no body<br>    [public] default TypeName defaultMethod([args]){}; &#x2F;&#x2F; the overriding method does not need to have <code>default</code>; In the overriding method, can use InterfaceName.super.methodName() to call the original method<br>    [public] static TypeName staticMethod() {}; &#x2F;&#x2F; cannot be inherited or overridden, but the implementation class can declare again<br>}<br>···</p>
+<ul>
+<li>A class can implement multiple interfaces separated by commas. If so, can inherit only abstract methods</li>
+<li>If the implementation class implements multiple interfaces which have the same method, the implementation class should override the method</li>
+<li>If the implementation class extends a superclass and implements multiple interfaces and the superclass and interfaces have the same method and the same member variable, and if the implementation class does not override the method, by default the method in the superclass will be used when needed, but cannot tell which member variable to use</li>
+</ul>
+<h3 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h3><p><img src="/../image/java-core-test/4.png" alt="Exception and Error"></p>
+<ul>
+<li><p>checked exception: must use “try-catch” or “throws”</p>
+</li>
+<li><p>try</p>
+</li>
+<li><p>catch: optional; catch by type; if caught, will not enter other catch blocks, so put catch blocks for smaller-scope exceptions first and put <code>catch(Exception)</code> at last; <code>System.exit(1);</code> will end the program</p>
+</li>
+<li><p>finally: optional; will run no matter whether there is an exception; if there is no catch block, must have finally block; used to release resource<br><img src="/../image/java-core-test/5.png" alt="finally"><br><img src="/../image/java-core-test/6.png" alt="finally"></p>
+</li>
+<li><p>throws: declare some potential exceptions, the method that calls this method will deal with the exception</p>
+</li>
+<li><p>throw: throw an instance, Throwable or its subclass</p>
+</li>
+<li><p>the scope of variable declared in try, catch, finally blocks is the block</p>
+</li>
+<li><p>inherit Throwable or its subclass</p>
+</li>
+<li><p>exception chain</p>
+<ul>
+<li>Throwable(String message, Throwable cause)</li>
+<li>Throwable(Throwable cause)</li>
+<li>initCause(Throwable cause): initialize the cause of this throwable to the specified value.</li>
+</ul>
+</li>
+<li><p>method</p>
+</li>
+</ul>
+<ul>
+<li>toString()</li>
+<li>getMessage()</li>
+<li>printStackTrace()</li>
+</ul>
+<ul>
+<li>common exception types<ul>
+<li>Exception</li>
+<li>ArithmeticException</li>
+<li>ArrayIndexOutOfBoundsException</li>
+<li>ArrayStoreException</li>
+<li>NullPointerException</li>
+<li>ClassNotFoundException</li>
+<li>IllegalArgumentException</li>
+<li>InputMismatchException</li>
+<li>ClassCastException</li>
+<li>NumberFormatException</li>
+<li>FileNotFoundException</li>
+</ul>
+</li>
+</ul>
+<h3 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h3><h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><h3 id="Generic-Type"><a href="#Generic-Type" class="headerlink" title="Generic Type"></a>Generic Type</h3><h3 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h3><ul>
+<li>see the post “Collection”</li>
+</ul>
+<h3 id="Multithread"><a href="#Multithread" class="headerlink" title="Multithread"></a>Multithread</h3><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/07/MySQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +560,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-08 10:44:23" itemprop="dateModified" datetime="2022-04-08T10:44:23-04:00">2022-04-08</time>
+                <time title="Modified: 2022-04-11 19:48:06" itemprop="dateModified" datetime="2022-04-11T19:48:06-04:00">2022-04-11</time>
               </span>
 
           
@@ -207,6 +591,97 @@
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">INSERT INTO 表名 [(字段名 [,字段名] ...)] VALUES (值的列表);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO 表名 （字段名）</span><br><span class="line">SELECT 字段名或值</span><br><span class="line">FROM 表名</span><br><span class="line">WHERE 条件;</span><br><span class="line"></span><br><span class="line">INSERT INTO demo.goodsmaster</span><br><span class="line">(</span><br><span class="line">  itemnumber,</span><br><span class="line">  barcode,</span><br><span class="line">  goodsname,</span><br><span class="line">  specification,</span><br><span class="line">  unit,</span><br><span class="line">  price</span><br><span class="line">)</span><br><span class="line">VALUES</span><br><span class="line">(</span><br><span class="line">  4,</span><br><span class="line">  &#x27;0003&#x27;,</span><br><span class="line">  &#x27;尺子&#x27;,</span><br><span class="line">  &#x27;三角型&#x27;,</span><br><span class="line">  &#x27;把&#x27;,</span><br><span class="line">  5</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>can skip inserting some columns if null allowed or have default values</li>
+<li>ON DUPLICATE: 假设我们要把门店 B 的商品数据，插入到门店 A 的商品表中去，如果有重复的商品编号，就用门店 B 的条码，替换门店 A 的条码，用门店 B 的商品名称，替换门店 A 的商品名称；如果没有重复的编号，就直接把门店 B 的商品数据插入到门店 A 的商品表中。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 书        | 16开          | 本   |      89.00 |</span><br><span class="line">|          2 | 0002    | 笔        | 10支装        | 包   |       5.00 |</span><br><span class="line">|          3 | 0003    | 橡皮      | NULL          | 个   |       3.00 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster1;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 教科书    | NULL          | NULL |      89.00 |</span><br><span class="line">|          4 | 0004    | 馒头      |               |      |       1.50 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO demo.goodsmaster</span><br><span class="line">SELECT *</span><br><span class="line">FROM demo.goodsmaster1 as a</span><br><span class="line">ON DUPLICATE KEY UPDATE barcode = a.barcode,goodsname=a.goodsname;</span><br><span class="line">-- 运行结果如下</span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 教科书    | 16开          | 本   |      89.00 |</span><br><span class="line">|          2 | 0002    | 笔        | 10支装        | 包   |       5.00 |</span><br><span class="line">|          3 | 0003    | 橡皮      | NULL          | 个   |       3.00 |</span><br><span class="line">|          4 | 0004    | 馒头      |               |      |       1.50 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">DELETE FROM 表名</span><br><span class="line">WHERE 条件</span><br><span class="line"></span><br><span class="line">// 删除全部数据</span><br><span class="line">DELETE FROM demo.goodsmaster;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">UPDATE 表名</span><br><span class="line">SET 字段名=值</span><br><span class="line">WHERE 条件</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Don’t update primary key</li>
+</ul>
+<h3 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">SELECT *|字段列表</span><br><span class="line">FROM 数据源</span><br><span class="line">WHERE 条件</span><br><span class="line">GROUP BY 字段</span><br><span class="line">HAVING 条件</span><br><span class="line">ORDER BY 字段</span><br><span class="line">LIMIT 起始点，行数</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    [ALL | DISTINCT | DISTINCTROW ]</span><br><span class="line">    [HIGH_PRIORITY]</span><br><span class="line">    [STRAIGHT_JOIN]</span><br><span class="line">    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]</span><br><span class="line">    [SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]</span><br><span class="line">    select_expr [, select_expr] ...</span><br><span class="line">    [into_option]</span><br><span class="line">    [FROM table_references</span><br><span class="line">      [PARTITION partition_list]]</span><br><span class="line">    [WHERE where_condition]</span><br><span class="line">    [GROUP BY &#123;col_name | expr | position&#125;, ... [WITH ROLLUP]]</span><br><span class="line">    [HAVING where_condition]</span><br><span class="line">    [WINDOW window_name AS (window_spec)</span><br><span class="line">        [, window_name AS (window_spec)] ...]</span><br><span class="line">    [ORDER BY &#123;col_name | expr | position&#125;</span><br><span class="line">      [ASC | DESC], ... [WITH ROLLUP]]</span><br><span class="line">    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]</span><br><span class="line">    [into_option]</span><br><span class="line">    [FOR &#123;UPDATE | SHARE&#125;</span><br><span class="line">        [OF tbl_name [, tbl_name] ...]</span><br><span class="line">        [NOWAIT | SKIP LOCKED]</span><br><span class="line">      | LOCK IN SHARE MODE]</span><br><span class="line">    [into_option]</span><br><span class="line"></span><br><span class="line">into_option: &#123;</span><br><span class="line">    INTO OUTFILE &#x27;file_name&#x27;</span><br><span class="line">        [CHARACTER SET charset_name]</span><br><span class="line">        export_options</span><br><span class="line">  | INTO DUMPFILE &#x27;file_name&#x27;</span><br><span class="line">  | INTO var_name [, var_name] ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Use of an unqualified * with other items in the select list may produce a parse error. To avoid this problem, use a qualified tbl_name.* reference:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT AVG(score), t1.* FROM t1 ...</span><br></pre></td></tr></table></figure></li>
+<li><p>You need not specify a tbl_name or db_name.tbl_name prefix for a column reference unless the reference would be ambiguous.</p>
+</li>
+<li><p>The INTO clause, if present, can appear in any position indicated by the syntax description, but within a given statement can appear only once, not in multiple positions.</p>
+</li>
+<li><p>column alias:</p>
+</li>
+</ul>
+<ul>
+<li>it is good practice to be in the habit of using AS explicitly when specifying column aliases.</li>
+<li>can be used in GROUP BY, ORDER BY, or HAVING clauses</li>
+<li>If the column alias contains spaces, you need to place it inside quotes</li>
+<li>It is not permissible to refer to a column alias in a WHERE clause, because the column value might not yet be determined when the WHERE clause is executed.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT CONCAT(&#x27;Jane&#x27;,&#x27; &#x27;,&#x27;Doe&#x27;) AS &#x27;Full name&#x27;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li>from: table, derived table<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tbl_name [[AS] alias] [index_hint]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li>devrived table must have an alias</li>
+<li>If you name more than one table, you are performing a join.</li>
+<li>The use of index hints provides the optimizer with information about how to choose indexes during query processing. For a description of the syntax for specifying these hints, see Section 8.9.4, “Index Hints”.You can use SET max_seeks_for_key&#x3D;value as an alternative way to force MySQL to prefer key scans instead of table scans. See Section 5.1.8, “Server System Variables”.</li>
+</ul>
+<ul>
+<li><p>GROUP BY</p>
+<ul>
+<li>permits a WITH ROLLUP modifier. See Section 12.20.2, “GROUP BY Modifiers”.</li>
+</ul>
+</li>
+<li><p>order by</p>
+<ul>
+<li>asc, desc</li>
+<li>If ORDER BY occurs within a parenthesized query expression and also is applied in the outer query, the results are undefined and may change in a future version of MySQL.</li>
+<li>When you use ORDER BY or GROUP BY to sort a column in a SELECT, the server sorts values using only the initial number of bytes indicated by the max_sort_length system variable.</li>
+</ul>
+</li>
+<li><p>limit:</p>
+</li>
+</ul>
+<ul>
+<li>start index is 0</li>
+<li><code>limit 1, 2</code>: 1 means starting from index 1 (included); 2 means 2 records</li>
+<li>With one argument, the value specifies the number of rows to return from the beginning of the result set</li>
+<li>For prepared statements, you can use placeholders. <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET @skip=1; SET @numrows=5;</span><br><span class="line">PREPARE STMT FROM &#x27;SELECT * FROM tbl LIMIT ?, ?&#x27;;</span><br><span class="line">EXECUTE STMT USING @skip, @numrows;</span><br></pre></td></tr></table></figure></li>
+<li>If LIMIT occurs within a parenthesized query expression and also is applied in the outer query, the results are undefined and may change in a future version of MySQL</li>
+</ul>
+<ul>
+<li><p>HAVING</p>
+<ul>
+<li>The query result includes only groups satisfying the HAVING conditions. (If no GROUP BY is present, all rows implicitly form a single aggregate group.).</li>
+<li>The WHERE clause specifies conditions on columns in the select list, but cannot refer to aggregate functions.</li>
+<li>LIMIT is applied after HAVING</li>
+<li>SQL standard: HAVING must reference only columns in the GROUP BY clause or columns used in aggregate functions. Extension: permits HAVING to refer to columns in the SELECT list and columns in outer subqueries. If a HAVING column name is used both in GROUP BY and as an aliased column in the select column list, preference is given to the column in the GROUP BY column</li>
+<li></li>
+</ul>
+</li>
+<li><p>For update: …</p>
+</li>
+<li><p>DISTINCT</p>
+</li>
+<li><p>STRAIGHT_JOIN forces the optimizer to join the tables in the order in which they are listed in the FROM clause.</p>
+</li>
+<li><p>STRAIGHT_JOIN does not apply to any table that the optimizer treats as a const or system table.</p>
+</li>
+<li><p>SQL_BIG_RESULT or SQL_SMALL_RESULT can be used with GROUP BY or DISTINCT to tell the optimizer that the result set has many rows or is small, respectively. For SQL_BIG_RESULT, MySQL directly uses disk-based temporary tables if they are created, and prefers sorting to using a temporary table with a key on the GROUP BY elements. For SQL_SMALL_RESULT, MySQL uses in-memory temporary tables to store the resulting table instead of using sorting. This should not normally be needed.</p>
+</li>
+<li><p>SQL_BUFFER_RESULT forces the result to be put into a temporary table. This helps MySQL free the table locks early and helps in cases where it takes a long time to send the result set to the client. This modifier can be used only for top-level SELECT statements, not for subqueries or following UNION.</p>
+</li>
+<li><p>Named Windows: <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/window-functions-named-windows.html">https://dev.mysql.com/doc/refman/8.0/en/window-functions-named-windows.html</a></p>
+</li>
+<li><p>Partition: <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/partitioning-selection.html">https://dev.mysql.com/doc/refman/8.0/en/partitioning-selection.html</a></p>
 </li>
 </ul>
 <h2 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h2><h3 id="Redo-Log-in-InnoDB"><a href="#Redo-Log-in-InnoDB" class="headerlink" title="Redo Log in InnoDB"></a>Redo Log in InnoDB</h3><ul>
@@ -310,7 +785,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-10 11:10:55" itemprop="dateModified" datetime="2022-04-10T11:10:55-04:00">2022-04-10</time>
+                <time title="Modified: 2022-04-13 16:00:27" itemprop="dateModified" datetime="2022-04-13T16:00:27-04:00">2022-04-13</time>
               </span>
 
           
@@ -450,7 +925,44 @@
 </ul>
 <p>“控制”指的是对程序执行流程的控制，而“反转”指的是在没有使用框架之前，程序员自己控制整个程序的执行。在使用框架之后，整个程序的执行流程通过框架来控制。流程的控制权从程序员“反转”给了框架。</p>
 <p>依赖注入和控制反转恰恰相反，它是一种具体的编码技巧。我们不通过 new 的方式在类内部创建依赖类的对象，而是将依赖的类对象在外部创建好之后，通过构造函数、函数参数等方式传递（或注入）给类来使用。</p>
-<h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
+<h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h3 id="Singleton"><a href="#Singleton" class="headerlink" title="Singleton"></a>Singleton</h3><ul>
+<li>create and provide only one instance by itself</li>
+<li>implementation<ul>
+<li>private constructor</li>
+<li>private static object</li>
+<li>public static method to create and get</li>
+</ul>
+</li>
+<li>type<ul>
+<li>hungry: Instantiate when loading the class; thread-safe  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    //饿汉式：创建对象实例的时候直接初始化  空间换时间</span><br><span class="line">public class SingletonOne &#123;</span><br><span class="line">	//1、创建类中私有构造</span><br><span class="line">	private SingletonOne()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//2、创建该类型的私有静态实例</span><br><span class="line">	private static SingletonOne instance=new SingletonOne();</span><br><span class="line"></span><br><span class="line">	//3、创建公有静态方法返回静态实例对象</span><br><span class="line">	public static SingletonOne getInstance()&#123;</span><br><span class="line">		return instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>lazy: instantiate when using; not thread-safe  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    //懒汉式：类内实例对象创建时并不直接初始化，直到第一次调用get方法时，才完成初始化操作</span><br><span class="line">//时间换空间</span><br><span class="line">public class SingletonTwo &#123;</span><br><span class="line">	//1、创建私有构造方法</span><br><span class="line">	private SingletonTwo()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//2、创建静态的该类实例对象</span><br><span class="line">	private static SingletonTwo instance=null;</span><br><span class="line"></span><br><span class="line">	//3、创建开放的静态方法提供实例对象</span><br><span class="line">	public static SingletonTwo getInstance()&#123;</span><br><span class="line">		if(instance==null)</span><br><span class="line">			instance=new SingletonTwo();</span><br><span class="line"></span><br><span class="line">		return instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同步锁</li>
+<li>双重校验锁</li>
+<li>静态内部类</li>
+<li>枚举</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pro<ul>
+<li>save memory</li>
+<li>avoid frequent creating</li>
+</ul>
+</li>
+<li>con<ul>
+<li>hard to extend</li>
+<li>if not used for a long time, lost due to GC</li>
+</ul>
+</li>
+<li>when to use<ul>
+<li>save memory</li>
+<li>universal handling</li>
+<li>multiple instances will cause problems, e.g. order number generator</li>
+</ul>
+</li>
+</ul>
+<h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
 <li>reference: 《重构》《代码大全》《代码简洁之道》</li>
 </ul>
 <h2 id="Refactoring"><a href="#Refactoring" class="headerlink" title="Refactoring"></a>Refactoring</h2><ul>
@@ -1085,110 +1597,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/collection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/collection/" class="post-title-link" itemprop="url">Collection</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-25 14:17:11 / Modified: 18:50:04" itemprop="dateCreated datePublished" datetime="2022-03-25T14:17:11-04:00">2022-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-fundamental/" itemprop="url" rel="index"><span itemprop="name">Java fundamental</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/../image/collection/collection_framework.png" alt="Collection Framework"></p>
-<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ul>
-<li>ArrayList: Object[]</li>
-<li>Vector: Object[], thread-safe</li>
-<li>LinkedList: doubly-linked</li>
-</ul>
-<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><ul>
-<li>HashSet: based on HashMap</li>
-<li>LinkedHashSet: extends HashSet, use LinkedHashMap</li>
-<li>TreeSet: RedBlackTree</li>
-</ul>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
-<li>HashMap: if array length &lt; 64, array + linked list, resizes the array, otherwise converts the linked list to RedBlackTree</li>
-<li>LinkedHashMap: extends HashMap, adds a doubly-linked list to save the order of keys</li>
-<li>HashTable: array + linked list; thread-safe</li>
-<li>TreeMap: RedBlackTree</li>
-</ul>
-<h1 id="Thread-safe"><a href="#Thread-safe" class="headerlink" title="Thread-safe"></a>Thread-safe</h1><ul>
-<li>CopyOnWriteArrayList</li>
-<li>ConcurrentLinkedQueue</li>
-<li>BlockingQueue</li>
-<li>ConcurrentHashMap</li>
-<li>ConcurrentSkipListMap</li>
-</ul>
-<h2 id="Why-not-array"><a href="#Why-not-array" class="headerlink" title="Why not array?"></a>Why not array?</h2><ul>
-<li>fixed length</li>
-</ul>
-<h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>Safe: when an element is modified, throws concurrentModificationException</p>
-<h2 id="ArrayList-vs-LinkedList"><a href="#ArrayList-vs-LinkedList" class="headerlink" title="ArrayList vs LinkedList"></a>ArrayList vs LinkedList</h2><ul>
-<li>base structure</li>
-<li>time complexity</li>
-<li>random access: Arrays.binarySearch(arr, val)</li>
-<li>memory: empty array cells vs pointers</li>
-</ul>
-<h2 id="ArrayList-resize"><a href="#ArrayList-resize" class="headerlink" title="ArrayList resize"></a>ArrayList resize</h2><p>… To be continued</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1253,7 +1666,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

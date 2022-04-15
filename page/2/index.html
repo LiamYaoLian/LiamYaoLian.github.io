@@ -22,26 +22,26 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Liam Lian&#39;s Blog">
-<meta property="og:url" content="https://liamyaolian.github.io/archives/2022/04/index.html">
+<meta property="og:url" content="https://liamyaolian.github.io/page/2/index.html">
 <meta property="og:site_name" content="Liam Lian&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://liamyaolian.github.io/archives/2022/04/">
+<link rel="canonical" href="https://liamyaolian.github.io/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | Liam Lian's Blog</title>
+  <title>Liam Lian's Blog</title>
   
 
 
@@ -139,91 +139,115 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/collection/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 11 posts in total. Keep on posting.</span>
-      </div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/collection/" class="post-title-link" itemprop="url">Collection</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-25 14:17:11 / Modified: 18:50:04" itemprop="dateCreated datePublished" datetime="2022-03-25T14:17:11-04:00">2022-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-fundamental/" itemprop="url" rel="index"><span itemprop="name">Java fundamental</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+          <p><img src="/../image/collection/collection_framework.png" alt="Collection Framework"></p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ul>
+<li>ArrayList: Object[]</li>
+<li>Vector: Object[], thread-safe</li>
+<li>LinkedList: doubly-linked</li>
+</ul>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><ul>
+<li>HashSet: based on HashMap</li>
+<li>LinkedHashSet: extends HashSet, use LinkedHashMap</li>
+<li>TreeSet: RedBlackTree</li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
+<li>HashMap: if array length &lt; 64, array + linked list, resizes the array, otherwise converts the linked list to RedBlackTree</li>
+<li>LinkedHashMap: extends HashMap, adds a doubly-linked list to save the order of keys</li>
+<li>HashTable: array + linked list; thread-safe</li>
+<li>TreeMap: RedBlackTree</li>
+</ul>
+<h1 id="Thread-safe"><a href="#Thread-safe" class="headerlink" title="Thread-safe"></a>Thread-safe</h1><ul>
+<li>CopyOnWriteArrayList</li>
+<li>ConcurrentLinkedQueue</li>
+<li>BlockingQueue</li>
+<li>ConcurrentHashMap</li>
+<li>ConcurrentSkipListMap</li>
+</ul>
+<h2 id="Why-not-array"><a href="#Why-not-array" class="headerlink" title="Why not array?"></a>Why not array?</h2><ul>
+<li>fixed length</li>
+</ul>
+<h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>Safe: when an element is modified, throws concurrentModificationException</p>
+<h2 id="ArrayList-vs-LinkedList"><a href="#ArrayList-vs-LinkedList" class="headerlink" title="ArrayList vs LinkedList"></a>ArrayList vs LinkedList</h2><ul>
+<li>base structure</li>
+<li>time complexity</li>
+<li>random access: Arrays.binarySearch(arr, val)</li>
+<li>memory: empty array cells vs pointers</li>
+</ul>
+<h2 id="ArrayList-resize"><a href="#ArrayList-resize" class="headerlink" title="ArrayList resize"></a>ArrayList resize</h2><p>… To be continued</p>
+
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-12T17:43:13-04:00"
-              content="2022-04-12">
-          04-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/12/Java-Core-Test/" itemprop="url">
-            <span itemprop="name">Java Core Test</span>
-          </a>
-      </div>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-07T20:25:28-04:00"
-              content="2022-04-07">
-          04-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/07/MySQL/" itemprop="url">
-            <span itemprop="name">MySQL</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-07T17:51:29-04:00"
-              content="2022-04-07">
-          04-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/07/Design-Pattern/" itemprop="url">
-            <span itemprop="name">Design Pattern</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
-    </div>
-  </div>
   
   
   
 
+
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 

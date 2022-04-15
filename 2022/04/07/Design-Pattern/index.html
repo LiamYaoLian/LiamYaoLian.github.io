@@ -28,7 +28,7 @@
 <meta property="og:description" content="Code Quality maintainability: quickly update without bugs well layered modularity high cohesion loose coupling well-documented interface-oriented programming   readability extensibility simplicity reu">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-04-07T21:51:29.000Z">
-<meta property="article:modified_time" content="2022-04-10T15:10:55.624Z">
+<meta property="article:modified_time" content="2022-04-13T20:00:27.220Z">
 <meta property="article:author" content="Liam Lian">
 <meta property="article:tag" content="Design Pattern">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-10 11:10:55" itemprop="dateModified" datetime="2022-04-10T11:10:55-04:00">2022-04-10</time>
+                <time title="Modified: 2022-04-13 16:00:27" itemprop="dateModified" datetime="2022-04-13T16:00:27-04:00">2022-04-13</time>
               </span>
 
           
@@ -321,7 +321,44 @@
 </ul>
 <p>“控制”指的是对程序执行流程的控制，而“反转”指的是在没有使用框架之前，程序员自己控制整个程序的执行。在使用框架之后，整个程序的执行流程通过框架来控制。流程的控制权从程序员“反转”给了框架。</p>
 <p>依赖注入和控制反转恰恰相反，它是一种具体的编码技巧。我们不通过 new 的方式在类内部创建依赖类的对象，而是将依赖的类对象在外部创建好之后，通过构造函数、函数参数等方式传递（或注入）给类来使用。</p>
-<h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
+<h2 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h2><h3 id="Singleton"><a href="#Singleton" class="headerlink" title="Singleton"></a>Singleton</h3><ul>
+<li>create and provide only one instance by itself</li>
+<li>implementation<ul>
+<li>private constructor</li>
+<li>private static object</li>
+<li>public static method to create and get</li>
+</ul>
+</li>
+<li>type<ul>
+<li>hungry: Instantiate when loading the class; thread-safe  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    //饿汉式：创建对象实例的时候直接初始化  空间换时间</span><br><span class="line">public class SingletonOne &#123;</span><br><span class="line">	//1、创建类中私有构造</span><br><span class="line">	private SingletonOne()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//2、创建该类型的私有静态实例</span><br><span class="line">	private static SingletonOne instance=new SingletonOne();</span><br><span class="line"></span><br><span class="line">	//3、创建公有静态方法返回静态实例对象</span><br><span class="line">	public static SingletonOne getInstance()&#123;</span><br><span class="line">		return instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>lazy: instantiate when using; not thread-safe  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    //懒汉式：类内实例对象创建时并不直接初始化，直到第一次调用get方法时，才完成初始化操作</span><br><span class="line">//时间换空间</span><br><span class="line">public class SingletonTwo &#123;</span><br><span class="line">	//1、创建私有构造方法</span><br><span class="line">	private SingletonTwo()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//2、创建静态的该类实例对象</span><br><span class="line">	private static SingletonTwo instance=null;</span><br><span class="line"></span><br><span class="line">	//3、创建开放的静态方法提供实例对象</span><br><span class="line">	public static SingletonTwo getInstance()&#123;</span><br><span class="line">		if(instance==null)</span><br><span class="line">			instance=new SingletonTwo();</span><br><span class="line"></span><br><span class="line">		return instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同步锁</li>
+<li>双重校验锁</li>
+<li>静态内部类</li>
+<li>枚举</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>pro<ul>
+<li>save memory</li>
+<li>avoid frequent creating</li>
+</ul>
+</li>
+<li>con<ul>
+<li>hard to extend</li>
+<li>if not used for a long time, lost due to GC</li>
+</ul>
+</li>
+<li>when to use<ul>
+<li>save memory</li>
+<li>universal handling</li>
+<li>multiple instances will cause problems, e.g. order number generator</li>
+</ul>
+</li>
+</ul>
+<h2 id="Coding-Standards"><a href="#Coding-Standards" class="headerlink" title="Coding Standards"></a>Coding Standards</h2><ul>
 <li>reference: 《重构》《代码大全》《代码简洁之道》</li>
 </ul>
 <h2 id="Refactoring"><a href="#Refactoring" class="headerlink" title="Refactoring"></a>Refactoring</h2><ul>
@@ -411,7 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Quality"><span class="nav-number">1.</span> <span class="nav-text">Code Quality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paradigm"><span class="nav-number">2.</span> <span class="nav-text">Paradigm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OOP"><span class="nav-number">2.1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Four-features"><span class="nav-number">2.1.1.</span> <span class="nav-text">Four features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compared-to-Process-oriented-Programming"><span class="nav-number">2.1.2.</span> <span class="nav-text">Compared to Process-oriented Programming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fake-OOP"><span class="nav-number">2.1.3.</span> <span class="nav-text">Fake OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Constants"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">POP example: Constants</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Utils"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">POP example: Utils</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-VO-x2F-BO-x2F-Entity-and-Controller-x2F-Service-x2F-Repository"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">POP example: VO&#x2F;BO&#x2F;Entity and Controller&#x2F;Service&#x2F;Repository</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Interface-vs-Abstract-Class"><span class="nav-number">2.1.4.</span> <span class="nav-text">Interface vs Abstract Class</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Abstract-Class"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">Abstract Class</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#interface"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">interface</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Program-to-interface"><span class="nav-number">2.1.5.</span> <span class="nav-text">Program to interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SOLID-principles"><span class="nav-number">2.1.6.</span> <span class="nav-text">SOLID principles</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern"><span class="nav-number">3.</span> <span class="nav-text">Design Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coding-Standards"><span class="nav-number">4.</span> <span class="nav-text">Coding Standards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refactoring"><span class="nav-number">5.</span> <span class="nav-text">Refactoring</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Quality"><span class="nav-number">1.</span> <span class="nav-text">Code Quality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paradigm"><span class="nav-number">2.</span> <span class="nav-text">Paradigm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OOP"><span class="nav-number">2.1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Four-features"><span class="nav-number">2.1.1.</span> <span class="nav-text">Four features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compared-to-Process-oriented-Programming"><span class="nav-number">2.1.2.</span> <span class="nav-text">Compared to Process-oriented Programming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fake-OOP"><span class="nav-number">2.1.3.</span> <span class="nav-text">Fake OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Constants"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">POP example: Constants</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-Utils"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">POP example: Utils</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#POP-example-VO-x2F-BO-x2F-Entity-and-Controller-x2F-Service-x2F-Repository"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">POP example: VO&#x2F;BO&#x2F;Entity and Controller&#x2F;Service&#x2F;Repository</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Interface-vs-Abstract-Class"><span class="nav-number">2.1.4.</span> <span class="nav-text">Interface vs Abstract Class</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Abstract-Class"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">Abstract Class</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#interface"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">interface</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Program-to-interface"><span class="nav-number">2.1.5.</span> <span class="nav-text">Program to interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SOLID-principles"><span class="nav-number">2.1.6.</span> <span class="nav-text">SOLID principles</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern"><span class="nav-number">3.</span> <span class="nav-text">Design Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Singleton"><span class="nav-number">3.1.</span> <span class="nav-text">Singleton</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coding-Standards"><span class="nav-number">4.</span> <span class="nav-text">Coding Standards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refactoring"><span class="nav-number">5.</span> <span class="nav-text">Refactoring</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -425,7 +462,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
