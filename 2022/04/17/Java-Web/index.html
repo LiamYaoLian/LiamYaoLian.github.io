@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="XML Extensible Markup Language, has tags, to save and transfer data or configmarkup lower case, “-“ no duplicate names in different layers &amp;lt, &amp;gt, &amp;amp, &amp;apos, &amp;quotcdata element">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/04/17/Java-Web/index.html">
+<meta property="og:site_name" content="Liam Lian&#39;s Blog">
+<meta property="og:description" content="XML Extensible Markup Language, has tags, to save and transfer data or configmarkup lower case, “-“ no duplicate names in different layers &amp;lt, &amp;gt, &amp;amp, &amp;apos, &amp;quotcdata element">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liamyaolian.github.io/image/java-web/1.png">
+<meta property="og:image" content="https://liamyaolian.github.io/image/java-web/2.png">
+<meta property="og:image" content="https://liamyaolian.github.io/image/java-web/3.png">
+<meta property="article:published_time" content="2022-04-17T23:23:29.000Z">
+<meta property="article:modified_time" content="2022-04-19T20:42:38.208Z">
+<meta property="article:author" content="Liam Lian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liamyaolian.github.io/image/java-web/1.png">
+
+<link rel="canonical" href="https://liamyaolian.github.io/2022/04/17/Java-Web/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java Web | Liam Lian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liam Lian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/17/Java-Web/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-17 19:23:29" itemprop="dateCreated datePublished" datetime="2022-04-17T19:23:29-04:00">2022-04-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-19 16:42:38" itemprop="dateModified" datetime="2022-04-19T16:42:38-04:00">2022-04-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h2><ul>
+<li>Extensible Markup Language, has tags, to save and transfer data or config<h3 id="markup"><a href="#markup" class="headerlink" title="markup"></a>markup</h3></li>
+<li>lower case, “-“</li>
+<li>no duplicate names in different layers</li>
+<li>&amp;lt, &amp;gt, &amp;amp, &amp;apos, &amp;quot<h3 id="cdata"><a href="#cdata" class="headerlink" title="cdata"></a>cdata</h3></li>
+<li>element content that parser to interpret as character data, not markup</li>
+<li><code>&lt;![CDATA[ content here ]]&gt;</code><h3 id="Semantic-constraint"><a href="#Semantic-constraint" class="headerlink" title="Semantic constraint"></a>Semantic constraint</h3><h4 id="dtd"><a href="#dtd" class="headerlink" title="dtd"></a>dtd</h4></li>
+<li><!ELEMENT>: to define what elements and how many are allowed<ul>
+<li><!ELEMENT hr (employee) >: one “employee” node under the “hr” node</li>
+<li><!ELEMENT hr (employee+) >: at least one “employee” node under the “hr” node</li>
+<li><!ELEMENT hr (employee*) >: can have 0 to n “employee” nodes under the “hr” node</li>
+<li><!ELEMENT hr (employee?) >: at most one “employee” node under the “hr” node</li>
+<li><!ELEMENT employee (name, age, salary, department)>: must have four nodes with this order</li>
+<li><!ELEMENT name (#PCDATA)>: #PCDATA is text</li>
+<li><!ATTLIST employee no CDATA "">: the type of the attribute “no” in “employee” is CDATA and the default value is “”</li>
+</ul>
+</li>
+<li><code>&lt;!DOCTYPE hr SYSTEM &quot;hr.dtd&quot;&gt;</code> in XML to import the dtd file<h4 id="XML-schema"><a href="#XML-schema" class="headerlink" title="XML schema"></a>XML schema</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;schema xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</span><br><span class="line">	&lt;element name=&quot;hr&quot;&gt;</span><br><span class="line">		&lt;!-- complexType标签含义是复杂节点，包含子节点时必须使用这个标签 --&gt;</span><br><span class="line">		&lt;complexType&gt;</span><br><span class="line">			&lt;sequence&gt;</span><br><span class="line">				&lt;element name=&quot;employee&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;9999&quot;&gt;</span><br><span class="line">					&lt;complexType&gt;</span><br><span class="line">						&lt;sequence&gt;</span><br><span class="line">							&lt;element name=&quot;name&quot; type=&quot;string&quot;&gt;&lt;/element&gt;</span><br><span class="line">							&lt;element name=&quot;age&quot;&gt;</span><br><span class="line">								&lt;simpleType&gt;</span><br><span class="line">									&lt;restriction base=&quot;integer&quot;&gt;</span><br><span class="line">										&lt;minInclusive value=&quot;18&quot;&gt;&lt;/minInclusive&gt;</span><br><span class="line">										&lt;maxInclusive value=&quot;60&quot;&gt;&lt;/maxInclusive&gt;</span><br><span class="line">									&lt;/restriction&gt;</span><br><span class="line">								&lt;/simpleType&gt;</span><br><span class="line">							&lt;/element&gt;</span><br><span class="line">							&lt;element name=&quot;salary&quot; type=&quot;integer&quot;&gt;&lt;/element&gt;</span><br><span class="line">							&lt;element name=&quot;department&quot;&gt;</span><br><span class="line">								&lt;complexType&gt;</span><br><span class="line">									&lt;sequence&gt;</span><br><span class="line">										&lt;element name=&quot;dname&quot; type=&quot;string&quot;&gt;&lt;/element&gt;</span><br><span class="line">										&lt;element name=&quot;address&quot; type=&quot;string&quot;&gt;&lt;/element&gt;</span><br><span class="line">									&lt;/sequence&gt;</span><br><span class="line">								&lt;/complexType&gt;</span><br><span class="line">							&lt;/element&gt;</span><br><span class="line">						&lt;/sequence&gt;</span><br><span class="line">						&lt;attribute name=&quot;no&quot; type=&quot;string&quot; use=&quot;required&quot;&gt;&lt;/attribute&gt;</span><br><span class="line">					&lt;/complexType&gt;</span><br><span class="line">				&lt;/element&gt;</span><br><span class="line">			&lt;/sequence&gt;</span><br><span class="line">		&lt;/complexType&gt;</span><br><span class="line">	&lt;/element&gt;</span><br><span class="line">&lt;/schema&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h3></li>
+<li>document object model</li>
+<li>Dom4j<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.dom4j.Attribute;</span><br><span class="line">import org.dom4j.Document;</span><br><span class="line">import org.dom4j.DocumentException;</span><br><span class="line">import org.dom4j.Element;</span><br><span class="line">import org.dom4j.io.SAXReader;</span><br><span class="line"></span><br><span class="line">public class HrReader &#123;</span><br><span class="line">	public void readXml()&#123;</span><br><span class="line">		String file = &quot;d:/workspace/xml/src/hr.xml&quot;;</span><br><span class="line"></span><br><span class="line">		SAXReader reader = new SAXReader();</span><br><span class="line">		try &#123;</span><br><span class="line">			Document document = reader.read(file);</span><br><span class="line">			Element root = document.getRootElement();</span><br><span class="line">			List&lt;Element&gt; employees =  root.elements(&quot;employee&quot;);</span><br><span class="line">			for (Element employee : employees)&#123;</span><br><span class="line">				Element name = employee.element(&quot;name&quot;);</span><br><span class="line">				String empName = name.getText();</span><br><span class="line">				System.out.println(empName);</span><br><span class="line">				System.out.println(employee.elementText(&quot;age&quot;));</span><br><span class="line">				System.out.println(employee.elementText(&quot;salary&quot;));</span><br><span class="line">				Element department = employee.element(&quot;department&quot;);</span><br><span class="line">				System.out.println(department.element(&quot;dname&quot;).getText());</span><br><span class="line">				System.out.println(department.element(&quot;address&quot;).getText());</span><br><span class="line">				Attribute att = employee.attribute(&quot;no&quot;);</span><br><span class="line">				System.out.println(att.getText());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (DocumentException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		HrReader reader = new HrReader();</span><br><span class="line">		reader.readXml();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.OutputStreamWriter;</span><br><span class="line">import java.io.Writer;</span><br><span class="line"></span><br><span class="line">import org.dom4j.Document;</span><br><span class="line">import org.dom4j.DocumentException;</span><br><span class="line">import org.dom4j.Element;</span><br><span class="line">import org.dom4j.io.SAXReader;</span><br><span class="line"></span><br><span class="line">public class HrWriter &#123;</span><br><span class="line">	public void writeXml()&#123;</span><br><span class="line">		String file = &quot;d:/workspace/xml/src/hr.xml&quot;;</span><br><span class="line">		SAXReader reader = new SAXReader();</span><br><span class="line">		try &#123;</span><br><span class="line">			Document document = reader.read(file);</span><br><span class="line">			Element root = document.getRootElement();</span><br><span class="line">			Element employee = root.addElement(&quot;employee&quot;);</span><br><span class="line">			employee.addAttribute(&quot;no&quot;, &quot;3311&quot;);</span><br><span class="line">			Element name = employee.addElement(&quot;name&quot;);</span><br><span class="line">			name.setText(&quot;Liam&quot;);</span><br><span class="line">			employee.addElement(&quot;age&quot;).setText(&quot;37&quot;);</span><br><span class="line">			employee.addElement(&quot;salary&quot;).setText(&quot;3600&quot;);</span><br><span class="line">			Element department = employee.addElement(&quot;department&quot;);</span><br><span class="line">			department.addElement(&quot;dname&quot;).setText(&quot;IT&quot;);</span><br><span class="line">			department.addElement(&quot;address&quot;).setText(&quot;N2J 3C5&quot;);</span><br><span class="line">			Writer writer = new OutputStreamWriter(new FileOutputStream(file) , &quot;UTF-8&quot;);</span><br><span class="line">			document.write(writer);</span><br><span class="line">			writer.close();</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		HrWriter hrWriter = new HrWriter();</span><br><span class="line">		hrWriter.writeXml();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="XPath"><a href="#XPath" class="headerlink" title="XPath"></a>XPath</h3><ul>
+<li>to search data in XML<br><img src="/../image/java-web/1.png" alt="Xpath 1"><br><img src="/../image/java-web/2.png" alt="Xpath 2"><br><img src="/../image/java-web/3.png" alt="Xpath 2"></li>
+<li>Jaxen<ul>
+<li>a Xpath library that supports DOM, XOM, Dom4j, and JDOM</li>
+<li>Dom4j depends on Jaxen<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">import java.util.List;</span><br><span class="line">import org.dom4j.Document;</span><br><span class="line">import org.dom4j.DocumentException;</span><br><span class="line">import org.dom4j.Element;</span><br><span class="line">import org.dom4j.Node;</span><br><span class="line">import org.dom4j.io.SAXReader;</span><br><span class="line"></span><br><span class="line">public class XPathTestor &#123;</span><br><span class="line">	public void xpath(String xpathExp)&#123;</span><br><span class="line">		String file = &quot;E:/lianxi/xml/hr.xml&quot;;</span><br><span class="line">		SAXReader reader = new SAXReader();</span><br><span class="line">		try &#123;</span><br><span class="line">			Document document = reader.read(file);</span><br><span class="line"></span><br><span class="line">			List&lt;Node&gt; nodes = document.selectNodes(xpathExp);</span><br><span class="line">			for(Node node : nodes)&#123;</span><br><span class="line">				Element emp = (Element)node;</span><br><span class="line">				System.out.println(emp.attributeValue(&quot;no&quot;));</span><br><span class="line">				System.out.println(emp.elementText(&quot;name&quot;));</span><br><span class="line">				System.out.println(emp.elementText(&quot;age&quot;));</span><br><span class="line">				System.out.println(emp.elementText(&quot;salary&quot;));</span><br><span class="line">				System.out.println(&quot;==============================&quot;);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		&#125; catch (DocumentException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		XPathTestor testor = new XPathTestor();</span><br><span class="line">//		testor.xpath(&quot;/hr/employee&quot;);</span><br><span class="line">//		testor.xpath(&quot;//employee&quot;);</span><br><span class="line">//		testor.xpath(&quot;//employee[salary&lt;4000]&quot;);</span><br><span class="line">//		testor.xpath(&quot;//employee[name=&#x27;������&#x27;]&quot;);</span><br><span class="line">//		testor.xpath(&quot;//employee[@no=3304]&quot;);</span><br><span class="line">//		testor.xpath(&quot;//employee[1]&quot;);</span><br><span class="line">//		testor.xpath(&quot;//employee[last()]&quot;);</span><br><span class="line">		//testor.xpath(&quot;//employee[position()&lt;3]&quot;);</span><br><span class="line">		testor.xpath(&quot;//employee[3] | //employee[8]&quot;);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h2><ul>
+<li>Tomcat: web application server software, a container to run Servlet</li>
+<li>configuration<ul>
+<li>port</li>
+<li>ContextPath</li>
+<li>应用自动重载</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h2><ul>
+<li><p>Server Applet, to create dynamic web content</p>
+</li>
+<li><p>process: request -&gt; Tomcat -&gt; search in web.xml to find the relevant Servlet -&gt; Servlet runs -&gt; response</p>
+</li>
+<li><p>steps</p>
+<ul>
+<li><p>extends HttpServlet</p>
+</li>
+<li><p>override service(HttpServletRequest request , HttpServletResponse response)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PrintWriter out =  response.getWriter();</span><br><span class="line">out.println(&quot;&lt;a href=&#x27;http://www.baidu.com&#x27;&gt;Baidu&lt;/a&gt;&quot;);</span><br></pre></td></tr></table></figure></li>
+<li><p>configure web.xml or use annotation</p>
+<ul>
+<li>XML<ul>
+<li><load-on-startup>0~9999</load-on-startup>, 0 means this Servlet has the highest priority</li>
+<li>default home page</li>
+<li>status code and page</li>
+<li>Servlet 通配符映射及初始化参数<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;3.1&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;servlet_advanced&lt;/display-name&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.htm&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">  &lt;servlet&gt;</span><br><span class="line">  	&lt;servlet-name&gt;patternServlet&lt;/servlet-name&gt;</span><br><span class="line">  	&lt;servlet-class&gt;com.imooc.servlet.pattern.PatternServlet&lt;/servlet-class&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">  	&lt;servlet-name&gt;patternServlet&lt;/servlet-name&gt;</span><br><span class="line">  	&lt;url-pattern&gt;/pattern/*&lt;/url-pattern&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br><span class="line">  &lt;context-param&gt;</span><br><span class="line">  	&lt;param-name&gt;copyright&lt;/param-name&gt;</span><br><span class="line">  	&lt;param-value&gt;© 2018 imooc.com&lt;/param-value&gt;</span><br><span class="line">  &lt;/context-param&gt;</span><br><span class="line">  &lt;context-param&gt;</span><br><span class="line">  	&lt;param-name&gt;title&lt;/param-name&gt;</span><br><span class="line">  	&lt;param-value&gt;Liam Lian&lt;/param-value&gt;</span><br><span class="line">  &lt;/context-param&gt;</span><br><span class="line">  &lt;!-- 指定错误页面 --&gt;</span><br><span class="line">  &lt;error-page&gt;</span><br><span class="line">  	&lt;error-code&gt;404&lt;/error-code&gt;</span><br><span class="line">  	&lt;location&gt;/error/404.html&lt;/location&gt;</span><br><span class="line">  &lt;/error-page&gt;</span><br><span class="line">  &lt;error-page&gt;</span><br><span class="line">  	&lt;error-code&gt;500&lt;/error-code&gt;</span><br><span class="line">  	&lt;location&gt;/error/500.jsp&lt;/location&gt;</span><br><span class="line">  &lt;/error-page&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>@WebServlet</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@WebServlet(&quot;/anno/*&quot;)</span><br><span class="line">public class AnnotationServlet extends HttpServlet&#123;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">    resp.getWriter().println(&quot;I&#x27;m annotation servlet!&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><a href="http://ip:port/context-path/url-mapping">http://ip:port/context-path/url-mapping</a>: context-path is project name by default</p>
+</li>
+</ul>
+</li>
+<li><p>methods</p>
+<ul>
+<li><p>request.getParameter() &#x2F;&#x2F; get one parameter</p>
+</li>
+<li><p>request.getParameterValues() &#x2F;&#x2F; get multiple parameter values</p>
+</li>
+<li><p>request.setAttribute(属性名，属性值)</p>
+</li>
+<li><p>Object attr &#x3D; request.getAttribute(属性名)</p>
+</li>
+<li><p>request.getRequestURL()</p>
+</li>
+<li><p>request.getServletContext()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ServletContext context = request.getServletContext();</span><br><span class="line">String copyright = context.getInitParameter(&quot;copyright&quot;);</span><br><span class="line">context.setAttribute(&quot;copyright&quot;, copyright);</span><br></pre></td></tr></table></figure></li>
+<li><p>request.getSession()</p>
+</li>
+<li><p>request.getHeader(“User-Agent”);</p>
+</li>
+<li><p>service() &#x2F;&#x2F; can deal with all requests</p>
+</li>
+<li><p>doGet() &#x2F;&#x2F; deal with get requests</p>
+</li>
+<li><p>doPost &#x2F;&#x2F; deal with post requests</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void doPost(HttpServletRequest request , HttpServletResponse response) throws IOException&#123;</span><br><span class="line">  String name = request.getParameter(&quot;name&quot;);</span><br><span class="line">  response.getWriter().println(&quot;&lt;h1 style=&#x27;color:red&#x27;&gt;&quot; + name + &quot;&lt;/h1&gt;&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>life cycle</p>
+<ul>
+<li>load: web.xml</li>
+<li>constructor</li>
+<li>init()</li>
+<li>provide service: service(), etc</li>
+<li>destroy()</li>
+</ul>
+</li>
+<li><p>note: content in WEB-INF can be accessed only by the server, secure</p>
+</li>
+</ul>
+<h3 id="Forward-and-Redirect"><a href="#Forward-and-Redirect" class="headerlink" title="Forward and Redirect"></a>Forward and Redirect</h3><ul>
+<li>request.getRequestDispatcher().forward(): <code>request.getRequestDispatcher(&quot;/direct/index&quot;).forward(request, response);</code><ul>
+<li>one request</li>
+<li>url that appears will not change</li>
+</ul>
+</li>
+<li>response.sendRedirect(): <code>response.sendRedirect(&quot;/servlet_advanced/direct/index&quot;);</code><ul>
+<li>two requests<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h4></li>
+</ul>
+</li>
+<li>sent with request to Tomcat</li>
+<li>default<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.Cookie;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">@WebServlet(&quot;/cookies/index&quot;)</span><br><span class="line">public class ImoocIndexServlet extends HttpServlet &#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">    public ImoocIndexServlet() &#123;</span><br><span class="line">        super();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line">		Cookie[] cs = request.getCookies();</span><br><span class="line">		if (cs == null) &#123;</span><br><span class="line">			response.getWriter().println(&quot;user not login&quot;);</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line">		String user = null;</span><br><span class="line">		for (Cookie c : cs) &#123;</span><br><span class="line">			System.out.println(c.getName() + &quot;:&quot; + c.getValue());</span><br><span class="line">			if (c.getName().equals(&quot;user&quot;)) &#123;</span><br><span class="line">				user = c.getValue();</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (user == null) &#123;</span><br><span class="line">			response.getWriter().println(&quot;user not login&quot;);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			response.getWriter().println(&quot;user:&quot; + user);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.Cookie;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">@WebServlet(&quot;/cookies/login&quot;)</span><br><span class="line">public class ImoocLoginServlet extends HttpServlet &#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">    public ImoocLoginServlet() &#123;</span><br><span class="line">        super();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line">		Cookie cookie = new Cookie(&quot;user&quot; , &quot;admin&quot;);</span><br><span class="line">		cookie.setMaxAge(60 * 60 * 24 * 7);</span><br><span class="line">		response.addCookie(cookie);</span><br><span class="line">		response.getWriter().println(&quot;login success&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h4></li>
+<li>data related to browser window, saved in Tomcat server memory</li>
+<li>通过Cookie的SessionId值提取用户数据</li>
+<li>methods<ul>
+<li>request.getSession()</li>
+<li>getAttribute()</li>
+<li>setAttribute()</li>
+<li>removeAttribute()</li>
+<li>setMaxInactiveInterval: 设置Session超时时间<h4 id="ServletContext"><a href="#ServletContext" class="headerlink" title="ServletContext"></a>ServletContext</h4></li>
+</ul>
+</li>
+<li>one global object<h4 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h4></li>
+<li>HttpServletRequest</li>
+<li>HttpSession</li>
+<li>ServletContext: after the application starts and before it closes<h4 id="Char-set"><a href="#Char-set" class="headerlink" title="Char set"></a>Char set</h4></li>
+<li>get: before Tomcat 8, server.xml增加URIEncoding&#x3D;”UTF-8”</li>
+<li>post: <code>request.setCharacterEncoding(&quot;UTF-8&quot;);</code></li>
+<li>response: <code>response.setContentType(&quot;text/html;charset=utf-8&quot;);</code></li>
+</ul>
+<h3 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h3><ul>
+<li>对URL进行统一的拦截处理, 过滤器对象在Web应用启动时被创建且全局唯一, 唯一的过滤器对象在并发环境中采用“多线程”提供服务<br>过</li>
+<li>implements javax.servlet.Filter</li>
+<li>doFilter()</li>
+<li>web.xml <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">  &lt;filter-name&gt;MyFirstFilter&lt;/filter-name&gt;</span><br><span class="line">  &lt;filter-class&gt;com.imooc.filter.MyFirstFilter&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">  &lt;filter-name&gt;MyFirstFilter&lt;/filter-name&gt;</span><br><span class="line">  &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@WebFilter (filterName=&quot;MyAnnoationFilter&quot;,urlPatterns=&quot;/*&quot;)</span><br><span class="line"> public class MyAnnotationFilter implements Filter &#123;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;init-param&gt;</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import javax.servlet.Filter;</span><br><span class="line">import javax.servlet.FilterChain;</span><br><span class="line">import javax.servlet.FilterConfig;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.ServletRequest;</span><br><span class="line">import javax.servlet.ServletResponse;</span><br><span class="line">import javax.servlet.annotation.WebFilter;</span><br><span class="line">import javax.servlet.annotation.WebInitParam;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">@WebFilter(filterName=&quot;CharacterEncodingFilter&quot;,urlPatterns=&quot;/*&quot;,</span><br><span class="line">	initParams= &#123;</span><br><span class="line">			@WebInitParam(name=&quot;encoding&quot; , value=&quot;GBK&quot;),</span><br><span class="line">			@WebInitParam(name=&quot;p1&quot; , value=&quot;v1&quot;),</span><br><span class="line">			@WebInitParam(name=&quot;p2&quot; , value=&quot;v2&quot;)</span><br><span class="line">	&#125;)</span><br><span class="line">public class CharacterEncodingFilter implements Filter &#123;</span><br><span class="line">	private String encoding;</span><br><span class="line">	@Override</span><br><span class="line">	public void init(FilterConfig filterConfig) throws ServletException &#123;</span><br><span class="line">		encoding = filterConfig.getInitParameter(&quot;encoding&quot;);</span><br><span class="line">		System.out.println(&quot;encoding:&quot;+encoding);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</span><br><span class="line">			throws IOException, ServletException &#123;</span><br><span class="line">		HttpServletRequest req = (HttpServletRequest)request;</span><br><span class="line">		req.setCharacterEncoding(encoding);</span><br><span class="line">		HttpServletResponse res = (HttpServletResponse)response;</span><br><span class="line">		res.setContentType(&quot;text/html;charset=&quot; + encoding);</span><br><span class="line">		chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void destroy() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">  &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;</span><br><span class="line">  &lt;filter-class&gt;com.imooc.filter.CharacterEncodingFilter&lt;/filter-class&gt;</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;encoding&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;GBK&lt;/param-value&gt;</span><br><span class="line">  &lt;/init-param&gt;</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;p1&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;v1&lt;/param-value&gt;</span><br><span class="line">  &lt;/init-param&gt;</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;p2&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;v2&lt;/param-value&gt;</span><br><span class="line">  &lt;/init-param&gt;</span><br><span class="line">&lt;/filter&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="Lifecycle"><a href="#Lifecycle" class="headerlink" title="Lifecycle"></a>Lifecycle</h4></li>
+</ul>
+</li>
+<li>Filter.init()</li>
+<li>Filter.doFilter()</li>
+<li>Filter.destroy()</li>
+</ul>
+<h4 id="ServletRequest"><a href="#ServletRequest" class="headerlink" title="ServletRequest"></a>ServletRequest</h4><ul>
+<li>ServletRequest是所有请求的顶层接口，代表任何”请求”</li>
+<li>HttpServletRequest是Http协议请求的抽象接口，是J2EE标准</li>
+<li>RequestFacade是HttpServletRequest接口的实现类，由Tomcat创建</li>
+</ul>
+<h4 id="x2F-映射的问题"><a href="#x2F-映射的问题" class="headerlink" title="&#x2F; 映射的问题"></a>&#x2F; 映射的问题</h4><ul>
+<li>&#x2F; 指映射 Web应用根路径，且只对Servlet生效</li>
+<li>默认首页index.jsp会让 &#x2F; 失效</li>
+<li>&#x2F; 与 &#x2F;* 含义不同，前者指向根路径，后者代表所有</li>
+</ul>
+<h4 id="chain"><a href="#chain" class="headerlink" title="chain"></a>chain</h4><ul>
+<li>过滤器的执行顺序以<filter-mapping>为准</li>
+<li>调用chain.doFilter()将请求向后传递</li>
+</ul>
+<h2 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h2><ul>
+<li><p>Java server page, separate Java code and HTML, in nature is Servlet, .jsp</p>
+</li>
+<li><p>.jsp -&gt; Servlet source code -&gt;(compiled) byte code</p>
+<h4 id="JSP-code-block"><a href="#JSP-code-block" class="headerlink" title="JSP code block"></a>JSP code block</h4></li>
+<li><p>&lt;% java code %&gt;: <code>&lt;% System.out.println(&quot;Hello&quot;); %&gt;</code></p>
+<h4 id="JSP-declaration-block"><a href="#JSP-declaration-block" class="headerlink" title="JSP declaration block"></a>JSP declaration block</h4></li>
+<li><p>&lt;%! java code %&gt;: <code>&lt;%! public int add(int a,int b)&#123;return a+b;&#125; %&gt;</code></p>
+<h4 id="output"><a href="#output" class="headerlink" title="output"></a>output</h4></li>
+<li><p>&lt;%&#x3D; java code %&gt;: <code>&lt;%= &quot;&lt;b&gt;&quot; + name + &quot;&lt;/b&gt;&quot; %&gt;</code></p>
+<h4 id="JSP-commands"><a href="#JSP-commands" class="headerlink" title="JSP commands"></a>JSP commands</h4></li>
+<li><p><code>&lt;%@ page import=&quot;java.util.*&quot; %&gt;</code></p>
+<ul>
+<li>&lt;%@ page %&gt; 定义当前JSP页面全局设置: <code>&lt;%@page import=&quot;java.util.*,java.text.*&quot; contentType=&quot;text/html;charset=utf-8&quot; isErrorPage=&quot;true&quot;%&gt;</code></li>
+<li>&lt;%@ include %&gt; 将其他JSP页面与当前JSP页面合并: <code>&lt;%@include file=&quot;include/header.jsp&quot; %&gt;</code></li>
+<li>&lt;%@ taglib %&gt; 引入JSP标签库<h4 id="comments"><a href="#comments" class="headerlink" title="comments"></a>comments</h4></li>
+</ul>
+</li>
+<li><p>&lt;%– comments –%&gt;</p>
+</li>
+<li><p>&#x2F;&#x2F; 、&#x2F;<em>..</em>&#x2F; 用于注释&lt;%%&gt;java代码</p>
+</li>
+<li><p><code>&lt;!-- html --&gt;</code> HTML注释</p>
+<h3 id="JSP-objects"><a href="#JSP-objects" class="headerlink" title="JSP objects"></a>JSP objects</h3></li>
+<li><p>request: HttpServletRequest</p>
+</li>
+<li><p>response: HttpServletResponse</p>
+</li>
+<li><p>session: HttpSession</p>
+</li>
+<li><p>application: ServletContext</p>
+</li>
+<li><p>out: PrintWriter</p>
+</li>
+<li><p>page: this (this page)</p>
+</li>
+<li><p>pageContext: PageContext</p>
+</li>
+<li><p>config: ServletConfig</p>
+</li>
+<li><p>exception: Throwable</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		String url = request.getRequestURL().toString(); // HttpServletRequest</span><br><span class="line">		response.getWriter().println(url);//HttpServletResponse</span><br><span class="line">	%&gt;</span><br><span class="line">	&lt;% out.println(&quot;&lt;br&gt;ABCCC&quot;);</span><br><span class="line">		session.setAttribute(&quot;user&quot;, &quot;Liam&quot;);</span><br><span class="line">		out.println((String)session.getAttribute(&quot;user&quot;));</span><br><span class="line">	%&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		String cp = application.getInitParameter(&quot;copyright&quot;) ; //ServletContext</span><br><span class="line">		out.println(&quot;&lt;hr/&gt;&quot;);</span><br><span class="line">		out.println(cp);</span><br><span class="line">		pageContext.getRequest();</span><br><span class="line">		pageContext.getResponse();</span><br><span class="line">		pageContext.getSession();</span><br><span class="line">		pageContext.getServletContext();</span><br><span class="line">	%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@page import=&quot;java.util.*,java.text.*&quot; contentType=&quot;text/html;charset=utf-8&quot; %&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">	boolean isPrime(int num)&#123;</span><br><span class="line">		boolean flag = true;</span><br><span class="line">		for(int j = 2 ; j &lt; num ; j++)&#123;</span><br><span class="line">			if(num % j == 0)&#123;</span><br><span class="line">				flag = false;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return flag;</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	List&lt;Integer&gt; primes = new ArrayList();</span><br><span class="line">	for(int i = 2 ; i&lt;=1000 ; i++)&#123;</span><br><span class="line">		boolean flag = isPrime(i);</span><br><span class="line"></span><br><span class="line">		if(flag == true)&#123;</span><br><span class="line">			primes.add(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	for(int p : primes)&#123;</span><br><span class="line">%&gt;</span><br><span class="line">	&lt;h1 style=&quot;color:red;&quot;&gt;&lt;%=p %&gt;是质数&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	&#125;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="EL"><a href="#EL" class="headerlink" title="EL"></a>EL</h3></li>
+<li><p>Expression Language, to simplify JSP</p>
+</li>
+<li><p>${expression}</p>
+<h4 id="Scope-1"><a href="#Scope-1" class="headerlink" title="Scope"></a>Scope</h4></li>
+<li><p>pageScope: <code>&#123;pageScope.student.name&#125;</code></p>
+</li>
+<li><p>requestScope</p>
+</li>
+<li><p>sessionScope</p>
+</li>
+<li><p>applicationScope</p>
+</li>
+<li><p>if scope is omitted, EL will try to find the value from the smallest scope to the largest scope</p>
+</li>
+<li><p>${param.参数名}</p>
+</li>
+</ul>
+<h3 id="JSTL"><a href="#JSTL" class="headerlink" title="JSTL"></a>JSTL</h3><ul>
+<li>JSP Standard Tag Library, to simplify JSP</li>
+<li>put jar files in <code>/WEB-INF/lib</code><ul>
+<li>taglibs-standard-spec-1.2.5.jar</li>
+<li>taglibs-standard-impl-1.2.5.jar</li>
+<li>taglibs-standard-jstlel-1.2.5.jar: to support EL, optional</li>
+<li>taglibs-standard-compat-1.2.5.jar: to be compatible with version 1.0, optional</li>
+</ul>
+</li>
+<li>libraries<ul>
+<li>core<ul>
+<li><p>&lt;%@ taglib prefix&#x3D;”c” uri&#x3D;”<a target="_blank" rel="noopener" href="http://java.sun.com/jsp/jstl/core&quot;">http://java.sun.com/jsp/jstl/core&quot;</a> %&gt;</p>
+</li>
+<li><p>&lt;c:if&gt;</p>
+</li>
+<li><p>&lt;c:choose&gt;, &lt;c:when&gt;, &lt;c:otherwise&gt;</p>
+</li>
+<li><p>&lt;c:forEach&gt;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forEach var=&quot;p&quot; items=&quot;$&#123;persons&#125;&quot; varStatus = &quot;idx&quot;&gt;</span><br><span class="line">No. $&#123;idx.index + 1&#125; &lt;br/&gt;</span><br><span class="line">name：$&#123;p.name&#125; sex: $&#123;p.sex&#125; age:$&#123;p.age&#125;</span><br><span class="line">&lt;/c:forEach&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!-- 在Java或者JSP文件中输入 Alt + / 可出现智能提示 --&gt;</span><br><span class="line">&lt;%@ taglib  uri = &quot;http://java.sun.com/jsp/jstl/core&quot; prefix = &quot;c&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;h1&gt;$&#123;requestScope.score&#125;&lt;/h1&gt;</span><br><span class="line">	&lt;c:if test = &quot;$&#123;score &gt;= 60 &#125;&quot;&gt;</span><br><span class="line">		&lt;h1 style = &quot;color:green&quot;&gt;恭喜，你已通过测试&lt;/h1&gt;</span><br><span class="line">	&lt;/c:if&gt;</span><br><span class="line">	&lt;c:if test = &quot;$&#123;score &lt; 60 &#125;&quot;&gt;</span><br><span class="line">		&lt;h1 style = &quot;color:red&quot;&gt;对不起，再接再厉&lt;/h1&gt;</span><br><span class="line">	&lt;/c:if&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- choose when otherwise --&gt;</span><br><span class="line">	$&#123;grade &#125;</span><br><span class="line">	&lt;c:choose&gt;</span><br><span class="line">		&lt;c:when test=&quot;$&#123;grade == &#x27;A&#x27;&#125;&quot;&gt;</span><br><span class="line">			&lt;h2&gt;你很优秀&lt;/h2&gt;</span><br><span class="line">		&lt;/c:when&gt;</span><br><span class="line">		&lt;c:when test=&quot;$&#123;grade == &#x27;B&#x27; &#125;&quot;&gt;</span><br><span class="line">			&lt;h2&gt;不错呦&lt;/h2&gt;</span><br><span class="line">		&lt;/c:when&gt;</span><br><span class="line">		&lt;c:when test=&quot;$&#123;grade == &#x27;C&#x27; &#125;&quot;&gt;</span><br><span class="line">			&lt;h2&gt;水平一般，需要提高&lt;/h2&gt;</span><br><span class="line">		&lt;/c:when&gt;</span><br><span class="line">		&lt;c:when test = &quot;$&#123;grade == &#x27;D&#x27;&#125;&quot;&gt;</span><br><span class="line">			&lt;h2&gt;需要努力啦，不要气馁&lt;/h2&gt;</span><br><span class="line">		&lt;/c:when&gt;</span><br><span class="line">		&lt;c:otherwise&gt;</span><br><span class="line">			&lt;h2&gt;一切随缘吧&lt;/h2&gt;</span><br><span class="line">		&lt;/c:otherwise&gt;</span><br><span class="line">	&lt;/c:choose&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- forEach标签用于遍历集合</span><br><span class="line">		List companys = (List)request.getAttribute(&quot;companys&quot;)</span><br><span class="line">		for(Company c : companys)&#123;</span><br><span class="line">			out.print(&quot;...&quot;)</span><br><span class="line">		&#125;</span><br><span class="line">		idx = index</span><br><span class="line">		idx.index属性代表循环的索引值（0开始）</span><br><span class="line">	--&gt;</span><br><span class="line">	&lt;c:forEach varStatus=&quot;idx&quot; items = &quot;$&#123;requestScope.companys &#125;&quot; var = &quot;c&quot;&gt;</span><br><span class="line">		&lt;h2&gt;$&#123;idx.index + 1&#125;-$&#123;c.cname &#125;-$&#123;c.url &#125;&lt;/h2&gt;</span><br><span class="line">	&lt;/c:forEach&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>fmt<ul>
+<li>&lt;fmt:formatDate value &#x3D; “” pattern &#x3D; “” &#x2F;&gt;</li>
+<li>&lt;fmt:formatNumber value &#x3D; “” pattern &#x3D; “”&#x2F;&gt;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/fmt&quot; prefix=&quot;fmt&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		request.setAttribute(&quot;amt&quot;, 1987654.326);</span><br><span class="line">		request.setAttribute(&quot;now&quot;, new java.util.Date());</span><br><span class="line">		request.setAttribute(&quot;html&quot;, &quot;&lt;a href=&#x27;index.html&#x27;&gt;index&lt;/a&gt;&quot;);</span><br><span class="line">		request.setAttribute(&quot;nothing&quot;, null);</span><br><span class="line">	%&gt;</span><br><span class="line">	&lt;h2&gt;$&#123;now &#125;&lt;/h2&gt;</span><br><span class="line">	&lt;!--</span><br><span class="line">		formatDate pattern</span><br><span class="line">		yyyy - 四位年</span><br><span class="line">		MM - 两位月</span><br><span class="line">		dd - 两位日</span><br><span class="line">		HH - 24小时制</span><br><span class="line">		hh - 12小时制</span><br><span class="line">		mm - 分钟</span><br><span class="line">		ss - 秒数</span><br><span class="line">		SSS - 毫秒</span><br><span class="line">	 --&gt;</span><br><span class="line">	&lt;h2&gt;</span><br><span class="line">		&lt;fmt:formatDate value=&quot;$&#123;requestScope.now &#125;&quot; pattern=&quot;yyyy年MM月dd日 HH时mm分ss秒 SSS毫秒&quot; /&gt;</span><br><span class="line">	&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">	&lt;h2&gt;$&#123;amt &#125;&lt;/h2&gt;</span><br><span class="line">	&lt;h2&gt;¥&lt;fmt:formatNumber value = &quot;$&#123;amt &#125;&quot; pattern=&quot;0,00.00&quot;&gt;&lt;/fmt:formatNumber&gt;元&lt;/h2&gt;</span><br><span class="line">	&lt;h2&gt;null默认值：&lt;c:out value=&quot;$&#123;nothing &#125;&quot; default=&quot;无&quot;&gt;&lt;/c:out&gt; &lt;/h2&gt;</span><br><span class="line">	&lt;h2&gt;&lt;c:out value=&quot;$&#123; html&#125;&quot; escapeXml=&quot;true&quot;&gt;&lt;/c:out&gt;&lt;/h2&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>sql</li>
+<li>xml</li>
+<li>functions</li>
+</ul>
+</li>
+</ul>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><ul>
+<li>export WAR</li>
+<li>put WAR in <code>&#123;TOMCAT_HOME&#125;/webapps</code></li>
+<li>start: run bin&#x2F;startup.bat</li>
+<li><code>&#123;TOMCAT_HOME&#125;/conf/server.xml</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">           connectionTimeout=&quot;20000&quot;</span><br><span class="line">           redirectPort=&quot;8443&quot; /&gt;</span><br><span class="line">&lt;Context path=&quot;/&quot;&gt; &lt;!-- so that we don&#x27;t need to have the project name in the url --&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/12/Java-Core-Test/" rel="prev" title="Java Core Test">
+      <i class="fa fa-chevron-left"></i> Java Core Test
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/19/jQuery/" rel="next" title="jQuery">
+      jQuery <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML"><span class="nav-number">1.</span> <span class="nav-text">XML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#markup"><span class="nav-number">1.1.</span> <span class="nav-text">markup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cdata"><span class="nav-number">1.2.</span> <span class="nav-text">cdata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Semantic-constraint"><span class="nav-number">1.3.</span> <span class="nav-text">Semantic constraint</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dtd"><span class="nav-number">1.3.1.</span> <span class="nav-text">dtd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-schema"><span class="nav-number">1.3.2.</span> <span class="nav-text">XML schema</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM"><span class="nav-number">1.4.</span> <span class="nav-text">DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XPath"><span class="nav-number">1.5.</span> <span class="nav-text">XPath</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat"><span class="nav-number">2.</span> <span class="nav-text">Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet"><span class="nav-number">3.</span> <span class="nav-text">Servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-and-Redirect"><span class="nav-number">3.1.</span> <span class="nav-text">Forward and Redirect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookie"><span class="nav-number">3.1.1.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session"><span class="nav-number">3.1.2.</span> <span class="nav-text">Session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletContext"><span class="nav-number">3.1.3.</span> <span class="nav-text">ServletContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scope"><span class="nav-number">3.1.4.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Char-set"><span class="nav-number">3.1.5.</span> <span class="nav-text">Char set</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter"><span class="nav-number">3.2.</span> <span class="nav-text">Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Lifecycle"><span class="nav-number">3.2.1.</span> <span class="nav-text">Lifecycle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ServletRequest"><span class="nav-number">3.2.2.</span> <span class="nav-text">ServletRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x2F-%E6%98%A0%E5%B0%84%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.3.</span> <span class="nav-text">&#x2F; 映射的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chain"><span class="nav-number">3.2.4.</span> <span class="nav-text">chain</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSP"><span class="nav-number">4.</span> <span class="nav-text">JSP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP-code-block"><span class="nav-number">4.0.1.</span> <span class="nav-text">JSP code block</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP-declaration-block"><span class="nav-number">4.0.2.</span> <span class="nav-text">JSP declaration block</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#output"><span class="nav-number">4.0.3.</span> <span class="nav-text">output</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP-commands"><span class="nav-number">4.0.4.</span> <span class="nav-text">JSP commands</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#comments"><span class="nav-number">4.0.5.</span> <span class="nav-text">comments</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP-objects"><span class="nav-number">4.1.</span> <span class="nav-text">JSP objects</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#example"><span class="nav-number">4.1.1.</span> <span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EL"><span class="nav-number">4.2.</span> <span class="nav-text">EL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Scope-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">Scope</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSTL"><span class="nav-number">4.3.</span> <span class="nav-text">JSTL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#publish"><span class="nav-number">5.</span> <span class="nav-text">publish</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam Lian</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam Lian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
