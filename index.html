@@ -145,6 +145,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/20/Other-Backend-Topics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/20/Other-Backend-Topics/" class="post-title-link" itemprop="url">Other Backend Topics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-04-20 18:49:54 / Modified: 18:57:42" itemprop="dateCreated datePublished" datetime="2022-04-20T18:49:54-04:00">2022-04-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><ul>
+<li>a container to install the program and its environment<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3></li>
+<li>镜像类似于Java中的类，而容器就是实例</li>
+<li>容器可修改，镜像不可修改</li>
+<li>同一个镜像可生成多个容器独立运行，他们之间没有任何干扰<h3 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h3></li>
+<li>client提供给用户一个终端，用户输入 Docker 提供的命令来管理本地或远程的服务器<h3 id="Daemon"><a href="#Daemon" class="headerlink" title="Daemon"></a>Daemon</h3></li>
+<li>Daemon：服务端守护进程，接收 Client 发送的命令并执行相应的操作<h3 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h3></li>
+<li>download images<ul>
+<li>docker pull [OPTIONS] NAME[:TAG]</li>
+<li>docker images [OPTIONS] [REPOSITORY[:TAG]]</li>
+</ul>
+</li>
+<li>docker run [OPTIONS] IMAGE [COMMAND] [ARG…]</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/19/MyBatis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -455,7 +527,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-19 16:42:38" itemprop="dateModified" datetime="2022-04-19T16:42:38-04:00">2022-04-19</time>
+                <time title="Modified: 2022-04-20 19:17:18" itemprop="dateModified" datetime="2022-04-20T19:17:18-04:00">2022-04-20</time>
               </span>
 
           
@@ -730,6 +802,11 @@
 </ul>
 </li>
 </ul>
+<h3 id="Listener"><a href="#Listener" class="headerlink" title="Listener"></a>Listener</h3><ul>
+<li>ServletContext - 对全局ServletContext及其属性进行监听</li>
+<li>HttpSession - 对用户会话及其属性操作进行监听</li>
+<li>ServletRequest - 对请求及属性操作进行监听</li>
+</ul>
 <h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><ul>
 <li>export WAR</li>
 <li>put WAR in <code>&#123;TOMCAT_HOME&#125;/webapps</code></li>
@@ -786,7 +863,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-20 16:19:16" itemprop="dateModified" datetime="2022-04-20T16:19:16-04:00">2022-04-20</time>
+                <time title="Modified: 2022-04-21 00:50:17" itemprop="dateModified" datetime="2022-04-21T00:50:17-04:00">2022-04-21</time>
               </span>
 
           
@@ -801,7 +878,16 @@
 
       
           <h2 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h2><h3 id="Primitive"><a href="#Primitive" class="headerlink" title="Primitive"></a>Primitive</h3><p><img src="/../image/java-core-test/1.png" alt="Primitive"></p>
-<h3 id="Non-Primitive"><a href="#Non-Primitive" class="headerlink" title="Non-Primitive"></a>Non-Primitive</h3><h4 id="BigDecimal"><a href="#BigDecimal" class="headerlink" title="BigDecimal"></a>BigDecimal</h4><p>to do</p>
+<h3 id="Non-Primitive"><a href="#Non-Primitive" class="headerlink" title="Non-Primitive"></a>Non-Primitive</h3><h4 id="BigDecimal"><a href="#BigDecimal" class="headerlink" title="BigDecimal"></a>BigDecimal</h4><ul>
+<li>BigDecimal(val)</li>
+<li>BigDecimal(String val)</li>
+<li>add</li>
+<li>subtract</li>
+<li>multiply</li>
+<li>public BigDecimal divide(BigDecimal divisor, int scale, RoundingMode roundingMode)</li>
+<li>doubleValue(): Converts this BigDecimal to a double.</li>
+<li>compareTo(BigDecimal val)</li>
+</ul>
 <h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><ul>
 <li>if the integer &#x2F; integer (byte, short, char, int, long), result is integer</li>
 <li>i++(return and increment) vs ++i</li>
@@ -1263,6 +1349,47 @@
 </li>
 <li><p>notifyAll();</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class Queue &#123;</span><br><span class="line">	private int n;</span><br><span class="line">	boolean flag = false;</span><br><span class="line"></span><br><span class="line">	public synchronized int get() &#123;</span><br><span class="line">		if (!flag) &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				wait();</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(&quot;消费：&quot; + n);</span><br><span class="line">		flag = false;//消费完毕，容器中没有数据</span><br><span class="line">		notifyAll();</span><br><span class="line">		return n;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public synchronized void set(int n) &#123;</span><br><span class="line">		if (flag) &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				wait();</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(&quot;生产：&quot; + n);</span><br><span class="line">		this.n = n;</span><br><span class="line">		flag = true;//生产完毕，容器中已经有数据</span><br><span class="line">		notifyAll();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="Pool"><a href="#Pool" class="headerlink" title="Pool"></a>Pool</h4><ul>
+<li>why<ul>
+<li>反复创建线程开销大</li>
+<li>过多的线程会占用太多内存; 如果需要创建5个以上的线程，那么就可以使用线程池来管理</li>
+</ul>
+</li>
+<li>constructor<ul>
+<li>corePoolSize: int, 线程池在完成初始化后，默认情况下，线程池中并没有任何线程，线程池会等待有任务到来时，再创建新线程去执行任务</li>
+<li>maxPoolSize int 最大线程数，详解见下文</li>
+<li>keepAliveTime long 保持存活时间</li>
+<li>workQueue BlockingQueue 任务存储队列<ul>
+<li>直接交接：SynchronousQueue, 容量为0</li>
+<li>无界队列：LinkedBlockingQueue</li>
+<li>有界的队列：ArrayBlockingQueue</li>
+</ul>
+</li>
+<li>threadFactory ThreadFactory当线程池需要新的线程的时候，会使用threadFactory来生成新的线程<ul>
+<li>Executors.defaultThreadFactory()</li>
+<li>创建出来的线程都在同一个线程组，拥有同样的NORM_PRIORITY优先级并且都不是守护线程。</li>
+<li>如果自己指定ThreadFactory，那么就可以改变线程名、线程组、优先级、是否是守护线程等。通常使用默认的ThreadFactory就可以了。</li>
+</ul>
+</li>
+<li>Handler RejectedExecutionHandler 由于线程池无法接受你所提交的任务的拒绝策略</li>
+</ul>
+</li>
+<li>rule<ul>
+<li>如果线程数小于corePoolSize，即使其他工作线程处于空闲状态，也会创建一个新线程来运行新任务。</li>
+<li>如果线程数等于（或大于）corePoolSize但少于maximumPoolSize，则将任务放入队列。</li>
+<li>如果队列已满，并且线程数小于maxPoolSize，则创建一个新线程来运行任务。只有在队列填满时才创建多于corePoolSize的线程，如果使用的是无界队列（例如LinkedBlockingQueue），那么线程数就不会超过corePoolSize。</li>
+<li>如果队列已满，并且线程数大于或等于maxPoolSize，则拒绝该任务。</li>
+<li>如果线程池当前的线程数多于corePoolSize，那么如果多余的线程空闲时间超过keepAliveTime，它们就会被终止</li>
+</ul>
+</li>
+<li>how many threads<ul>
+<li>CPU密集型（加密、计算hash等）：最佳线程数为CPU核心数的1-2倍左右。</li>
+<li>耗时IO型（读写数据库、文件、网络读写等）：最佳线程数一般会大于CPU核心数很多倍</li>
+<li>参考Brain Goetz推荐的计算方法：线程数&#x3D;CPU核心数*（1+平均等待时间&#x2F;平均工作时间）</li>
+<li>stress test</li>
+</ul>
+</li>
 </ul>
 <h3 id="Reflex"><a href="#Reflex" class="headerlink" title="Reflex"></a>Reflex</h3><ul>
 <li>运行时动态访问类与对象<h4 id="Class-2"><a href="#Class-2" class="headerlink" title="Class"></a>Class</h4></li>
@@ -2284,88 +2411,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/ORM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/ORM/" class="post-title-link" itemprop="url">ORM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-25 19:06:05 / Modified: 19:13:58" itemprop="dateCreated datePublished" datetime="2022-03-25T19:06:05-04:00">2022-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/framework-fundamental/" itemprop="url" rel="index"><span itemprop="name">framework fundamental</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><ul>
-<li>table -&gt; class</li>
-<li>record -&gt; object</li>
-<li>field -&gt; attribute</li>
-</ul>
-<h2 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h2><ul>
-<li>use MVC as architecture</li>
-<li>automation</li>
-<li>more flexibility for programming</li>
-</ul>
-<h2 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h2><ul>
-<li>need time to config</li>
-<li>as to complex queries, hard to write or will have worse performance than SQL</li>
-<li>hide the details about how to manipulate databases</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2435,7 +2480,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
