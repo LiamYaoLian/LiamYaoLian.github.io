@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="three features encapsulation: private attribute, getter and setter inheritance: has all attributes and methods of the base class, but cannot access the private members of the base class can have its o">
+  <meta name="description" content="Below is how to use AOP to configure log. 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import com.fasterxml.jackson.core.JsonProcessingException;import com.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OOD">
-<meta property="og:url" content="https://liamyaolian.github.io/2022/03/26/OOD/index.html">
+<meta property="og:title" content="Example - AOP">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/05/07/Example-AOP/index.html">
 <meta property="og:site_name" content="Liam Lian&#39;s Blog">
-<meta property="og:description" content="three features encapsulation: private attribute, getter and setter inheritance: has all attributes and methods of the base class, but cannot access the private members of the base class can have its o">
+<meta property="og:description" content="Below is how to use AOP to configure log. 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import com.fasterxml.jackson.core.JsonProcessingException;import com.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-03-26T17:13:23.000Z">
-<meta property="article:modified_time" content="2022-03-26T17:19:21.941Z">
+<meta property="article:published_time" content="2022-05-08T02:57:03.000Z">
+<meta property="article:modified_time" content="2022-05-08T02:57:55.174Z">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://liamyaolian.github.io/2022/03/26/OOD/">
+<link rel="canonical" href="https://liamyaolian.github.io/2022/05/07/Example-AOP/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>OOD | Liam Lian's Blog</title>
+  <title>Example - AOP | Liam Lian's Blog</title>
   
 
 
@@ -150,7 +150,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/26/OOD/">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/05/07/Example-AOP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -163,7 +163,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          OOD
+          Example - AOP
         </h1>
 
         <div class="post-meta">
@@ -174,16 +174,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-26 13:13:23 / Modified: 13:19:21" itemprop="dateCreated datePublished" datetime="2022-03-26T13:13:23-04:00">2022-03-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OOD/" itemprop="url" rel="index"><span itemprop="name">OOD</span></a>
-                </span>
+              <time title="Created: 2022-05-07 22:57:03 / Modified: 22:57:55" itemprop="dateCreated datePublished" datetime="2022-05-07T22:57:03-04:00">2022-05-07</time>
             </span>
 
           
@@ -197,16 +188,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="three-features"><a href="#three-features" class="headerlink" title="three features"></a>three features</h2><ul>
-<li>encapsulation: private attribute, getter and setter</li>
-<li>inheritance:<ul>
-<li>has all attributes and methods of the base class, but cannot access the private members of the base class</li>
-<li>can have its own members</li>
-<li>can override methods of base class</li>
-</ul>
-</li>
-<li>poly: 所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编<br>程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该<br>引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</li>
-</ul>
+        <p>Below is how to use AOP to configure log.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.core.JsonProcessingException;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebLogAspect</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(WebLogAspect.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution(public * co.avasta.abc.controller.*.*(..)))</span><span class="string">&quot;)</span></span><br><span class="line"><span class="string">    public void webLog() &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    @Before(&quot;</span>webLog()<span class="string">&quot;)</span></span><br><span class="line"><span class="string">    public void doBefore(JoinPoint joinPoint) &#123;</span></span><br><span class="line"><span class="string">        // log the request</span></span><br><span class="line"><span class="string">        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span></span><br><span class="line"><span class="string">        HttpServletRequest request = attributes.getRequest();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        log.info(&quot;</span>URL: <span class="string">&quot; + request.getRequestURL().toString());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>HTTP_METHOD: <span class="string">&quot; + request.getMethod());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>IP: <span class="string">&quot; + request.getRemoteAddr());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>CLASS_METHOD: <span class="string">&quot; + joinPoint.getSignature().getDeclaringTypeName() + &quot;</span>.<span class="string">&quot; + joinPoint.getSignature().getName());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>ARGS: <span class="string">&quot; + Arrays.toString(joinPoint.getArgs()));</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    @AfterReturning(returning = &quot;</span>res<span class="string">&quot;, pointcut = &quot;</span>webLog()<span class="string">&quot;)</span></span><br><span class="line"><span class="string">    public void doAfterReturning(Object res) throws JsonProcessingException &#123;</span></span><br><span class="line"><span class="string">        // res to JSON</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>RESPONSE:<span class="string">&quot; + new ObjectMapper().writeValueAsString(res));</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -222,13 +205,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/25/Project-SpringBoot-E-commerce/" rel="prev" title="Project: SpringBoot E-commerce">
-      <i class="fa fa-chevron-left"></i> Project: SpringBoot E-commerce
+    <a href="/2022/04/23/user/" rel="prev" title="User">
+      <i class="fa fa-chevron-left"></i> User
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/04/07/Design-Pattern/" rel="next" title="Design Pattern">
-      Design Pattern <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -287,7 +267,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#three-features"><span class="nav-number">1.</span> <span class="nav-text">three features</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

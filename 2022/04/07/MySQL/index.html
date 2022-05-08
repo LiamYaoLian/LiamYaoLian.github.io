@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://liamyaolian.github.io/image/mysql/1.webp">
 <meta property="og:image" content="https://liamyaolian.github.io/image/mysql/3.webp">
 <meta property="article:published_time" content="2022-04-08T00:25:28.000Z">
-<meta property="article:modified_time" content="2022-04-16T22:47:48.820Z">
+<meta property="article:modified_time" content="2022-04-23T17:05:19.687Z">
 <meta property="article:author" content="Liam Lian">
 <meta property="article:tag" content="DB">
 <meta name="twitter:card" content="summary">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-16 18:47:48" itemprop="dateModified" datetime="2022-04-16T18:47:48-04:00">2022-04-16</time>
+                <time title="Modified: 2022-04-23 13:05:19" itemprop="dateModified" datetime="2022-04-23T13:05:19-04:00">2022-04-23</time>
               </span>
 
           
@@ -221,36 +221,95 @@
 </ul>
 </li>
 </ul>
-<h2 id="data-types"><a href="#data-types" class="headerlink" title="data types"></a>data types</h2><h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><ul>
+<h2 id="comments"><a href="#comments" class="headerlink" title="comments"></a>comments</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"><span class="comment">/**/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="data-types"><a href="#data-types" class="headerlink" title="data types"></a>data types</h2><h2 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h2><ul>
+<li>TINYINT: 1 byte</li>
+<li>SMALLINT: 2 bytes</li>
+<li>MEDIUMINT: 3 bytes</li>
+<li>INT: 4 bytes</li>
+<li>BIGINT: 8 bytes</li>
+<li>FLOAT: 4 bytes</li>
+<li>DOUBLE: 8 bytes</li>
+<li>DECIMAL(x,y)</li>
+</ul>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><ul>
 <li>char: 255</li>
-<li>varchar: 255, variable length</li>
-<li>text: 65535<h2 id="Date-and-Time"><a href="#Date-and-Time" class="headerlink" title="Date and Time"></a>Date and Time</h2></li>
+<li>varchar: variable length; 理论65535，不允许非空字段时最大65533，允许非空字段65532</li>
+<li>text: variable length; 65535</li>
+<li>MEDIUMTEXT: variable length; 1千6百万字符</li>
+<li>LONGTEXT: variable length; 42亿字符<h2 id="Date-and-Time"><a href="#Date-and-Time" class="headerlink" title="Date and Time"></a>Date and Time</h2></li>
 <li>Date</li>
+<li>Time</li>
+<li>Year</li>
 <li>Datetime</li>
 <li>Timestamp: converted from the current time zone to UTC for storage, and converted back from UTC to the current time zone for retrieval</li>
 </ul>
 <h2 id="Queries"><a href="#Queries" class="headerlink" title="Queries"></a>Queries</h2><p><img src="/../image/mysql/4.png" alt="undo log and read-view"></p>
 <h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop database (if exists) database_name;</span><br><span class="line">create database database_name;</span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE database.table_na</span><br><span class="line">me (</span><br><span class="line">column1 datatype,</span><br><span class="line">column2 datatype,</span><br><span class="line">column3 datatype,</span><br><span class="line">....);</span><br><span class="line">drop table (if exists) database.table_name;</span><br><span class="line">CREATE TABLE database.new_table_name</span><br><span class="line">AS</span><br><span class="line">(SELECT column1, column2,...</span><br><span class="line">FROM existing_table_name</span><br><span class="line">WHERE ....);</span><br><span class="line"></span><br><span class="line">Show tables;</span><br><span class="line">describe table_name;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> database.table_name (</span><br><span class="line">column1 datatype [<span class="keyword">constraint</span>] [comment],</span><br><span class="line">column2 datatype [<span class="keyword">constraint</span>] [comment],</span><br><span class="line">column3 datatype [<span class="keyword">constraint</span>] [comment],</span><br><span class="line">INDEX [ 索引名称 ] ( 字段 )</span><br><span class="line"><span class="keyword">foreign</span> key (deptno) <span class="keyword">references</span> t_dept(deptno)</span><br><span class="line">....) [comment];</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> (if <span class="keyword">exists</span>) database.table_name;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> database.new_table_name</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line">(<span class="keyword">SELECT</span> column1, column2,...</span><br><span class="line"><span class="keyword">FROM</span> existing_table_name</span><br><span class="line"><span class="keyword">WHERE</span> ....);</span><br><span class="line"></span><br><span class="line"><span class="keyword">Show</span> tables;</span><br><span class="line"><span class="keyword">describe</span> table_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称</span><br><span class="line"><span class="keyword">ADD</span> 列<span class="number">1</span> 数据类型 [ 约束 ] [COMMENT 注释] ,</span><br><span class="line"><span class="keyword">ADD</span> 列<span class="number">2</span> 数据类型 [ 约束 ] [COMMENT 注释] ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称</span><br><span class="line">MODIFY 列<span class="number">1</span> 数据类型 [ 约束 ] [COMMENT 注释] ,</span><br><span class="line">MODIFY 列<span class="number">2</span> 数据类型 [ 约束 ] [COMMENT 注释] ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称</span><br><span class="line">CHANGE 列<span class="number">1</span> 新列名<span class="number">1</span> 数据类型 [ 约束 ] [COMMENT 注释] ,</span><br><span class="line">CHANGE 列<span class="number">2</span> 新列名<span class="number">2</span> 数据类型 [ 约束 ] [COMMENT 注释] ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称</span><br><span class="line"><span class="keyword">DROP</span> 列<span class="number">1</span> ,</span><br><span class="line"><span class="keyword">DROP</span> 列<span class="number">2</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 RENAME 新表名 ;</span><br></pre></td></tr></table></figure>
+<h4 id="constraints"><a href="#constraints" class="headerlink" title="constraints"></a>constraints</h4><ul>
+<li>PRIMARY KEY</li>
+<li>NOT NULL</li>
+<li>UNIQUE</li>
+<li>FOREIGN KEY</li>
+</ul>
 <h3 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h3><ul>
-<li>&#x3D;</li>
-<li>&lt;&gt;, !&#x3D;</li>
-<li>is null, is not null</li>
-<li>between and</li>
-<li>in</li>
-<li>EXISTS</li>
-<li>like<ul>
+<li><p>&#x3D;</p>
+</li>
+<li><p>&lt;&gt;, !&#x3D;</p>
+</li>
+<li><p>is null, is not null</p>
+</li>
+<li><p>between and</p>
+</li>
+<li><p>in</p>
+</li>
+<li><p>EXISTS</p>
+<ul>
+<li>EXISTS关键字是把原来在子查询之外的条件判断，写到了子查询的里面<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">查询工资等级3和4级的员工信息</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">select</span> empno, ename, sal, comm</span><br><span class="line"><span class="keyword">from</span> t_emp</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">exists</span></span><br><span class="line">(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_salgrade <span class="keyword">where</span> grade <span class="keyword">in</span> (<span class="number">3</span>, <span class="number">4</span>) <span class="keyword">and</span> sal <span class="keyword">between</span> losal <span class="keyword">and</span> hisal);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>like</p>
+<ul>
 <li>%: zero or more</li>
 <li>_: single</li>
 </ul>
+</li>
+<li><p>regexp</p>
+<ul>
+<li><code>ename regexp &quot;[a-zA-Z]&#123;4&#125;</code></li>
+</ul>
+</li>
+<li><p>NOT</p>
+</li>
+<li><p>AND</p>
+</li>
+<li><p>OR</p>
+</li>
+<li><p>XOR</p>
+</li>
+<li><p>&amp;</p>
+</li>
+<li><p>|</p>
+</li>
+<li><p>~: bitwise not</p>
+</li>
+<li><p>^: bitwise XOR</p>
+</li>
+<li><p>&lt;&lt;</p>
+</li>
+<li><blockquote>
+<blockquote>
+</blockquote>
+</blockquote>
 </li>
 </ul>
 <h4 id="Priority"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</h4><ul>
 <li>() &gt; NOT &gt;And &gt; Or</li>
 </ul>
-<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">INSERT INTO 表名 [(字段名 [,字段名] ...)] VALUES (值的列表);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO 表名 （字段名）</span><br><span class="line">SELECT 字段名或值</span><br><span class="line">FROM 表名</span><br><span class="line">WHERE 条件;</span><br><span class="line"></span><br><span class="line">INSERT INTO demo.goodsmaster</span><br><span class="line">(</span><br><span class="line">  itemnumber,</span><br><span class="line">  barcode,</span><br><span class="line">  goodsname,</span><br><span class="line">  specification,</span><br><span class="line">  unit,</span><br><span class="line">  price</span><br><span class="line">)</span><br><span class="line">VALUES</span><br><span class="line">(</span><br><span class="line">  4,</span><br><span class="line">  &#x27;0003&#x27;,</span><br><span class="line">  &#x27;尺子&#x27;,</span><br><span class="line">  &#x27;三角型&#x27;,</span><br><span class="line">  &#x27;把&#x27;,</span><br><span class="line">  5</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">IGNORE只插入数据库不存在</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">INSERT</span> [ IGNORE ] <span class="keyword">INTO</span> 表名 [(字段名 [,字段名] ...)] <span class="keyword">VALUES</span> (值的列表);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 （字段名）(</span><br><span class="line"><span class="keyword">SELECT</span> 字段名或值</span><br><span class="line"><span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="keyword">WHERE</span> 条件);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> demo.goodsmaster</span><br><span class="line">(itemnumber, barcode, goodsname, specification, unit, price)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">(<span class="number">4</span>,<span class="string">&#x27;0003&#x27;</span>,<span class="string">&#x27;尺子&#x27;</span>,<span class="string">&#x27;三角型&#x27;</span>,<span class="string">&#x27;把&#x27;</span>,<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*MySQL dialect*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 <span class="keyword">SET</span> 字段<span class="number">1</span><span class="operator">=</span>值<span class="number">1</span>, 字段<span class="number">2</span><span class="operator">=</span>值<span class="number">2</span>, …… ;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>can skip inserting some columns if null allowed or have default values</li>
@@ -258,11 +317,16 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 书        | 16开          | 本   |      89.00 |</span><br><span class="line">|          2 | 0002    | 笔        | 10支装        | 包   |       5.00 |</span><br><span class="line">|          3 | 0003    | 橡皮      | NULL          | 个   |       3.00 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster1;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 教科书    | NULL          | NULL |      89.00 |</span><br><span class="line">|          4 | 0004    | 馒头      |               |      |       1.50 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO demo.goodsmaster</span><br><span class="line">SELECT *</span><br><span class="line">FROM demo.goodsmaster1 as a</span><br><span class="line">ON DUPLICATE KEY UPDATE barcode = a.barcode,goodsname=a.goodsname;</span><br><span class="line">-- 运行结果如下</span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 教科书    | 16开          | 本   |      89.00 |</span><br><span class="line">|          2 | 0002    | 笔        | 10支装        | 包   |       5.00 |</span><br><span class="line">|          3 | 0003    | 橡皮      | NULL          | 个   |       3.00 |</span><br><span class="line">|          4 | 0004    | 馒头      |               |      |       1.50 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 
-<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">DELETE FROM 表名</span><br><span class="line">WHERE 条件</span><br><span class="line"></span><br><span class="line">// 删除全部数据</span><br><span class="line">DELETE FROM demo.goodsmaster; // undo log</span><br><span class="line">Truncate table table_name; // no in undo log</span><br></pre></td></tr></table></figure>
-
-<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">UPDATE 表名</span><br><span class="line">SET 字段名=值</span><br><span class="line">WHERE 条件</span><br></pre></td></tr></table></figure>
+<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">DELETE [ IGNORE ] FROM 表名 [ LEFT | RIGHT ] JOIN 表2 ON 条件</span><br><span class="line">WHERE 条件</span><br><span class="line">[ ORDER BY …… ]</span><br><span class="line">[ LIMIT …… ] ;</span><br><span class="line"></span><br><span class="line">// 删除全部数据</span><br><span class="line">DELETE FROM demo.goodsmaster; // undo log</span><br><span class="line">Truncate table table_name; // no in undo log</span><br></pre></td></tr></table></figure>
 <ul>
+<li>ignore: if foreign key exists so some records cannot be deleted, will ignore these records</li>
+<li>sequence: from -&gt; where -&gt; order by -&gt; limit -&gt; delete</li>
+</ul>
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">UPDATE 表名</span><br><span class="line">SET 字段名=值</span><br><span class="line">WHERE 条件</span><br><span class="line">[ ORDER BY …… ]</span><br><span class="line">[ LIMIT param ] ; /*can only have one param*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sequence: from -&gt; where -&gt; order by -&gt; limit -&gt; set</li>
 <li>Don’t update primary key</li>
+<li>因为WHERE子句中的子查询效率非常低，所以我们可以利用表连接的方式来改造UPDATE语句<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表<span class="number">1</span> [ <span class="keyword">LEFT</span> <span class="operator">|</span> <span class="keyword">RIGHT</span> ] <span class="keyword">JOIN</span> 表<span class="number">2</span> <span class="keyword">ON</span> 条件</span><br><span class="line"><span class="keyword">SET</span> 字段<span class="number">1</span> <span class="operator">=</span> 值<span class="number">1</span> , 字段<span class="number">2</span> <span class="operator">=</span> 值<span class="number">2</span> , …… ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">UPDATE</span> 表<span class="number">1</span> , 表<span class="number">2</span></span><br><span class="line"><span class="keyword">SET</span> 字段<span class="number">1</span> <span class="operator">=</span> 值<span class="number">1</span> , 字段<span class="number">2</span> <span class="operator">=</span> 值<span class="number">2</span> , ……</span><br><span class="line"><span class="keyword">WHERE</span> 连接条件 ;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">SELECT *|字段列表</span><br><span class="line">FROM 数据源</span><br><span class="line">WHERE 条件</span><br><span class="line">GROUP BY 字段</span><br><span class="line">HAVING 条件</span><br><span class="line">ORDER BY 字段</span><br><span class="line">LIMIT 起始点，行数</span><br></pre></td></tr></table></figure>
 
@@ -349,11 +413,17 @@
 <li>The use of index hints provides the optimizer with information about how to choose indexes during query processing. For a description of the syntax for specifying these hints, see Section 8.9.4, “Index Hints”.You can use SET max_seeks_for_key&#x3D;value as an alternative way to force MySQL to prefer key scans instead of table scans. See Section 5.1.8, “Server System Variables”.</li>
 </ul>
 <ul>
+<li><p>where</p>
+<ul>
+<li>old: 筛选掉记录最多的条件写在最左侧</li>
+</ul>
+</li>
 <li><p>GROUP BY</p>
 <ul>
 <li>permits a WITH ROLLUP modifier. See Section 12.20.2, “GROUP BY Modifiers”.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    productLine,</span><br><span class="line">    orderYear,</span><br><span class="line">    SUM(orderValue) totalOrderValue</span><br><span class="line">FROM</span><br><span class="line">    sales</span><br><span class="line">GROUP BY</span><br><span class="line">    productline,</span><br><span class="line">    orderYear</span><br><span class="line">WITH ROLLUP;</span><br></pre></td></tr></table></figure>
 <img src="/../image/mysql/6.png" alt="with rollup"><br><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-rollup/">https://www.mysqltutorial.org/mysql-rollup/</a></li>
 <li>The number of dimension column you selected can not larger than that of followed by clause group by</li>
+<li>GROUP_CONCAT函数可以把分组查询中的某个字段拼接成一个字符串</li>
 </ul>
 </li>
 <li><p>order by</p>
@@ -385,7 +455,7 @@
 </li>
 </ul>
 <ul>
-<li>AVG: ignore null</li>
+<li>AVG: ignore null, 只能用于数字类型，非数字数据统计结果为0</li>
 <li>COUNT<ul>
 <li>COUNT(*) to count the number of rows in a table</li>
 <li>COUNT(column) ignores NULL values</li>
@@ -393,7 +463,7 @@
 </li>
 <li>MAX: ignore null</li>
 <li>MIN: ignore null</li>
-<li>SUM: ignore null</li>
+<li>SUM: ignore null, 只能用于数字类型，字符类型的统计结果为0，日期类型统计结果是毫秒数相加。</li>
 <li>for each group</li>
 <li>can put <code>Distinct</code> inside (), such as <code>count(DISTINCT prod_price)</code></li>
 </ul>
@@ -426,8 +496,36 @@
 <li>union all</li>
 <li>only one order by statement can be used, which is after the final select statement</li>
 </ul>
-<h3 id="function"><a href="#function" class="headerlink" title="function"></a>function</h3><h3 id="common-table-expression-or-CTE"><a href="#common-table-expression-or-CTE" class="headerlink" title="common table expression or CTE"></a>common table expression or CTE</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">WITH salesrep AS (</span><br><span class="line">    SELECT</span><br><span class="line">        employeeNumber,</span><br><span class="line">        CONCAT(firstName, &#x27; &#x27;, lastName) AS salesrepName</span><br><span class="line">    FROM</span><br><span class="line">        employees</span><br><span class="line">    WHERE</span><br><span class="line">        jobTitle = &#x27;Sales Rep&#x27;</span><br><span class="line">),</span><br><span class="line">customer_salesrep AS (</span><br><span class="line">    SELECT</span><br><span class="line">        customerName, salesrepName</span><br><span class="line">    FROM</span><br><span class="line">        customers</span><br><span class="line">            INNER JOIN</span><br><span class="line">        salesrep ON employeeNumber = salesrepEmployeeNumber</span><br><span class="line">)</span><br><span class="line">SELECT</span><br><span class="line">    *</span><br><span class="line">FROM</span><br><span class="line">    customer_salesrep</span><br><span class="line">ORDER BY customerName;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WITH RECURSIVE cte_name AS (</span><br><span class="line">    initial_query  -- anchor member</span><br><span class="line">    UNION ALL</span><br><span class="line">    recursive_query -- recursive member that references to the CTE name</span><br><span class="line">)</span><br><span class="line">SELECT * FROM cte_name;</span><br></pre></td></tr></table></figure>
+<h3 id="function"><a href="#function" class="headerlink" title="function"></a>function</h3><h4 id="Number-1"><a href="#Number-1" class="headerlink" title="Number"></a>Number</h4><ul>
+<li>abs</li>
+<li>round</li>
+<li>floor</li>
+<li>ceil</li>
+<li>power(2,3)</li>
+<li>log(7,3)</li>
+<li>ln(10)</li>
+<li>sqrt(9)</li>
+<li>pi()</li>
+<li>sin</li>
+<li>cos</li>
+<li>tan</li>
+<li>cot</li>
+<li>radians(30): 角度转换弧度</li>
+<li>DEGREES(1): 弧度转换角度<h4 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h4><h5 id="system-time"><a href="#system-time" class="headerlink" title="system time"></a>system time</h5></li>
+<li>now(): yyyy-MM-dd hh:mm:ss</li>
+<li>curdate(): yyyy-MM-dd</li>
+<li>curtime(): hh:mm:ss<h5 id="DATE-FORMAT"><a href="#DATE-FORMAT" class="headerlink" title="DATE_FORMAT"></a>DATE_FORMAT</h5></li>
+<li>DATE_FORMAT(日期, 表达式)<br>%Y 年份<br>%m 月份<br>%d 日期<br>%w 星期(数字)<br>%W 星期(名称)<br>%j 本年第几天<br>%U 本年第几周<br>%h 小时(12)<br>%H 小时(24)<br>%i 分钟<br>%s 秒<br>%r 时间(12)<br>%T 时间(24)<h5 id="DATE-ADD-and"><a href="#DATE-ADD-and" class="headerlink" title="DATE_ADD() and"></a>DATE_ADD() and</h5></li>
+<li>DATE_ADD( 日期 , INTERVAL 15 DAY )</li>
+<li>DATEDIFF ( 日期 , 日期 )<h4 id="String-1"><a href="#String-1" class="headerlink" title="String"></a>String</h4>LOWER<br>UPPER<br>LENGTH<br>SELECT CONCAT(“SQL “, “Tutorial “, “is “, “fun!”) AS ConcatenatedString<br>SELECT INSTR(“W3Schools.com”, “3”) AS MatchPosition: 2<br>SELECT INSERT(“W3Schools.com”, 1, 9, “Example”): Example.com<br>REPLACE(“你好先生”,”先生”,”女士”)<br>SELECT SUBSTR(“SQL Tutorial”, 5, 3) AS ExtractString: Tut<br>SELECT SUBSTRING(“SQL Tutorial”, 5, 3) AS ExtractString: Tut<br>SELECT LPAD(“SQL Tutorial”, 20, “ABC”): ABCABCABSQL Tutorial; Left-pad the string with “ABC”, to a total length of 20.<br>RPAD(“Hello”,10,”*”)<br>TRIM(“ 你好先生 “)<h4 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h4>IFNULL( 表达式 , 值 )<br>IF( 表达式 , 值1 , 值2 )</li>
+</ul>
+<h3 id="common-table-expression-or-CTE"><a href="#common-table-expression-or-CTE" class="headerlink" title="common table expression or CTE"></a>common table expression or CTE</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">WITH salesrep AS (</span><br><span class="line">    SELECT</span><br><span class="line">        employeeNumber,</span><br><span class="line">        CONCAT(firstName, &#x27; &#x27;, lastName) AS salesrepName</span><br><span class="line">    FROM</span><br><span class="line">        employees</span><br><span class="line">    WHERE</span><br><span class="line">        jobTitle = &#x27;Sales Rep&#x27;</span><br><span class="line">),</span><br><span class="line">customer_salesrep AS (</span><br><span class="line">    SELECT</span><br><span class="line">        customerName, salesrepName</span><br><span class="line">    FROM</span><br><span class="line">        customers</span><br><span class="line">            INNER JOIN</span><br><span class="line">        salesrep ON employeeNumber = salesrepEmployeeNumber</span><br><span class="line">)</span><br><span class="line">SELECT</span><br><span class="line">    *</span><br><span class="line">FROM</span><br><span class="line">    customer_salesrep</span><br><span class="line">ORDER BY customerName;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WITH RECURSIVE cte_name AS (</span><br><span class="line">    initial_query  -- anchor member</span><br><span class="line">    UNION ALL</span><br><span class="line">    recursive_query -- recursive member that references to the CTE name</span><br><span class="line">)</span><br><span class="line">SELECT * FROM cte_name;</span><br></pre></td></tr></table></figure>
 <p>to do: <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-recursive-cte/">https://www.mysqltutorial.org/mysql-recursive-cte/</a></p>
+<h3 id="subquery"><a href="#subquery" class="headerlink" title="subquery"></a>subquery</h3><ul>
+<li>can be in “select”, “from”, “where”</li>
+<li>in “from” will have high efficiency, avoid being in “select” or “where”. 查询语句执行的时候要多次的依赖于子查询的结果，这类子查询被<br>称作相关子查询</li>
+<li>多行子查询只能出现在WHERE子句和FROM子句中</li>
+</ul>
 <h3 id="Execution-Order"><a href="#Execution-Order" class="headerlink" title="Execution Order"></a>Execution Order</h3><p>From &gt; join &gt; Where &gt; group by &gt; having &gt; select &gt; distinct &gt; order by &gt; limit</p>
 <h3 id="Prepared-statement"><a href="#Prepared-statement" class="headerlink" title="Prepared statement"></a>Prepared statement</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM products</span><br><span class="line">WHERE productCode = ?;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -441,12 +539,14 @@
 <li>unique</li>
 <li>not null</li>
 <li>one but can be multiple columns</li>
+<li>can use AUTO_INCREMENT</li>
 </ul>
 </li>
 <li>FK<ul>
 <li>primary key in another table</li>
 <li>can be null</li>
 <li>can have more than one FK</li>
+<li>如果形成外键闭环，我们将无法删除任何一张表的记录</li>
 </ul>
 </li>
 </ul>
@@ -486,14 +586,37 @@
 <li>back up every day or every week? More frequent, more storage, less RTO(Recovery Time Objective).</li>
 </ul>
 <h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><ul>
-<li>high isolation will lead to low efficiency<h3 id="Isolation-Levels"><a href="#Isolation-Levels" class="headerlink" title="Isolation Levels"></a>Isolation Levels</h3></li>
+<li>high isolation will lead to low efficiency</li>
+<li>SQL<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION ;</span><br><span class="line"><span class="keyword">SQL</span>语句</span><br><span class="line">[ <span class="keyword">COMMIT</span> <span class="operator">|</span> <span class="keyword">ROLLBACK</span> ] ;</span><br></pre></td></tr></table></figure></li>
+<li>ACID</li>
+</ul>
+<h3 id="Isolation-Levels"><a href="#Isolation-Levels" class="headerlink" title="Isolation Levels"></a>Isolation Levels</h3><ul>
+<li><code>SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED</code></li>
 <li>read uncommitted: no read-view.</li>
 <li>read committed: a read-view is created when a SQL query executes</li>
-<li>repeatable read: a read-view is created when the transaction starts , so data seen in this transaction are the same as what they were when this transaction started.</li>
+<li>repeatable read: a read-view is created when the transaction executes “select” so the undo log has data, so data seen in this transaction are the same as what they were when this transaction started.</li>
 <li>serializable: read and write will add lock. After a transaction finishes, another transaction can execute.<br><img src="/../image/mysql/1.webp" alt="isolation levels"><br>Source: <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/68963">https://time.geekbang.org/column/article/68963</a></li>
 </ul>
-<h2 id="index"><a href="#index" class="headerlink" title="index"></a>index</h2><ul>
-<li>different storage engines may have different index implementation.<h3 id="InnoDB-index-model"><a href="#InnoDB-index-model" class="headerlink" title="InnoDB index model"></a>InnoDB index model</h3></li>
+<h2 id="导出与备份"><a href="#导出与备份" class="headerlink" title="导出与备份"></a>导出与备份</h2><ul>
+<li>数据导出: 数据<ul>
+<li>SQL文档<ul>
+<li><code>mysqldump -uroot -p [ no-data ] 逻辑库 &gt; 路径</code></li>
+<li>如果业务数据非常多，建议只导出表结构，然后用SELECT INTO OUTFILE把数据导出成文本文档</li>
+</ul>
+</li>
+<li>文本文档</li>
+</ul>
+</li>
+<li>数据备份: 数据文件、日志文件、索引文件等等</li>
+<li>全量备份, 增量备份</li>
+<li>导入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USE demo ;</span><br><span class="line">SOURCE backup.sql ;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="index"><a href="#index" class="headerlink" title="index"></a>index</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX 索引名 ON 表名( 字段 ) ；</span><br><span class="line">ALTER TABLE 表名称 ADD INDEX [ 索引名 ]( 字段 ) ;</span><br><span class="line">SHOW INDEX FROM 表名 ;</span><br><span class="line">DROP INDEX 索引名称 ON 表名 ;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>different storage engines may have different index implementation.</li>
+<li>不要在大字段上创建索引</li>
+</ul>
+<h3 id="InnoDB-index-model"><a href="#InnoDB-index-model" class="headerlink" title="InnoDB index model"></a>InnoDB index model</h3><ul>
 <li>B+ tree<br><img src="/../image/mysql/3.webp" alt="InnoDB index model"></li>
 <li>primary key index (called clustered index in InnoDB): leaves store records</li>
 <li>non primary key index (called secondary index in InnoDB): leaves store primary key values. If search based on non primary key index, will search the B+ tree of the non primary key index first, find the primary key value, and then search the B+ tree of the primary key index.</li>
@@ -587,7 +710,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-types"><span class="nav-number">2.</span> <span class="nav-text">data types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-number">3.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Date-and-Time"><span class="nav-number">4.</span> <span class="nav-text">Date and Time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Queries"><span class="nav-number">5.</span> <span class="nav-text">Queries</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Database"><span class="nav-number">5.1.</span> <span class="nav-text">Database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Table"><span class="nav-number">5.2.</span> <span class="nav-text">Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Operator"><span class="nav-number">5.3.</span> <span class="nav-text">Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Priority"><span class="nav-number">5.3.1.</span> <span class="nav-text">Priority</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insert"><span class="nav-number">5.4.</span> <span class="nav-text">Insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete"><span class="nav-number">5.5.</span> <span class="nav-text">Delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">5.6.</span> <span class="nav-text">Update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read"><span class="nav-number">5.7.</span> <span class="nav-text">Read</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Join"><span class="nav-number">5.8.</span> <span class="nav-text">Join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-when"><span class="nav-number">5.9.</span> <span class="nav-text">Case when</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#union"><span class="nav-number">5.10.</span> <span class="nav-text">union</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#function"><span class="nav-number">5.11.</span> <span class="nav-text">function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common-table-expression-or-CTE"><span class="nav-number">5.12.</span> <span class="nav-text">common table expression or CTE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execution-Order"><span class="nav-number">5.13.</span> <span class="nav-text">Execution Order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prepared-statement"><span class="nav-number">5.14.</span> <span class="nav-text">Prepared statement</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Constraint"><span class="nav-number">6.</span> <span class="nav-text">Constraint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PK-vs-FK"><span class="nav-number">6.1.</span> <span class="nav-text">PK vs FK</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">7.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log"><span class="nav-number">8.</span> <span class="nav-text">Log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log-in-InnoDB"><span class="nav-number">8.1.</span> <span class="nav-text">Redo Log in InnoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binlog-in-the-server-layer"><span class="nav-number">8.2.</span> <span class="nav-text">binlog in the server layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">8.3.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-restore"><span class="nav-number">8.4.</span> <span class="nav-text">How to restore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">9.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation-Levels"><span class="nav-number">9.1.</span> <span class="nav-text">Isolation Levels</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index"><span class="nav-number">10.</span> <span class="nav-text">index</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB-index-model"><span class="nav-number">10.1.</span> <span class="nav-text">InnoDB index model</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#comments"><span class="nav-number">2.</span> <span class="nav-text">comments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-types"><span class="nav-number">3.</span> <span class="nav-text">data types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Number"><span class="nav-number">4.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-number">5.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Date-and-Time"><span class="nav-number">6.</span> <span class="nav-text">Date and Time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Queries"><span class="nav-number">7.</span> <span class="nav-text">Queries</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Database"><span class="nav-number">7.1.</span> <span class="nav-text">Database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Table"><span class="nav-number">7.2.</span> <span class="nav-text">Table</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#constraints"><span class="nav-number">7.2.1.</span> <span class="nav-text">constraints</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Operator"><span class="nav-number">7.3.</span> <span class="nav-text">Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Priority"><span class="nav-number">7.3.1.</span> <span class="nav-text">Priority</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insert"><span class="nav-number">7.4.</span> <span class="nav-text">Insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete"><span class="nav-number">7.5.</span> <span class="nav-text">Delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">7.6.</span> <span class="nav-text">Update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read"><span class="nav-number">7.7.</span> <span class="nav-text">Read</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Join"><span class="nav-number">7.8.</span> <span class="nav-text">Join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-when"><span class="nav-number">7.9.</span> <span class="nav-text">Case when</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#union"><span class="nav-number">7.10.</span> <span class="nav-text">union</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#function"><span class="nav-number">7.11.</span> <span class="nav-text">function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Number-1"><span class="nav-number">7.11.1.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Time"><span class="nav-number">7.11.2.</span> <span class="nav-text">Time</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#system-time"><span class="nav-number">7.11.2.1.</span> <span class="nav-text">system time</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DATE-FORMAT"><span class="nav-number">7.11.2.2.</span> <span class="nav-text">DATE_FORMAT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DATE-ADD-and"><span class="nav-number">7.11.2.3.</span> <span class="nav-text">DATE_ADD() and</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-1"><span class="nav-number">7.11.3.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Condition"><span class="nav-number">7.11.4.</span> <span class="nav-text">Condition</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common-table-expression-or-CTE"><span class="nav-number">7.12.</span> <span class="nav-text">common table expression or CTE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subquery"><span class="nav-number">7.13.</span> <span class="nav-text">subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execution-Order"><span class="nav-number">7.14.</span> <span class="nav-text">Execution Order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prepared-statement"><span class="nav-number">7.15.</span> <span class="nav-text">Prepared statement</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Constraint"><span class="nav-number">8.</span> <span class="nav-text">Constraint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PK-vs-FK"><span class="nav-number">8.1.</span> <span class="nav-text">PK vs FK</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">9.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log"><span class="nav-number">10.</span> <span class="nav-text">Log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log-in-InnoDB"><span class="nav-number">10.1.</span> <span class="nav-text">Redo Log in InnoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binlog-in-the-server-layer"><span class="nav-number">10.2.</span> <span class="nav-text">binlog in the server layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">10.3.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-restore"><span class="nav-number">10.4.</span> <span class="nav-text">How to restore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">11.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation-Levels"><span class="nav-number">11.1.</span> <span class="nav-text">Isolation Levels</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E4%B8%8E%E5%A4%87%E4%BB%BD"><span class="nav-number">12.</span> <span class="nav-text">导出与备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index"><span class="nav-number">13.</span> <span class="nav-text">index</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB-index-model"><span class="nav-number">13.1.</span> <span class="nav-text">InnoDB index model</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -601,12 +724,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
