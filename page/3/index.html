@@ -145,6 +145,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Microservices/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/Microservices/" class="post-title-link" itemprop="url">Spring Cloud</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-25 19:03:13" itemprop="dateCreated datePublished" datetime="2022-03-25T19:03:13-04:00">2022-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-25 01:17:48" itemprop="dateModified" datetime="2022-04-25T01:17:48-04:00">2022-04-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p>架构风格<br>组件以服务形式来提供<br>服务有独立进程<br>RPC、HTTP远程⽅法调⽤</p>
+<h2 id="Pro"><a href="#Pro" class="headerlink" title="Pro"></a>Pro</h2><p>部署效率<br>易于维护<br>团队协作开发成本<br>系统⾼可⽤性<br>灵活扩展<br>技术栈丰富</p>
+<h2 id="Con"><a href="#Con" class="headerlink" title="Con"></a>Con</h2><p>运维成本过高<br>接口可能不匹配<br>代码可能重复<br>架构复杂度提高<br>tradeoff</p>
+<h2 id="When-to-use"><a href="#When-to-use" class="headerlink" title="When to use"></a>When to use</h2><ul>
+<li>开发的⼈员超过10⼈</li>
+<li>高流量</li>
+<li>业务变化大</li>
+<li>不适合对延迟很敏感的低延迟高并发系统</li>
+</ul>
+<h2 id="How-to-break"><a href="#How-to-break" class="headerlink" title="How to break"></a>How to break</h2><ul>
+<li>纵向拆分：评论，发帖，etc</li>
+<li>横向拆分：用户模块，因为它被到处用</li>
+<li>结合业务综合分析</li>
+<li>每个开发人员所负责的服务不应超过3个</li>
+</ul>
+<h2 id="Two-Streams"><a href="#Two-Streams" class="headerlink" title="Two Streams"></a>Two Streams</h2><h3 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h3><h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><ul>
+<li><p>RPC framework</p>
+</li>
+<li><p>相比REST，效率RPC更高</p>
+</li>
+</ul>
+<h2 id="微服务重要模块"><a href="#微服务重要模块" class="headerlink" title="微服务重要模块"></a>微服务重要模块</h2><h3 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h3><h3 id="注册中⼼"><a href="#注册中⼼" class="headerlink" title="注册中⼼"></a>注册中⼼</h3><h3 id="服务框架"><a href="#服务框架" class="headerlink" title="服务框架"></a>服务框架</h3><h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h3 id="熔断和降级"><a href="#熔断和降级" class="headerlink" title="熔断和降级"></a>熔断和降级</h3><h3 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -541,7 +626,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
