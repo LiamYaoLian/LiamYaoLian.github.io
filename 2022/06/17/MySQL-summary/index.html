@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Overview server layer + storage engine layer server layer connector: connects client to server analyzer: lexical and syntax analysis optimizer: which index to use, which table to be joined first execu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL Summary">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/06/17/MySQL-summary/index.html">
+<meta property="og:site_name" content="Liam Lian&#39;s Blog">
+<meta property="og:description" content="Overview server layer + storage engine layer server layer connector: connects client to server analyzer: lexical and syntax analysis optimizer: which index to use, which table to be joined first execu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liamyaolian.github.io/image/mysql/2.webp">
+<meta property="og:image" content="https://liamyaolian.github.io/image/mysql/1.webp">
+<meta property="og:image" content="https://liamyaolian.github.io/image/mysql/3.webp">
+<meta property="article:published_time" content="2022-06-18T00:25:28.000Z">
+<meta property="article:modified_time" content="2022-06-21T22:23:05.871Z">
+<meta property="article:author" content="Liam Lian">
+<meta property="article:tag" content="DB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liamyaolian.github.io/image/mysql/2.webp">
+
+<link rel="canonical" href="https://liamyaolian.github.io/2022/06/17/MySQL-summary/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>MySQL Summary | Liam Lian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liam Lian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/06/17/MySQL-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL Summary
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-06-17 20:25:28" itemprop="dateCreated datePublished" datetime="2022-06-17T20:25:28-04:00">2022-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-21 18:23:05" itemprop="dateModified" datetime="2022-06-21T18:23:05-04:00">2022-06-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><ul>
+<li>server layer + storage engine layer<ul>
+<li>server layer<ul>
+<li>connector: connects client to server</li>
+<li>analyzer: lexical and syntax analysis</li>
+<li>optimizer: which index to use, which table to be joined first</li>
+<li>executor: execute; update binlog in disk</li>
+</ul>
+</li>
+<li>storage engine: read and store, update redo log<ul>
+<li>engines</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"><span class="comment">/**/</span></span><br></pre></td></tr></table></figure>
+<h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><ul>
+<li>&lt;&gt;, !&#x3D;</li>
+<li>like<ul>
+<li>%: &gt;&#x3D; 0</li>
+<li>_: 1</li>
+</ul>
+</li>
+<li>regexp: <code>ename regexp &quot;[a-zA-Z]&#123;4&#125;&quot;</code></li>
+<li>not, and, or</li>
+</ul>
+<h2 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h2><h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop database (if exists) database_name;</span><br><span class="line">create database database_name;</span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> (if <span class="keyword">exists</span>) database.table_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> database.table_name (                                   </span><br><span class="line">column1 datatype [<span class="keyword">constraint</span>] [comment],                             </span><br><span class="line">column2 datatype [<span class="keyword">constraint</span>] [comment],                             </span><br><span class="line">column3 datatype [<span class="keyword">constraint</span>] [comment],                             </span><br><span class="line">INDEX [ index_name ] ( column_name )                                 </span><br><span class="line"><span class="keyword">foreign</span> key (deptno) <span class="keyword">references</span> t_dept(deptno)                       </span><br><span class="line">....) [comment];                                                     </span><br><span class="line">                                                                                                                                          </span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> database.new_table_name                                 </span><br><span class="line"><span class="keyword">AS</span>                                                                   </span><br><span class="line">(<span class="keyword">SELECT</span> column1, column2,...                                         </span><br><span class="line"><span class="keyword">FROM</span> existing_table_name                                             </span><br><span class="line"><span class="keyword">WHERE</span> ....);                                                         </span><br><span class="line">                                                                     </span><br><span class="line"><span class="keyword">Show</span> tables;  </span><br><span class="line">    </span><br><span class="line"><span class="keyword">describe</span> table_name;                                                 </span><br><span class="line">                                                                     </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name                                               </span><br><span class="line"><span class="keyword">ADD</span> column1 datatype [<span class="keyword">constraint</span>] [COMMENT] ,                        </span><br><span class="line"><span class="keyword">ADD</span> column2 datatype [<span class="keyword">constraint</span>] [COMMENT] ;                        </span><br><span class="line">                                                                     </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name                                               </span><br><span class="line">MODIFY column1 datatype [<span class="keyword">constraint</span>] [COMMENT] ,                     </span><br><span class="line">MODIFY column2 datatype [<span class="keyword">constraint</span>] [COMMENT] ;                     </span><br><span class="line">                                                                     </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name                                               </span><br><span class="line">CHANGE column1 new_column_name1 datatype [<span class="keyword">constraint</span>] [COMMENT] ,    </span><br><span class="line">CHANGE column2 new_column_name2 datatype [<span class="keyword">constraint</span>] [COMMENT] ;    </span><br><span class="line">                                                                     </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name                                               </span><br><span class="line"><span class="keyword">DROP</span> column1 ,                                                       </span><br><span class="line"><span class="keyword">DROP</span> column2 ;                                                       </span><br><span class="line">                                                                     </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name RENAME new_table_name ;                       </span><br><span class="line">```            </span><br><span class="line"></span><br><span class="line">#### constraints</span><br><span class="line"><span class="operator">*</span> <span class="keyword">PRIMARY</span> KEY</span><br><span class="line"><span class="operator">*</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line"><span class="operator">*</span> <span class="keyword">UNIQUE</span></span><br><span class="line"><span class="operator">*</span> <span class="keyword">FOREIGN</span> KEY           </span><br><span class="line"></span><br><span class="line">### <span class="keyword">Insert</span></span><br><span class="line">```<span class="keyword">SQL</span>                                                                                     </span><br><span class="line"><span class="comment">/*IGNORE: only insert records that do not exist*/</span>                                          </span><br><span class="line"><span class="keyword">INSERT</span> [ IGNORE ] <span class="keyword">INTO</span> table_name [(column1 ,column2, ...)] <span class="keyword">VALUES</span> (value1, value2, ...);  </span><br><span class="line">                                                                                           </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name （column_name）(                                                      </span><br><span class="line"><span class="keyword">SELECT</span> column_name                                                                         </span><br><span class="line"><span class="keyword">FROM</span> table_name                                                                            </span><br><span class="line"><span class="keyword">WHERE</span> 条件);                                                                                 </span><br><span class="line">                                                                                                                                                                                      </span><br><span class="line"><span class="comment">/*MySQL dialect*/</span>                                                                          </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name <span class="keyword">SET</span> column1<span class="operator">=</span>value1, column2<span class="operator">=</span>value2, ...... ;      </span><br><span class="line"></span><br><span class="line"><span class="comment">/* key: UNIQUE index or PRIMARY KEY */</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> demo.goodsmaster                                          </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span>                                                              </span><br><span class="line"><span class="keyword">FROM</span> demo.goodsmaster1 <span class="keyword">as</span> a                                           </span><br><span class="line"><span class="keyword">ON</span> DUPLICATE KEY <span class="keyword">UPDATE</span> barcode <span class="operator">=</span> a.barcode, goodsname<span class="operator">=</span>a.goodsname;                      </span><br><span class="line">```        </span><br><span class="line"></span><br><span class="line">### <span class="keyword">Delete</span></span><br><span class="line">```mysql                                                                                         </span><br><span class="line"><span class="comment">/* ignore: if foreign key exists so some records cannot be deleted, will ignore these records  */</span></span><br><span class="line"><span class="keyword">DELETE</span> [ IGNORE ] <span class="keyword">FROM</span> table_name [ <span class="keyword">LEFT</span> <span class="operator">|</span> <span class="keyword">RIGHT</span> ] <span class="keyword">JOIN</span> table_name2 <span class="keyword">ON</span> conditions                </span><br><span class="line"><span class="keyword">WHERE</span> conditions                                                                                 </span><br><span class="line">[ <span class="keyword">ORDER</span> <span class="keyword">BY</span> ... ]                                                                                 </span><br><span class="line">[ LIMIT ... ] ;                                                                                  </span><br><span class="line">                                                                                                 </span><br><span class="line"><span class="comment">/*delete all*/</span>                                                                                   </span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> demo.goodsmaster; <span class="operator">/</span><span class="operator">/</span> undo log                                                        </span><br><span class="line"><span class="keyword">Truncate</span> <span class="keyword">table</span> table_name; <span class="operator">/</span><span class="operator">/</span> <span class="keyword">no</span> <span class="keyword">in</span> undo log                                                     </span><br><span class="line">```          </span><br><span class="line"></span><br><span class="line">### <span class="keyword">Update</span></span><br><span class="line">```                                                     </span><br><span class="line">                                                        </span><br><span class="line"><span class="keyword">UPDATE</span> table_name   </span><br><span class="line">[<span class="keyword">left</span> <span class="operator">|</span> <span class="keyword">right</span>] <span class="keyword">join</span> table_name2</span><br><span class="line"><span class="keyword">on</span> conditions                                    </span><br><span class="line"><span class="keyword">SET</span> column_name <span class="operator">=</span> <span class="keyword">value</span>                                               </span><br><span class="line"><span class="keyword">WHERE</span> 条件                                                </span><br><span class="line">[ <span class="keyword">ORDER</span> <span class="keyword">BY</span> ... ]                                         </span><br><span class="line">[ LIMIT param ] ; <span class="comment">/*can only have one param*/</span>           </span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">### Read</span><br><span class="line">```                                    </span><br><span class="line">                                       </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="operator">|</span> [<span class="keyword">DISTINCT</span>] column_name                 </span><br><span class="line"><span class="keyword">FROM</span> table_name                        </span><br><span class="line"><span class="keyword">WHERE</span> conditions                       </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> column_name                   </span><br><span class="line"><span class="keyword">HAVING</span> conditions                      </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> column_name                   </span><br><span class="line">LIMIT [<span class="keyword">offset</span>,] row_count                 </span><br></pre></td></tr></table></figure>
+<h4 id="Join"><a href="#Join" class="headerlink" title="Join"></a>Join</h4><ul>
+<li>inner join</li>
+<li>left join, right join<ul>
+<li>If there is no match, the columns of the row from the right&#x2F;left table will contain NULL</li>
+</ul>
+</li>
+<li>Full (outer) Join<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM t1                                                                                     </span><br><span class="line">LEFT JOIN t2 ON t1.id = t2.id                                                                        </span><br><span class="line">UNION ALL                                                                                            </span><br><span class="line">SELECT * FROM t1                                                                                     </span><br><span class="line">RIGHT JOIN t2 ON t1.id = t2.id                                                                       </span><br><span class="line">WHERE t1.id IS NULL                                                                                  </span><br><span class="line">```                                                                                                  </span><br><span class="line">* cross join</span><br><span class="line">* self join</span><br><span class="line"></span><br><span class="line">#### Group by</span><br><span class="line">* The number of dimension column you selected can not larger than that of followed by clause group by</span><br><span class="line">* GROUP_CONCAT函数可以把分组查询中的某个字段拼接成一个字符串 // TODO</span><br><span class="line">#### Limit</span><br><span class="line">* `limit 1, 2`: 1 means starting from 1 (included, first row is 0); 2 means returning 2 records</span><br><span class="line">#### aggregation function</span><br><span class="line">* AVG: ignore null, 只能用于数字类型</span><br><span class="line">* COUNT</span><br><span class="line">    - COUNT(*) to count the number of rows in a table</span><br><span class="line">    - COUNT(column) ignores NULL values</span><br><span class="line">* MAX: ignore null</span><br><span class="line">* MIN: ignore null</span><br><span class="line">* SUM: ignore null, 只能用于数字类型</span><br><span class="line">* for each group</span><br><span class="line">* can put `Distinct` inside (), such as `count(DISTINCT prod_price)`</span><br><span class="line">#### Window functions</span><br><span class="line">// TODO</span><br></pre></td></tr></table></figure>
+window_function_name(expression) OVER (<br>[PARTITION BY <expression>[{,<expression>…}]]<br>[ORDER BY <expression> [ASC|DESC], [{,<expression>…}]] &#x2F;&#x2F; how the rows are ordered within a partition<br>[frame_unit {<frame_start>|<frame_between>}]<br>)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">* frame_unit: row | range</span><br><span class="line">* frame_start</span><br><span class="line">  - UNBOUNDED PRECEDING: frame starts at the first row of the partition.</span><br><span class="line">  - N PRECEDING: a physical N of rows before the first current row.</span><br><span class="line">  - CURRENT ROW</span><br><span class="line">* frame_between: `BETWEEN frame_boundary_1 AND frame_boundary_2`</span><br><span class="line">  - frame_start</span><br><span class="line">  - UNBOUNDED FOLLOWING</span><br><span class="line">  - N FOLLOWING</span><br><span class="line">* default: `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`</span><br><span class="line">* functions</span><br><span class="line">  - Aggregate: Count, Sum, Avg, Min, Max</span><br><span class="line">  - Offset:</span><br><span class="line">    - first_value(column_name)</span><br><span class="line">    - last_value(column_name)</span><br><span class="line">    - lead(&lt;expression&gt;[,offset[, default_value]]): running diff, e.g. y-o-y; If offset is zero, then the LAG() function evaluates the expression for the current row. If you don’t specify the offset, then the LAG() function uses one by default.</span><br><span class="line">    - lag(&lt;expression&gt;[,offset[, default_value]]): running diff, e.g. y-o-y</span><br><span class="line"></span><br><span class="line">  - Rank</span><br><span class="line">    - row_number: Assigns a sequential integer to every row within its partition; application: Removing duplicate rows</span><br><span class="line">    - rank</span><br><span class="line">    - dense_rank   </span><br><span class="line"></span><br><span class="line">### Case when</span><br><span class="line">```sql                                                                                   </span><br><span class="line">CASE WHEN [compare_value] THEN result                                                    </span><br><span class="line">[WHEN [compare_value] THEN result ...]                                                   </span><br><span class="line">[ELSE result] END (AS new_column)                                                        </span><br><span class="line">```                                                                                      </span><br><span class="line">* CASE WHEN case be used in any statement</span><br><span class="line"></span><br><span class="line">### union</span><br><span class="line">* union removes duplicates</span><br><span class="line">* union all</span><br><span class="line">* only one order by statement can be used, which is after the final select statement</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### Column Alias</span><br><span class="line">* It is not permissible to refer to a column alias in a WHERE clause, because the column value might not yet be determined when the WHERE clause is executed. </span><br><span class="line"></span><br><span class="line">### Table Alias</span><br><span class="line">* derived table must have an alias  </span><br><span class="line"></span><br><span class="line">### function</span><br><span class="line">#### Number</span><br><span class="line">* abs</span><br><span class="line">* round</span><br><span class="line">* floor</span><br><span class="line">* ceil</span><br><span class="line">* power(2,3)</span><br><span class="line">* log(7,3)</span><br><span class="line">* ln(10)</span><br><span class="line">* sqrt(9)</span><br><span class="line">* pi()</span><br><span class="line">* sin</span><br><span class="line">* cos</span><br><span class="line">* tan</span><br><span class="line">* cot</span><br><span class="line">* radians(30): 角度转换弧度</span><br><span class="line">* DEGREES(1): 弧度转换角度   </span><br><span class="line">#### Time</span><br><span class="line">##### system time</span><br><span class="line">* now(): yyyy-MM-dd hh:mm:ss</span><br><span class="line">* curdate(): yyyy-MM-dd</span><br><span class="line">* curtime(): hh:mm:ss        </span><br><span class="line">##### DATE_FORMAT</span><br><span class="line">* DATE_FORMAT(日期, 表达式)      </span><br><span class="line">  %Y 年份                       </span><br><span class="line">  %m 月份                       </span><br><span class="line">  %d 日期                       </span><br><span class="line">  %w 星期(数字)                   </span><br><span class="line">  %W 星期(名称)                   </span><br><span class="line">  %j 本年第几天                    </span><br><span class="line">  %U 本年第几周                    </span><br><span class="line">  %h 小时(12)                   </span><br><span class="line">  %H 小时(24)                   </span><br><span class="line">  %i 分钟                       </span><br><span class="line">  %s 秒                        </span><br><span class="line">  %r 时间(12)                   </span><br><span class="line">  %T 时间(24)               </span><br><span class="line">##### DATE_ADD() and DATEDIFF</span><br><span class="line">* DATE_ADD( 日期 , INTERVAL 15 DAY )</span><br><span class="line">* DATEDIFF ( 日期 , 日期 )</span><br><span class="line">#### String</span><br><span class="line">LOWER                                                                                                                      </span><br><span class="line">UPPER                                                                                                                      </span><br><span class="line">LENGTH                                                                                                                     </span><br><span class="line">SELECT CONCAT(&quot;SQL &quot;, &quot;Tutorial &quot;, &quot;is &quot;, &quot;fun!&quot;) AS ConcatenatedString                                                    </span><br><span class="line">SELECT INSTR(&quot;W3Schools.com&quot;, &quot;3&quot;) AS MatchPosition: 2                                                                     </span><br><span class="line">SELECT INSERT(&quot;W3Schools.com&quot;, 1, 9, &quot;Example&quot;): Example.com                                                               </span><br><span class="line">REPLACE(&quot;你好先生&quot;,&quot;先生&quot;,&quot;女士&quot;)                                                                                                  </span><br><span class="line">SELECT SUBSTR(&quot;SQL Tutorial&quot;, 5, 3) AS ExtractString: Tut                                                                  </span><br><span class="line">SELECT SUBSTRING(&quot;SQL Tutorial&quot;, 5, 3) AS ExtractString: Tut                                                               </span><br><span class="line">SELECT LPAD(&quot;SQL Tutorial&quot;, 20, &quot;ABC&quot;): ABCABCABSQL Tutorial; Left-pad the string with &quot;ABC&quot;, to a total length of 20.     </span><br><span class="line">RPAD(&quot;Hello&quot;,10,&quot;*&quot;)                                                                                                       </span><br><span class="line">TRIM(&quot; 你好先生 &quot;)</span><br><span class="line">#### Condition</span><br><span class="line">IFNULL(expresssion, value)                                                                                                 </span><br><span class="line">IF(expression, value1, value2)    </span><br><span class="line"></span><br><span class="line">### CTE</span><br><span class="line">```sql</span><br><span class="line">WITH RECURSIVE cte_name AS (                                                   </span><br><span class="line">    initial_query  -- anchor member                                            </span><br><span class="line">    UNION ALL                                                                  </span><br><span class="line">    recursive_query -- recursive member that references to the CTE name        </span><br><span class="line">)                                                                              </span><br><span class="line">SELECT * FROM cte_name;                                                        </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>to do: <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-recursive-cte/">https://www.mysqltutorial.org/mysql-recursive-cte/</a></p>
+<h3 id="subquery"><a href="#subquery" class="headerlink" title="subquery"></a>subquery</h3><ul>
+<li>can be in “select”, “from”, “where”</li>
+<li>in “from” will have high efficiency, avoid being in “select” or “where”. 查询语句执行的时候要多次的依赖于子查询的结果，这类子查询被<br>称作相关子查询</li>
+<li>多行子查询只能出现在WHERE子句和FROM子句中</li>
+</ul>
+<h3 id="Execution-Order"><a href="#Execution-Order" class="headerlink" title="Execution Order"></a>Execution Order</h3><p>From &gt; join &gt; Where &gt; group by &gt; having &gt; select &gt; distinct &gt; order by &gt; limit                                           </p>
+<h2 id="Constraint"><a href="#Constraint" class="headerlink" title="Constraint"></a>Constraint</h2><h3 id="PK-vs-FK"><a href="#PK-vs-FK" class="headerlink" title="PK vs FK"></a>PK vs FK</h3><ul>
+<li>PK<ul>
+<li>unique</li>
+<li>not null</li>
+<li>one but can be multiple columns</li>
+<li>can use AUTO_INCREMENT</li>
+<li>Manual assignment: choose the largest ID, add 1 to make the new ID for the new record<ul>
+<li>why: multiple servers, auto_increment will cause duplicates; don’t use business field as PK because the business field may be reused or have duplicates</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>FK<ul>
+<li>primary key in another table</li>
+<li>can be null</li>
+<li>can have more than one FK</li>
+<li>如果形成外键闭环，我们将无法删除任何一张表的记录</li>
+</ul>
+</li>
+</ul>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><ul>
+<li>read-only, no storage<br>&#x2F;&#x2F; TODO</li>
+</ul>
+<h2 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h2><h3 id="General"><a href="#General" class="headerlink" title="General"></a>General</h3><ul>
+<li>connection start and end time, all instructions to server   <h3 id="Slow"><a href="#Slow" class="headerlink" title="Slow"></a>Slow</h3></li>
+<li>my.ini, restart after modifying my.ini <h3 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h3><h3 id="binary-log-in-the-server-layer"><a href="#binary-log-in-the-server-layer" class="headerlink" title="binary log in the server layer"></a>binary log in the server layer</h3></li>
+<li>Has statement-based logging: Events contain SQL statements that produce data changes (inserts, updates, deletes)</li>
+<li>append    </li>
+<li>for back up<h3 id="Relay-Bin-Log"><a href="#Relay-Bin-Log" class="headerlink" title="Relay Bin Log"></a>Relay Bin Log</h3></li>
+<li>on slave server, read bin log from master server and write into  <h3 id="Undo-log"><a href="#Undo-log" class="headerlink" title="Undo log"></a>Undo log</h3></li>
+<li>record what data look like before change, allowing rollback and allowing other transactions to read what data look like before it is changed by this transaction</li>
+<li>When there are no read-views earlier than this undo log record, it will be deleted.<br><img src="/../image/mysql/2.webp" alt="undo log and read-view"><h3 id="Redo-Log-in-InnoDB"><a href="#Redo-Log-in-InnoDB" class="headerlink" title="Redo Log in InnoDB"></a>Redo Log in InnoDB</h3></li>
+<li>used to recover modification of unfinished transaction</li>
+<li>Write-ahead logging<ul>
+<li>write to redo log, update memory, then disk</li>
+<li>when the redo log is full, move to disk to clean some space</li>
+</ul>
+</li>
+</ul>
+<p>InnoDB prepares redo log. Executor updates binlog. InnoDB commits redo log. </p>
+<h3 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h3><ul>
+<li>行锁是在需要的时候才加上的，等到事务结束时才释放。如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。</li>
+<li>Dead lock<ul>
+<li>发起死锁检测（默认innodb_deadlock_detect&#x3D;ON），发现死锁后，InnoDB自动回滚死锁链条中的某一个事务，让其他事务得以继续执行。如果并发能够控制住，比如同一行同时最多只有 10 个线程在更新，那么死锁检测的成本很低</li>
+<li>你可以考虑通过将一行改成逻辑上的多行来减少锁冲突。还是以影院账户为例，可以考虑放在多条记录上，比如 10 个记录，影院的账户总额等于这 10 个记录的值的总和。<br>这样每次要给影院账户加金额的时候，随机选其中一条记录来加。这样每次冲突概率变成原来的 1&#x2F;10，可以减少锁等待个数，也就减少了死锁检测的 CPU 消耗。<h3 id="Isolation-Levels"><a href="#Isolation-Levels" class="headerlink" title="Isolation Levels"></a>Isolation Levels</h3></li>
+</ul>
+</li>
+<li>read uncommitted: no read-view.</li>
+<li>read committed: a read-view is created when a SQL query of transaction B executes</li>
+<li>repeatable read: a read-view is created when the transaction B executes “select” so the undo log has data, so data seen in this transaction are the same as what they were when this transaction started.</li>
+<li>serializable: read and write will add lock. After a transaction finishes, another transaction can execute.<br><img src="/../image/mysql/1.webp" alt="isolation levels"><br>Source: <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/68963">https://time.geekbang.org/column/article/68963</a></li>
+</ul>
+<h2 id="index"><a href="#index" class="headerlink" title="index"></a>index</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX 索引名 ON table_name( column_name ) ；</span><br><span class="line">ALTER TABLE table_name称 ADD INDEX [ index_name ]( column_name ) ;</span><br><span class="line">SHOW INDEX FROM table_name ;</span><br><span class="line">DROP INDEX index_name ON table_name ;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>different storage engines may have different index implementation.</li>
+<li>Clustered index: defines the physical order in which table records are stored in a database; one clustered index per table; by default is PK</li>
+<li>Secondary index</li>
+<li>Multiple-column index<ul>
+<li>leftmost prefix rule</li>
+<li>if filter a field by a range, the field after this field in the multiple-column index will not be filtered by using the multiple-column index any longer.<br>For example, index is (branchnumber, cashiernumber, itemnumber), <code>branchnumber &gt; 10 AND cashiernumber = 1 AND itemnumber = 100</code>: will use index to filter branchnuber,<br>but when filtering cashiernumber, it will not use the index (branchnumber, cashiernumber)</li>
+</ul>
+</li>
+<li>If there are multiple indexes, MySQL will choose the best</li>
+<li>Don’t create an index on a big field</li>
+</ul>
+<h3 id="InnoDB-index-model"><a href="#InnoDB-index-model" class="headerlink" title="InnoDB index model"></a>InnoDB index model</h3><ul>
+<li>B+ tree<br><img src="/../image/mysql/3.webp" alt="InnoDB index model"></li>
+<li>primary key index (called clustered index in InnoDB): leaves store records</li>
+<li>non primary key index (called secondary index in InnoDB): leaves store primary key values. If search based on non primary key index, will search the B+ tree of the non primary key index first, find the primary key value, and then search the B+ tree of the primary key index.</li>
+<li>index maintenance<ul>
+<li>inserting may cause some records to be moved</li>
+<li>if a data page is full, inserting will create a new data page</li>
+</ul>
+</li>
+</ul>
+<h2 id="Paradigm"><a href="#Paradigm" class="headerlink" title="Paradigm"></a>Paradigm</h2><ul>
+<li>First: atomic: cannot be separated further</li>
+<li>Second: every record has a unique identifier; every field depends on the full PK rather than part of PK</li>
+<li>Third: cannot have field that depends on non-PK</li>
+<li>Business-first: may not obey paradigm 3</li>
+</ul>
+<h2 id="ER"><a href="#ER" class="headerlink" title="ER"></a>ER</h2><ul>
+<li>One entity -&gt; a table</li>
+<li>M-N -&gt; a table</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DB/" rel="tag"># DB</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/14/Redis-Summary/" rel="prev" title="Redis Summary">
+      <i class="fa fa-chevron-left"></i> Redis Summary
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/08/DRY/" rel="next" title="DRY">
+      DRY <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comments"><span class="nav-number">2.</span> <span class="nav-text">Comments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operator"><span class="nav-number">3.</span> <span class="nav-text">Operator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL"><span class="nav-number">4.</span> <span class="nav-text">DDL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Database"><span class="nav-number">4.1.</span> <span class="nav-text">Database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Table"><span class="nav-number">4.2.</span> <span class="nav-text">Table</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Join"><span class="nav-number">4.2.1.</span> <span class="nav-text">Join</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subquery"><span class="nav-number">4.3.</span> <span class="nav-text">subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execution-Order"><span class="nav-number">4.4.</span> <span class="nav-text">Execution Order</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Constraint"><span class="nav-number">5.</span> <span class="nav-text">Constraint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PK-vs-FK"><span class="nav-number">5.1.</span> <span class="nav-text">PK vs FK</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">6.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log"><span class="nav-number">7.</span> <span class="nav-text">Log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#General"><span class="nav-number">7.1.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slow"><span class="nav-number">7.2.</span> <span class="nav-text">Slow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Error"><span class="nav-number">7.3.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binary-log-in-the-server-layer"><span class="nav-number">7.4.</span> <span class="nav-text">binary log in the server layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relay-Bin-Log"><span class="nav-number">7.5.</span> <span class="nav-text">Relay Bin Log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-number">7.6.</span> <span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log-in-InnoDB"><span class="nav-number">7.7.</span> <span class="nav-text">Redo Log in InnoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock"><span class="nav-number">7.8.</span> <span class="nav-text">Lock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Isolation-Levels"><span class="nav-number">7.9.</span> <span class="nav-text">Isolation Levels</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index"><span class="nav-number">8.</span> <span class="nav-text">index</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB-index-model"><span class="nav-number">8.1.</span> <span class="nav-text">InnoDB index model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paradigm"><span class="nav-number">9.</span> <span class="nav-text">Paradigm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ER"><span class="nav-number">10.</span> <span class="nav-text">ER</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam Lian</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam Lian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
