@@ -145,6 +145,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/20/Other-Backend-Topics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/20/Other-Backend-Topics/" class="post-title-link" itemprop="url">Other Backend Topics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-04-20 18:49:54 / Modified: 18:57:42" itemprop="dateCreated datePublished" datetime="2022-04-20T18:49:54-04:00">2022-04-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><ul>
+<li>a container to install the program and its environment<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3></li>
+<li>镜像类似于Java中的类，而容器就是实例</li>
+<li>容器可修改，镜像不可修改</li>
+<li>同一个镜像可生成多个容器独立运行，他们之间没有任何干扰<h3 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h3></li>
+<li>client提供给用户一个终端，用户输入 Docker 提供的命令来管理本地或远程的服务器<h3 id="Daemon"><a href="#Daemon" class="headerlink" title="Daemon"></a>Daemon</h3></li>
+<li>Daemon：服务端守护进程，接收 Client 发送的命令并执行相应的操作<h3 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h3></li>
+<li>download images<ul>
+<li>docker pull [OPTIONS] NAME[:TAG]</li>
+<li>docker images [OPTIONS] [REPOSITORY[:TAG]]</li>
+</ul>
+</li>
+<li>docker run [OPTIONS] IMAGE [COMMAND] [ARG…]</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/19/MyBatis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2668,88 +2740,6 @@ SELECT * FROM t1<br>LEFT JOIN t2 ON t1.id &#x3D; t2.id<br>UNION ALL<br>SELECT * 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/ORM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/ORM/" class="post-title-link" itemprop="url">ORM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-25 19:06:05 / Modified: 19:13:58" itemprop="dateCreated datePublished" datetime="2022-03-25T19:06:05-04:00">2022-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/framework-fundamental/" itemprop="url" rel="index"><span itemprop="name">framework fundamental</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><ul>
-<li>table -&gt; class</li>
-<li>record -&gt; object</li>
-<li>field -&gt; attribute</li>
-</ul>
-<h2 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h2><ul>
-<li>use MVC as architecture</li>
-<li>automation</li>
-<li>more flexibility for programming</li>
-</ul>
-<h2 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h2><ul>
-<li>need time to config</li>
-<li>as to complex queries, hard to write or will have worse performance than SQL</li>
-<li>hide the details about how to manipulate databases</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2819,7 +2809,7 @@ SELECT * FROM t1<br>LEFT JOIN t2 ON t1.id &#x3D; t2.id<br>UNION ALL<br>SELECT * 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
