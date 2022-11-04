@@ -28,7 +28,7 @@
 <meta property="og:description" content="JWT server authenticates (correct username and password) server encrypts userId and expiresIn by ACCESS_TOKEN_SECRET to generate access token12const accessToken &#x3D;jwt.sign( &amp;#123;userId&amp;#125;, ACCESS_T">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-11-04T14:41:58.000Z">
-<meta property="article:modified_time" content="2022-11-04T15:31:14.786Z">
+<meta property="article:modified_time" content="2022-11-04T15:33:14.391Z">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
@@ -174,7 +174,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-11-04 10:41:58 / Modified: 11:31:14" itemprop="dateCreated datePublished" datetime="2022-11-04T10:41:58-04:00">2022-11-04</time>
+              <time title="Created: 2022-11-04 10:41:58 / Modified: 11:33:14" itemprop="dateCreated datePublished" datetime="2022-11-04T10:41:58-04:00">2022-11-04</time>
             </span>
 
           
@@ -210,6 +210,12 @@
 </ul>
 <ul>
 <li>after logout, cannot invalidate token immediately</li>
+</ul>
+<ul>
+<li>Anti-pattern</li>
+</ul>
+<ul>
+<li>JWT token should contain user information instead of data authorized</li>
 </ul>
 <h1 id="Session-Cookie"><a href="#Session-Cookie" class="headerlink" title="Session Cookie"></a>Session Cookie</h1><ol>
 <li>server authenticates (correct username and password)</li>
