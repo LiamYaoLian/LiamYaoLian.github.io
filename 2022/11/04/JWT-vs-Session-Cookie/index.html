@@ -20,15 +20,19 @@
     var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Liam Lian&#39;s Blog">
-<meta property="og:url" content="https://liamyaolian.github.io/archives/page/2/index.html">
+  <meta name="description" content="JWT server authenticates (correct username and password) server encrypts userId and expiresIn by ACCESS_TOKEN_SECRET to generate access token12const accessToken &#x3D;jwt.sign( &amp;#123;userId&amp;#125;, ACCESS_T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JWT vs Session Cookie">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/11/04/JWT-vs-Session-Cookie/index.html">
 <meta property="og:site_name" content="Liam Lian&#39;s Blog">
+<meta property="og:description" content="JWT server authenticates (correct username and password) server encrypts userId and expiresIn by ACCESS_TOKEN_SECRET to generate access token12const accessToken &#x3D;jwt.sign( &amp;#123;userId&amp;#125;, ACCESS_T">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-04T14:41:58.000Z">
+<meta property="article:modified_time" content="2022-11-04T15:31:14.786Z">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://liamyaolian.github.io/archives/page/2/">
+<link rel="canonical" href="https://liamyaolian.github.io/2022/11/04/JWT-vs-Session-Cookie/">
 
 
 <script id="page-configurations">
@@ -36,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | Liam Lian's Blog</title>
+  <title>JWT vs Session Cookie | Liam Lian's Blog</title>
   
 
 
@@ -139,234 +143,111 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 27 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/04/JWT-vs-Session-Cookie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JWT vs Session Cookie
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-04 10:41:58 / Modified: 11:31:14" itemprop="dateCreated datePublished" datetime="2022-11-04T10:41:58-04:00">2022-11-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-22T13:53:00-04:00"
-              content="2022-04-22">
-          04-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/22/Spring-MVC/" itemprop="url">
-            <span itemprop="name">Spring MVC</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-20T18:49:54-04:00"
-              content="2022-04-20">
-          04-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/20/Other-Backend-Topics/" itemprop="url">
-            <span itemprop="name">Other Backend Topics</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-19T17:12:44-04:00"
-              content="2022-04-19">
-          04-19
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/19/MyBatis/" itemprop="url">
-            <span itemprop="name">MyBatis</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-19T16:46:32-04:00"
-              content="2022-04-19">
-          04-19
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/19/jQuery/" itemprop="url">
-            <span itemprop="name">jQuery</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-17T19:23:29-04:00"
-              content="2022-04-17">
-          04-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/17/Java-Web/" itemprop="url">
-            <span itemprop="name">Java Web</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-12T17:43:13-04:00"
-              content="2022-04-12">
-          04-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/12/Java-Core-Test/" itemprop="url">
-            <span itemprop="name">Java Core Test</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-07T20:25:28-04:00"
-              content="2022-04-07">
-          04-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/07/MySQL/" itemprop="url">
-            <span itemprop="name">MySQL</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-07T17:51:29-04:00"
-              content="2022-04-07">
-          04-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/07/Design-Pattern/" itemprop="url">
-            <span itemprop="name">Design Pattern</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-26T13:13:23-04:00"
-              content="2022-03-26">
-          03-26
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/26/OOD/" itemprop="url">
-            <span itemprop="name">OOD</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-25T21:58:28-04:00"
-              content="2022-03-25">
-          03-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/25/Project-SpringBoot-E-commerce/" itemprop="url">
-            <span itemprop="name">Project: SpringBoot E-commerce</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h1><ol>
+<li>server authenticates (correct username and password)</li>
+<li>server encrypts userId and expiresIn by ACCESS_TOKEN_SECRET to generate access token<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> accessToken =</span><br><span class="line">jwt.<span class="title function_">sign</span>( &#123;userId&#125;, <span class="variable constant_">ACCESS_TOKEN_SECRET</span>, &#123;<span class="attr">expiresIn</span>: <span class="string">&quot;15m&quot;</span>&#125; )</span><br></pre></td></tr></table></figure></li>
+<li>server sends access token to browser</li>
+<li>browser saves access token</li>
+<li>browser sends access token in subsequent requests</li>
+<li>server gets access token from request header</li>
+<li>server decrypt access token to get user id<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jwt.<span class="title function_">verify</span>( accessToken, <span class="variable constant_">ACCESS_TOKEN_SECRET</span>, <span class="function">(<span class="params">err, user</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="variable language_">console</span>.<span class="title function_">log</span>(err) <span class="comment">// eg. invalid token, or expired token</span></span><br><span class="line">req.<span class="property">user</span> = user</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>server uses user id to look up persisted data, such as data in shoppingCartDB</li>
+</ol>
+<ul>
+<li>Pro</li>
+</ul>
+<ul>
+<li>No DB call required to get user id, so it’s faster</li>
+<li>No need for shared session DB, can horizontally scale</li>
+</ul>
+<ul>
+<li>Con</li>
+</ul>
+<ul>
+<li>after logout, cannot invalidate token immediately</li>
+</ul>
+<h1 id="Session-Cookie"><a href="#Session-Cookie" class="headerlink" title="Session Cookie"></a>Session Cookie</h1><ol>
+<li>server authenticates (correct username and password)</li>
+<li>server generates session id (signed with “secret key”)<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>( session (&#123; <span class="attr">secret</span>: “secret key”&#125;) )</span><br></pre></td></tr></table></figure></li>
+<li>server saves session id in session DB</li>
+<li>server sends cookie with session id to browser</li>
+<li>browser saves cookie in cookie storage</li>
+<li>browser sends cookie in subsequent requests</li>
+<li>server gets session id from the request cookie.</li>
+<li>server verifies session Id integrity using “secret key” and looks<br>up in session DB to get user id<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">session</span>.<span class="property">id</span>)      <span class="comment">// get sessionId</span></span><br><span class="line">   <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">session</span>.<span class="property">cookie</span>)  <span class="comment">// get cookie</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>server uses user id to look up persisted data, such as data in shoppingCartDB</li>
+</ol>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/30/Principle/" rel="prev" title="Principle">
+      <i class="fa fa-chevron-left"></i> Principle
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -418,6 +299,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JWT"><span class="nav-number">1.</span> <span class="nav-text">JWT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Session-Cookie"><span class="nav-number">2.</span> <span class="nav-text">Session Cookie</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -145,6 +145,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Distributed-Transaction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/Distributed-Transaction/" class="post-title-link" itemprop="url">Distributed Transaction</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-25 19:56:36 / Modified: 20:55:42" itemprop="dateCreated datePublished" datetime="2022-03-25T19:56:36-04:00">2022-03-25</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><p>a programming execution unit to manipulate data in the databases</p>
+<ul>
+<li>Atomic: all succeed or all fail</li>
+<li>Consistency: does not change the data integrity of database. ?</li>
+<li>Isolation: not disturb other transactions</li>
+<li>Durability: permanently change</li>
+</ul>
+<h3 id="Isolation"><a href="#Isolation" class="headerlink" title="Isolation"></a>Isolation</h3><ul>
+<li>Read uncommitted</li>
+<li>Read committed: ?</li>
+<li>Repeatable read: ?</li>
+<li>Serializable: ?</li>
+</ul>
+<h2 id="How-to-ensure-ACID"><a href="#How-to-ensure-ACID" class="headerlink" title="How to ensure ACID"></a>How to ensure ACID</h2><p>InnoDB:</p>
+<ul>
+<li>A: Undo log</li>
+<li>C: Undo log</li>
+<li>I: lock</li>
+<li>D: Redo log</li>
+</ul>
+<h3 id="Undo-log"><a href="#Undo-log" class="headerlink" title="Undo log"></a>Undo log</h3><p>record data before manipulation in undo log, rollback</p>
+<h3 id="Redo-log"><a href="#Redo-log" class="headerlink" title="Redo log"></a>Redo log</h3><p>record new data in redo log</p>
+<h3 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h3><h2 id="Dirty-Read"><a href="#Dirty-Read" class="headerlink" title="Dirty Read"></a>Dirty Read</h2><h2 id="Phantom-Read"><a href="#Phantom-Read" class="headerlink" title="Phantom Read"></a>Phantom Read</h2><h2 id="Unrepeatable-Read"><a href="#Unrepeatable-Read" class="headerlink" title="Unrepeatable Read"></a>Unrepeatable Read</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><ul>
+<li>Make sure data consistent in sub-system.</li>
+<li>A big operation consists of small operations on many nodes. Make sure all succeed or fail.</li>
+<li>Example: Create order and decrement stock count. All succeed or fail.</li>
+</ul>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><ul>
+<li>Multiple databases</li>
+<li>Sharding</li>
+<li>Microservices</li>
+</ul>
+<h2 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h2><ul>
+<li>Consistency: all nodes see the same data at the same time.</li>
+<li>Availability: return normal result (success or failure) within reasonable time</li>
+<li>Partition tolerance: ?<br>CP or AP<br>Money: CP<br>Internet: AP</li>
+</ul>
+<h3 id="Consistency"><a href="#Consistency" class="headerlink" title="Consistency"></a>Consistency</h3><ul>
+<li>Strong: The data in all nodes is the same at any time</li>
+<li>Weak: ?</li>
+<li>Eventual: ?</li>
+</ul>
+<h2 id="BASE"><a href="#BASE" class="headerlink" title="BASE"></a>BASE</h2><p>For AP<br>Eventual instead of strong consistency</p>
+<ul>
+<li>Basically available: some available: longer response time; lose some functions</li>
+<li>Soft state: allow middle state, 即允许系统在不同节点的数据副本之间进⾏数据同步的过程存在延时</li>
+<li>Eventually consistent: ?</li>
+</ul>
+<h3 id="BASE-vs-ACID"><a href="#BASE-vs-ACID" class="headerlink" title="BASE vs ACID"></a>BASE vs ACID</h3><ul>
+<li>ACID: strong consistency</li>
+<li>BASE: sacrifice consistency for availability</li>
+</ul>
+<h2 id="How-to-solve-the-consistency-problem"><a href="#How-to-solve-the-consistency-problem" class="headerlink" title="How to solve the consistency problem"></a>How to solve the consistency problem</h2><ul>
+<li>avoid distribution</li>
+<li>distributed transaction</li>
+</ul>
+<h2 id="Distributed-Transaction-Type"><a href="#Distributed-Transaction-Type" class="headerlink" title="Distributed Transaction Type"></a>Distributed Transaction Type</h2><ul>
+<li>Hard transaction: CP. Suitable for low concurrency and short transaction</li>
+<li>Soft transaction: BASE.</li>
+</ul>
+<h3 id="Hard-transaction"><a href="#Hard-transaction" class="headerlink" title="Hard transaction"></a>Hard transaction</h3><ul>
+<li>XA: 2PC, JTA, JTS; 3PC; due to synchronous blocking, low efficiency.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/ORM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -853,7 +974,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
