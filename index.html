@@ -145,6 +145,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/05/SQL-Query-Tuning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/05/SQL-Query-Tuning/" class="post-title-link" itemprop="url">SQL Query Tuning</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-05 11:47:08 / Modified: 16:17:08" itemprop="dateCreated datePublished" datetime="2022-11-05T11:47:08-04:00">2022-11-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Reference: <a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/high-performance-mysql/9780596101718/ch04.html">https://www.oreilly.com/library/view/high-performance-mysql/9780596101718/ch04.html</a></p>
+<h1 id="what-happens-when-you-send-MySQL-a-query"><a href="#what-happens-when-you-send-MySQL-a-query" class="headerlink" title="what happens when you send MySQL a query:"></a>what happens when you send MySQL a query:</h1><p>The client sends the SQL statement to the server.<br>The server checks the query cache. If there’s a hit, it returns the stored result from the cache; otherwise, it passes the SQL statement to the next step.<br>The server parses, preprocesses, and optimizes the SQL into a query execution plan.<br>The query execution engine executes the plan by making calls to the storage engine API.<br>The server sends the result to the client.</p>
+<p>The protocol is half-duplex, which means that at any given time the MySQL server can be either sending or receiving messages, but not both. It also means there is no way to cut a message short.</p>
+<h1 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h1><p>query cost metrics include:</p>
+<ul>
+<li>Execution time</li>
+<li>Number of rows examined</li>
+<li>Number of rows returned</li>
+</ul>
+<p>access types: a full table scan &gt; index scans &gt; range scans &gt; unique index lookups &gt; constants</p>
+<p>the temporary table created by the subquery has no indexes.</p>
+<h1 id="Best-Practices"><a href="#Best-Practices" class="headerlink" title="Best Practices"></a>Best Practices</h1><ul>
+<li>Cache frequently-read but rarely updated data</li>
+<li>Try changing the schema such as using summary tables</li>
+<li>Try covering indexes</li>
+<li>Use as few queries as possible, but sometimes executing a few simple queries instead of one complex one.</li>
+<li>Avoid retrieving unnecessary data such as <code>select *</code></li>
+<li>Sometimes avoid correlated subqueries.<ul>
+<li>use join</li>
+<li>or manually generate the IN() list by executing the subquery as a separate query with GROUP_CONCAT(). Sometimes this can be faster than a JOIN.</li>
+</ul>
+</li>
+<li>union<ul>
+<li>filter out unnecessary rows within union</li>
+<li>use union all instead of union if possible</li>
+</ul>
+</li>
+<li>in<ul>
+<li>if “in” list is too large, it can be slow. The optimizer will “share” the list by copying it to the corresponding columns in all related tables.</li>
+</ul>
+</li>
+<li>join<ul>
+<li>Consider the join order when adding indexes. If you’re joining tables A and B on column c and the query optimizer decides to join the tables in the order B, A, you don’t need to index the column on table B. In general, you need to add indexes only on the second table in the join order, unless they’re needed for some other reason.</li>
+<li>decompose a join by running multiple single-table queries instead of a multitable join, and then performing the join in the application. For example, instead of this single query:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM tag</span><br><span class="line">    -&gt;    JOIN tag_post ON tag_post.tag_id=tag.id</span><br><span class="line">    -&gt;    JOIN post ON tag_post.post_id=post.id</span><br><span class="line">    -&gt; WHERE tag.tag=&#x27;mysql&#x27;;</span><br></pre></td></tr></table></figure>
+You might run these queries:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM  tag WHERE tag=&#x27;mysql&#x27;;</span><br><span class="line">mysql&gt; SELECT * FROM  tag_post WHERE tag_id=1234;</span><br><span class="line">mysql&gt; SELECT * FROM  post WHERE  post.id in (123,456,567,9098,8904);</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>group by, order by<ul>
+<li>Try to ensure that any GROUP BY or ORDER BY expression refers only to columns from a single table, so MySQL can try to use an index for that operation.</li>
+<li>If you need to group a join by a value that comes from a lookup table, it’s usually more efficient to group by the lookup table’s identifier than by the value. For example, the following query isn’t as efficient as it could be:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT actor.first_name, actor.last_name, COUNT(*)</span><br><span class="line">    -&gt; FROM sakila.film_actor</span><br><span class="line">    -&gt;    INNER JOIN sakila.actor USING(actor_id)</span><br><span class="line">    -&gt; GROUP BY actor.first_name, actor.last_name;</span><br></pre></td></tr></table></figure>
+The query is more efficiently written as follows:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  mysql&gt; SELECT actor.first_name, actor.last_name, COUNT(*)</span><br><span class="line">      -&gt; FROM sakila.film_actor</span><br><span class="line">      -&gt;    INNER JOIN sakila.actor USING(actor_id)</span><br><span class="line">      -&gt; GROUP BY film_actor.actor_id;</span><br><span class="line">  ```    </span><br><span class="line">* limit</span><br><span class="line">- do the offset on a covering index, rather than the full rows. You can then join the result to the full row and retrieve the additional columns you need. Consider the following query:</span><br></pre></td></tr></table></figure>
+mysql&gt; SELECT film_id, description FROM sakila.film ORDER BY title LIMIT 50, 5;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rewrite:</span><br></pre></td></tr></table></figure>
+mysql&gt; SELECT film.film_id, film.description<br>-&gt; FROM sakila.film<br>-&gt;    INNER JOIN (<br>-&gt;       SELECT film_id FROM sakila.film<br>-&gt;       ORDER BY title LIMIT 50, 5<br>-&gt;    ) AS lim USING(film_id);<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sometimes you can also convert the limit to a positional query, which the server can execute as an index range scan. For example, if you precalculate and index a position column, you can rewrite the query as follows:</span><br></pre></td></tr></table></figure>
+mysql&gt; SELECT film_id, description FROM sakila.film<br>-&gt; WHERE position BETWEEN 50 AND 54 ORDER BY position;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* min and max</span><br></pre></td></tr></table></figure>
+mysql&gt; SELECT MIN(actor_id) FROM sakila.actor WHERE first_name &#x3D; ‘PENELOPE’;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Because there’s no index on first_name, this query performs a table scan. If MySQL scans the primary key, it can theoretically stop after reading the first matching row, because the primary key is strictly ascending and any subsequent row will have a greater actor_id.</span><br><span class="line">Rewrite:</span><br></pre></td></tr></table></figure>
+mysql&gt; SELECT actor_id FROM sakila.actor USE INDEX(PRIMARY)<br>  -&gt; WHERE first_name &#x3D; ‘PENELOPE’ LIMIT 1;<br>&#96;&#96;&#96;</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/04/JWT-vs-Session-Cookie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1575,88 +1682,6 @@ window_function_name(expression) OVER (<br>[PARTITION BY <expression>[{,<express
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/23/user/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/23/user/" class="post-title-link" itemprop="url">User</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-04-23 13:13:23 / Modified: 15:00:42" itemprop="dateCreated datePublished" datetime="2022-04-23T13:13:23-04:00">2022-04-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/project/" itemprop="url" rel="index"><span itemprop="name">project</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Register"><a href="#Register" class="headerlink" title="Register"></a>Register</h2><ul>
-<li>password<ul>
-<li>MD5</li>
-<li>salt</li>
-</ul>
-</li>
-<li>redirect to index page<ul>
-<li><code>window.location.href = json.redirect_url</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="Log-out"><a href="#Log-out" class="headerlink" title="Log out"></a>Log out</h2><ul>
-<li>invalidate session</li>
-<li>redirect to “&#x2F;login.html”</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1726,7 +1751,7 @@ window_function_name(expression) OVER (<br>[PARTITION BY <expression>[{,<express
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
