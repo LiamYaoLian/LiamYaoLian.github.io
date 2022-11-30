@@ -28,7 +28,7 @@
 <meta property="og:description" content="Transaction and Lock Use InnoDB (default setting) reduces great hassle. Transaction is implemented by storage engine. If your transaction uses Table A and Table B and Table B’s storage engine does not">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-11-30T15:05:46.000Z">
-<meta property="article:modified_time" content="2022-11-30T20:05:06.047Z">
+<meta property="article:modified_time" content="2022-11-30T21:33:09.068Z">
 <meta property="article:author" content="Liam Lian">
 <meta name="twitter:card" content="summary">
 
@@ -174,7 +174,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-11-30 10:05:46 / Modified: 15:05:06" itemprop="dateCreated datePublished" datetime="2022-11-30T10:05:46-05:00">2022-11-30</time>
+              <time title="Created: 2022-11-30 10:05:46 / Modified: 16:33:09" itemprop="dateCreated datePublished" datetime="2022-11-30T10:05:46-05:00">2022-11-30</time>
             </span>
 
           
@@ -200,15 +200,16 @@
 </li>
 <li><p>If You set AUTOCOMMIT &#x3D; 1, use <code>begin</code> and <code>start transaction</code> if one transaction has many queries<br>Note: Certain commands (typically DDL such as ALTER TABLE, but may be others such as LOCK TABLES) cause MySQL to commit the transaction before they execute.</p>
 </li>
-<li><p>Choose the suitable isolation level: READ COMMITTED, READ UNCOMMITTED, REPEATABLE READ, (usually not choose) SERIALIZABLE<br>TODO</p>
+<li><p>Choose the suitable isolation level: READ COMMITTED, READ UNCOMMITTED, REPEATABLE READ, (usually not choose) SERIALIZABLE</p>
 </li>
 <li><p>Understand how MVCC allows most read queries not needing to acquire locks. <code>READ COMMITTED</code> and <code>REPEATABLE READ</code> use MVCC, while <code>READ UNCOMMITTED</code> and <code>SERIALIZABLE</code> do not need it.<br>InnoDB implements MVCC by assigning a transaction ID for each transaction at the first time the transaction reads any data. When a record is modified within that transaction, an undo record that explains how to revert that change is written to the undo log, and the rollback pointer of the transaction is pointed at that undo log record.</p>
 </li>
 <li><p>May need to use explicit locking:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT ... FOR SHARE          // After MySQL 8.0</span><br><span class="line">SELECT ... FOR UPDATE</span><br></pre></td></tr></table></figure>
-<p>TODO</p>
+<p>S Lock: Other sessions can read the rows, but cannot modify them until your transaction commits. If any of these rows were changed by another transaction that has not yet committed, your query waits until that transaction ends and then uses the latest values.</p>
 </li>
 </ul>
+<p>X Lock: If one transaction adds an X lock on a record, other transactions cannot add locks on it but need to wait.</p>
 <h1 id="Schema"><a href="#Schema" class="headerlink" title="Schema"></a>Schema</h1><h2 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h2><ol>
 <li>Smaller is usually better than bigger. For example, if <code>TINYINT</code> is sufficient, it is more efficient than <code>INT</code>.</li>
 <li>Estimate conservatively. Realizing the data type is not big enough after the code has been in production is more painful.</li>
@@ -263,7 +264,7 @@ If the query joins multiple tables, ordering the results by the index works only
 </ol>
 <ul>
 <li>Avoid join too many tables. Join them in application.</li>
-<li>The table has fewer rows that meet the ON criteria should be the first table.</li>
+<li>The table has fewer rows that meet the ON criteria should be the “driver” table. You can manually use this rule in STRAIGHT JOIN, LEFT JOIN, and RIGHT JOIN.</li>
 <li>If optimizer decides to join the tables in the order B, A, you need to add indexes only on the second table (Table A) in the join order.</li>
 </ul>
 <ol start="5">
