@@ -145,6 +145,270 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/30/MySQL-Query-Tuning-V2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/30/MySQL-Query-Tuning-V2/" class="post-title-link" itemprop="url">MySQL Query Tuning V2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-30 10:05:46 / Modified: 14:58:51" itemprop="dateCreated datePublished" datetime="2022-11-30T10:05:46-05:00">2022-11-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Transaction-and-Lock"><a href="#Transaction-and-Lock" class="headerlink" title="Transaction and Lock"></a>Transaction and Lock</h1><ul>
+<li><p>Use InnoDB (default setting) reduces great hassle. Transaction is implemented by storage engine. If your transaction uses Table A and Table B and Table B’s storage engine does not support transaction, MySQL does not throw an error and data on Table B will not be rolled back.<br>Note: Lock is release on commit or roll back.</p>
+</li>
+<li><p>Use lock with smaller granularity to allow more concurrency. But more locks consumes more resources. It is a trade off.</p>
+</li>
+<li><p>Retry after deadlock is detected. InnoDB storage engine will notice circular dependencies and return an error instantly. InnoDB rolls back the transaction that has the fewest exclusive row locks.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Transaction 1</span><br><span class="line">START TRANSACTION;</span><br><span class="line">UPDATE StockPrice SET close = 45.50 WHERE stock_id = 4 and date = ‘2020-05-01’;</span><br><span class="line">UPDATE StockPrice SET close = 19.80 WHERE stock_id = 3 and date = ‘2020-05-02’;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Transaction 2</span><br><span class="line">START TRANSACTION;</span><br><span class="line">UPDATE StockPrice SET high = 20.12 WHERE stock_id = 3 and date = &#x27;2020-05-02&#x27;;</span><br><span class="line">UPDATE StockPrice SET high = 47.20 WHERE stock_id = 4 and date = &#x27;2020-05-01&#x27;;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure></li>
+<li><p>If you set AUTOCOMMIT &#x3D; 0, you are always in a transaction until you issue a COMMIT or ROLLBACK. MySQL then starts a new transaction immediately.</p>
+</li>
+<li><p>If You set AUTOCOMMIT &#x3D; 1, use <code>begin</code> and <code>start transaction</code> if one transaction has many queries<br>Note: Certain commands (typically DDL such as ALTER TABLE, but may be others such as LOCK TABLES) cause MySQL to commit the transaction before they execute.</p>
+</li>
+<li><p>Choose the suitable isolation level: READ COMMITTED, READ UNCOMMITTED, REPEATABLE READ, (usually not choose) SERIALIZABLE<br>TODO</p>
+</li>
+<li><p>Understand how MVCC allows most read queries not needing to acquire locks. <code>READ COMMITTED</code> and <code>REPEATABLE READ</code> use MVCC, while <code>READ UNCOMMITTED</code> and <code>SERIALIZABLE</code> do not need it.<br>InnoDB implements MVCC by assigning a transaction ID for each transaction at the first time the transaction reads any data. When a record is modified within that transaction, an undo record that explains how to revert that change is written to the undo log, and the rollback pointer of the transaction is pointed at that undo log record.</p>
+</li>
+<li><p>May need to use explicit locking:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT ... FOR SHARE          // After MySQL 8.0</span><br><span class="line">SELECT ... FOR UPDATE</span><br></pre></td></tr></table></figure>
+<p>TODO</p>
+</li>
+</ul>
+<h1 id="Schema"><a href="#Schema" class="headerlink" title="Schema"></a>Schema</h1><h2 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h2><ol>
+<li>Smaller is usually better than bigger. For example, if <code>TINYINT</code> is sufficient, it is more efficient than <code>INT</code>.</li>
+<li>Estimate conservatively. Realizing the data type is not big enough after the code has been in production is more painful.</li>
+<li>Simple is good. For example, integers are cheaper than characters.</li>
+<li>Avoid <code>null</code> if possible. Set a default value to leverage index.</li>
+<li><code>DECIMAL</code> is precise but more expensive. In some high-volume cases, use a BIGINT instead and store the data as some multiple of the smallest fraction of currency. For example, multiply all dollar amounts by a million and store the result in a BIGINT.</li>
+<li><code>VARCHAR</code> require less storage space than fixed-length types because it uses only as much space as it needs. However, because the rows are variable length, they can grow when you update them, which can cause extra work. If a row grows and no longer fits in its original location, the behavior is storage engine dependent. For example, InnoDB may need to split the page to fit the row into it. It’s usually worth using VARCHAR when the maximum column length is much larger than the average length; when updates to the field are rare, so fragmentation is not a problem; and when you’re using a complex character set such as UTF-8, where each character uses a variable number of bytes of storage.</li>
+<li>Using ENUM instead of a string type. ENUM is 1 or 2 bytes. ENUM is stored as integers as the sequence specified in the definition. Avoid <code>ENUM(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;)</code>. ENUM will be converted to string in a string context. If you want to sort them alphabetically:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT e FROM enum_test ORDER BY FIELD(e, &#x27;apple&#x27;, &#x27;dog&#x27;, &#x27;fish&#x27;);</span><br></pre></td></tr></table></figure></li>
+<li>DATETIME is independent of TIMEZONE, 8 bytes, millisecond-precision, from the year 1000 to the year 9999. TIMESTAMP depends on TIMEZONE, 4 bytes, second-precision, from 1970-1-1 midnight GMT to 2038-1-19. MySQL server, operating system, and client connections all have time zone settings.</li>
+</ol>
+<h2 id="Primary-KEY"><a href="#Primary-KEY" class="headerlink" title="Primary KEY"></a>Primary KEY</h2><ol>
+<li>Once you choose a type for PK, make sure you use the same type in all related tables</li>
+<li>The Smaller, the better</li>
+<li>Integer is usually better than string</li>
+<li>Avoid random number, because values will be distributed over a large space. If you still want to use UUID, convert it into 16-byte numbers with UNHEX() and store them in a BINARY(16) column. You can retrieve the values in hexadecimal format with the HEX() function.</li>
+</ol>
+<h2 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h2><ul>
+<li>If a table have hundreds of columns, even if we only use a few columns, InnoDB will parse all columns, which is expensive.</li>
+</ul>
+<h2 id="Summary-Table"><a href="#Summary-Table" class="headerlink" title="Summary Table"></a>Summary Table</h2><ul>
+<li>To improve performance</li>
+</ul>
+<h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><h2 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B Tree"></a>B Tree</h2><ul>
+<li>Avoid duplicate, redundant, unused indices, because MySQL has to maintain each index separately.</li>
+<li>Use cluster index if possible. Cluster index leaf stores the row. Non-cluster index leaf stores PK.</li>
+<li>The leaf pages can perform better if they are physically sequential, otherwise it’s called “fragmented” and range scans or full index scans are slower. Avoid that with random values such as UUID. To defragment data, you can either run OPTIMIZE TABLE or dump and reload the data.</li>
+<li>Use multicolumn index if possible instead of many indices on single columns (because MySQL needs to do “index merge” for the latter one), and consider:<ul>
+<li>using covering index, which is an index that contains (or “covers”) all the data needed to satisfy a query.</li>
+<li>the left-most rule when deciding the order of columns.</li>
+<li>what sorting is needed in queries. B-tree indexes stores the data in sorted order, and MySQL can exploit that for ORDER BY and GROUP BY. Ordering the results by the index does not work if a column in ORDER BY is not in the index or the order in ORDER BY is not the order of the index. If you need to sort in different directions, a trick is to store a reversed or negated value.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE rental (</span><br><span class="line"> ...</span><br><span class="line"> PRIMARY KEY (rental_id),</span><br><span class="line"> UNIQUE KEY rental_date (rental_date,inventory_id,customer_id),</span><br><span class="line"> KEY idx_fk_inventory_id (inventory_id),</span><br><span class="line"> KEY idx_fk_customer_id (customer_id),</span><br><span class="line"> KEY idx_fk_staff_id (staff_id),</span><br><span class="line"> ...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">... WHERE rental_date = &#x27;2005-05-25&#x27; ORDER BY inventory_id, staff_id;</span><br><span class="line"># does not use index because the ORDER BY refers to a column that isn’t in the index</span><br></pre></td></tr></table></figure>
+The ORDER BY clause needs to form a leftmost prefix of the index unless leading columns are constants.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE rental (</span><br><span class="line"> ...</span><br><span class="line"> PRIMARY KEY (rental_id),</span><br><span class="line"> UNIQUE KEY rental_date (rental_date,inventory_id,customer_id),</span><br><span class="line"> KEY idx_fk_inventory_id (inventory_id),</span><br><span class="line"> KEY idx_fk_customer_id (customer_id),</span><br><span class="line"> KEY idx_fk_staff_id (staff_id),</span><br><span class="line"> ...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; EXPLAIN SELECT rental_id, staff_id FROM sakila.rental</span><br><span class="line">    -&gt; WHERE rental_date = &#x27;2005-05-25&#x27;</span><br><span class="line">    -&gt; ORDER BY inventory_id, customer_id\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line"> type: ref</span><br><span class="line"> possible_keys: rental_date</span><br><span class="line"> key: rental_date</span><br><span class="line"> rows: 1</span><br><span class="line"> Extra: Using where</span><br></pre></td></tr></table></figure>
+If the query joins multiple tables, ordering the results by the index works only when all columns in the ORDER BY clause refer to the first table.</li>
+<li>Assuming there is no sorting and group by, the column that can filter out the most rows should be the leftest.</li>
+</ul>
+</li>
+<li>Consider using prefix to save storage. You must define prefix if you want to index BLOB, TEXT, or very long VARCHAR columns, because MySQL disallows indexing their full length.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE cities ADD KEY (city(7));</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Query-Tuning"><a href="#Query-Tuning" class="headerlink" title="Query Tuning"></a>Query Tuning</h1><h2 id="Slower-to-Fast"><a href="#Slower-to-Fast" class="headerlink" title="Slower to Fast"></a>Slower to Fast</h2><p>constants<br>unique index lookups<br>range scans<br>index scans<br>full table scans</p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ol>
+<li>Avoid <code>SELECT *</code>. Only include columns needed.</li>
+<li>Choose the suitable query size. It is a trade-off between:</li>
+</ol>
+<ul>
+<li>reduce the number of connections established.</li>
+<li>avoid locking for too long if there is a lock.</li>
+</ul>
+<ol start="3">
+<li>Do not perform calculation on index column while filtering. An example that violates this:  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT actor_id FROM actor WHERE actor_id + 1 = 5;</span><br></pre></td></tr></table></figure></li>
+<li>Join</li>
+</ol>
+<ul>
+<li>Avoid join too many tables. Join them in application.</li>
+<li>The table has fewer rows that meet the ON criteria should be the first table.</li>
+<li>Use the column with an index as the join criteria if possible.</li>
+</ul>
+<ol start="5">
+<li>Avoid correlated subqueries:</li>
+</ol>
+<ul>
+<li>Method 1: Replace IN with EXISTS  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM film</span><br><span class="line">  -&gt; WHERE EXISTS(</span><br><span class="line">  -&gt;    SELECT * FROM film_actor WHERE actor_id = 1</span><br><span class="line">  -&gt;       AND film_actor.film_id = film.film_id);</span><br></pre></td></tr></table></figure></li>
+<li>Method 2: Join. But this may not be more efficient because it will join all rows that can be joined first before filtering.</li>
+<li>Method 3: Generate the IN list with GROUP_CONCAT in another query</li>
+</ul>
+<ol start="6">
+<li>Use columns in the same table in GROUP BY and ORDER BY to leverage index. Move the WITH ROLLUP functionality into your application code.</li>
+<li>LIMIT with large offet<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT film_id, description FROM sakila.film ORDER BY title LIMIT 50, 5;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>Method 1:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT film.film_id, film.description</span><br><span class="line">    -&gt; FROM sakila.film</span><br><span class="line">    -&gt;    INNER JOIN (</span><br><span class="line">    -&gt;       SELECT film_id FROM sakila.film</span><br><span class="line">    -&gt;       ORDER BY title LIMIT 50, 5</span><br><span class="line">    -&gt;    ) AS lim USING(film_id);</span><br></pre></td></tr></table></figure></li>
+<li>Method 2: position is indexed<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT film_id, description FROM sakila.film</span><br><span class="line">WHERE position BETWEEN 50 AND 54 ORDER BY position;</span><br></pre></td></tr></table></figure></li>
+<li>Method 3<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM sakila.rental</span><br><span class="line">-&gt; WHERE rental_id &lt; 16030</span><br><span class="line">-&gt; ORDER BY rental_id DESC LIMIT 20;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="8">
+<li>Replace <code>OR</code> with <code>IN</code>. MySQL uses binary search on the <code>IN</code> list. However, <code>IN</code> list that is too long may hurt performance,<br>because the optimizer may copy the list for all related tables (due to a WHERE, ON, or USING clause that sets the column equals to that on another table).</li>
+<li>Union:</li>
+</ol>
+<ul>
+<li>add filtering  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.actor</span><br><span class="line"> ORDER BY last_name)</span><br><span class="line">UNION ALL</span><br><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.customer</span><br><span class="line"> ORDER BY last_name)</span><br><span class="line">LIMIT 20;</span><br></pre></td></tr></table></figure>
+  Should be:  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.actor</span><br><span class="line"> ORDER BY last_name</span><br><span class="line"> LIMIT 20)</span><br><span class="line">UNION ALL</span><br><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.customer</span><br><span class="line"> ORDER BY last_name</span><br><span class="line"> LIMIT 20)</span><br><span class="line">LIMIT 20;</span><br></pre></td></tr></table></figure></li>
+<li>If sorting is not needed, use UNION ALL, because UNION will sort.</li>
+</ul>
+<ol start="10">
+<li><p>MAX() and MIN()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT MIN(actor_id) FROM sakila.actor WHERE first_name = &#x27;PENELOPE&#x27;;</span><br></pre></td></tr></table></figure>
+<p>Can be:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT actor_id FROM sakila.actor USE INDEX(PRIMARY)</span><br><span class="line">    -&gt; WHERE first_name = &#x27;PENELOPE&#x27; LIMIT 1;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Count()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(IF(color = &#x27;blue&#x27;, 1, 0)) AS blue,SUM(IF(color = &#x27;red&#x27;, 1, 0))</span><br><span class="line">AS red FROM items;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/07/MQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/07/MQ/" class="post-title-link" itemprop="url">MQ</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-07 11:27:06 / Modified: 12:53:51" itemprop="dateCreated datePublished" datetime="2022-11-07T11:27:06-05:00">2022-11-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><ul>
+<li>asynchronous operation</li>
+<li>decouple</li>
+<li>rate limit<br>TODO</li>
+</ul>
+<h1 id="Challenge"><a href="#Challenge" class="headerlink" title="Challenge"></a>Challenge</h1><ul>
+<li>lost message</li>
+</ul>
+<ul>
+<li>After the message has been persisted in at least two servers, ack to producer</li>
+<li>After consumer finishes business logic, ack</li>
+</ul>
+<ul>
+<li>duplicate messages</li>
+</ul>
+<ul>
+<li>version</li>
+<li>id</li>
+<li>unique key</li>
+</ul>
+<ul>
+<li>order</li>
+</ul>
+<ul>
+<li>globally: one producer, one queue, one thread consumes</li>
+<li>locally: one thread consumes one queue</li>
+</ul>
+<ul>
+<li>message accumulation</li>
+</ul>
+<ul>
+<li>bug?</li>
+<li>consuming slowly: optimize consumption, such as batch insert</li>
+<li>scale-out: add more queues</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/05/SQL-Query-Tuning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,7 +434,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-11-05 11:47:08 / Modified: 16:17:08" itemprop="dateCreated datePublished" datetime="2022-11-05T11:47:08-04:00">2022-11-05</time>
+              <time title="Created: 2022-11-05 11:47:08 / Modified: 16:49:19" itemprop="dateCreated datePublished" datetime="2022-11-05T11:47:08-04:00">2022-11-05</time>
             </span>
 
           
@@ -184,55 +448,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Reference: <a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/high-performance-mysql/9780596101718/ch04.html">https://www.oreilly.com/library/view/high-performance-mysql/9780596101718/ch04.html</a></p>
-<h1 id="what-happens-when-you-send-MySQL-a-query"><a href="#what-happens-when-you-send-MySQL-a-query" class="headerlink" title="what happens when you send MySQL a query:"></a>what happens when you send MySQL a query:</h1><p>The client sends the SQL statement to the server.<br>The server checks the query cache. If there’s a hit, it returns the stored result from the cache; otherwise, it passes the SQL statement to the next step.<br>The server parses, preprocesses, and optimizes the SQL into a query execution plan.<br>The query execution engine executes the plan by making calls to the storage engine API.<br>The server sends the result to the client.</p>
+          <h1 id="what-happens-when-you-send-MySQL-a-query"><a href="#what-happens-when-you-send-MySQL-a-query" class="headerlink" title="what happens when you send MySQL a query:"></a>what happens when you send MySQL a query:</h1><p>The client sends the SQL statement to the server.<br>The server checks the query cache. If there’s a hit, it returns the stored result from the cache; otherwise, it passes the SQL statement to the next step.<br>The server parses, preprocesses, and optimizes the SQL into a query execution plan.<br>The query execution engine executes the plan by making calls to the storage engine API.<br>The server sends the result to the client.</p>
 <p>The protocol is half-duplex, which means that at any given time the MySQL server can be either sending or receiving messages, but not both. It also means there is no way to cut a message short.</p>
+<p>the temporary table created by the subquery has no indexes.</p>
 <h1 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h1><p>query cost metrics include:</p>
 <ul>
 <li>Execution time</li>
 <li>Number of rows examined</li>
-<li>Number of rows returned</li>
+<li>Number of rows returned<br>Note: access types: a full table scan &gt; index scans &gt; range scans &gt; unique index lookups &gt; constants</li>
 </ul>
-<p>access types: a full table scan &gt; index scans &gt; range scans &gt; unique index lookups &gt; constants</p>
-<p>the temporary table created by the subquery has no indexes.</p>
 <h1 id="Best-Practices"><a href="#Best-Practices" class="headerlink" title="Best Practices"></a>Best Practices</h1><ul>
-<li>Cache frequently-read but rarely updated data</li>
 <li>Try changing the schema such as using summary tables</li>
 <li>Try covering indexes</li>
 <li>Use as few queries as possible, but sometimes executing a few simple queries instead of one complex one.</li>
 <li>Avoid retrieving unnecessary data such as <code>select *</code></li>
-<li>Sometimes avoid correlated subqueries.<ul>
-<li>use join</li>
-<li>or manually generate the IN() list by executing the subquery as a separate query with GROUP_CONCAT(). Sometimes this can be faster than a JOIN.</li>
-</ul>
-</li>
 <li>union<ul>
 <li>filter out unnecessary rows within union</li>
 <li>use union all instead of union if possible</li>
 </ul>
 </li>
-<li>in<ul>
-<li>if “in” list is too large, it can be slow. The optimizer will “share” the list by copying it to the corresponding columns in all related tables.</li>
+<li>Sometimes avoid correlated subqueries.<ul>
+<li>use join</li>
+<li>or manually generate the IN() list by executing the subquery as a separate query with GROUP_CONCAT(). Sometimes this can be faster than a JOIN.</li>
 </ul>
 </li>
 <li>join<ul>
-<li>Consider the join order when adding indexes. If you’re joining tables A and B on column c and the query optimizer decides to join the tables in the order B, A, you don’t need to index the column on table B. In general, you need to add indexes only on the second table in the join order, unless they’re needed for some other reason.</li>
 <li>decompose a join by running multiple single-table queries instead of a multitable join, and then performing the join in the application. For example, instead of this single query:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM tag</span><br><span class="line">    -&gt;    JOIN tag_post ON tag_post.tag_id=tag.id</span><br><span class="line">    -&gt;    JOIN post ON tag_post.post_id=post.id</span><br><span class="line">    -&gt; WHERE tag.tag=&#x27;mysql&#x27;;</span><br></pre></td></tr></table></figure>
 You might run these queries:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM  tag WHERE tag=&#x27;mysql&#x27;;</span><br><span class="line">mysql&gt; SELECT * FROM  tag_post WHERE tag_id=1234;</span><br><span class="line">mysql&gt; SELECT * FROM  post WHERE  post.id in (123,456,567,9098,8904);</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>join in the order A, B. Ideally A should be a smaller table.</li>
+<li>Have indexes on the columns in the ON clauses. Consider the join order when adding indexes. If you’re joining tables A and B on column c and the query optimizer decides to join the tables in the order B, A, you don’t need to index the column on table B. In general, you need to add indexes only on the second table in the join order, unless they’re needed for some other reason.</li>
 </ul>
 </li>
 <li>group by, order by<ul>
 <li>Try to ensure that any GROUP BY or ORDER BY expression refers only to columns from a single table, so MySQL can try to use an index for that operation.</li>
 <li>If you need to group a join by a value that comes from a lookup table, it’s usually more efficient to group by the lookup table’s identifier than by the value. For example, the following query isn’t as efficient as it could be:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT actor.first_name, actor.last_name, COUNT(*)</span><br><span class="line">    -&gt; FROM sakila.film_actor</span><br><span class="line">    -&gt;    INNER JOIN sakila.actor USING(actor_id)</span><br><span class="line">    -&gt; GROUP BY actor.first_name, actor.last_name;</span><br></pre></td></tr></table></figure>
-The query is more efficiently written as follows:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  mysql&gt; SELECT actor.first_name, actor.last_name, COUNT(*)</span><br><span class="line">      -&gt; FROM sakila.film_actor</span><br><span class="line">      -&gt;    INNER JOIN sakila.actor USING(actor_id)</span><br><span class="line">      -&gt; GROUP BY film_actor.actor_id;</span><br><span class="line">  ```    </span><br><span class="line">* limit</span><br><span class="line">- do the offset on a covering index, rather than the full rows. You can then join the result to the full row and retrieve the additional columns you need. Consider the following query:</span><br></pre></td></tr></table></figure>
+Rewrite:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  mysql&gt; SELECT actor.first_name, actor.last_name, COUNT(*)</span><br><span class="line">      -&gt; FROM sakila.film_actor</span><br><span class="line">      -&gt;    INNER JOIN sakila.actor USING(actor_id)</span><br><span class="line">      -&gt; GROUP BY film_actor.actor_id;</span><br><span class="line">  ```    </span><br><span class="line">* limit</span><br><span class="line">- do the offset on a covering index, rather than the full rows. You can then join the result to the full row and retrieve the additional columns you need. Consider the following query:</span><br></pre></td></tr></table></figure>
 mysql&gt; SELECT film_id, description FROM sakila.film ORDER BY title LIMIT 50, 5;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rewrite:</span><br></pre></td></tr></table></figure>
 mysql&gt; SELECT film.film_id, film.description<br>-&gt; FROM sakila.film<br>-&gt;    INNER JOIN (<br>-&gt;       SELECT film_id FROM sakila.film<br>-&gt;       ORDER BY title LIMIT 50, 5<br>-&gt;    ) AS lim USING(film_id);<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sometimes you can also convert the limit to a positional query, which the server can execute as an index range scan. For example, if you precalculate and index a position column, you can rewrite the query as follows:</span><br></pre></td></tr></table></figure>
-mysql&gt; SELECT film_id, description FROM sakila.film<br>-&gt; WHERE position BETWEEN 50 AND 54 ORDER BY position;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* min and max</span><br></pre></td></tr></table></figure>
+mysql&gt; SELECT film_id, description FROM sakila.film<br>-&gt; WHERE position BETWEEN 50 AND 54 ORDER BY position;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Another example:</span><br></pre></td></tr></table></figure>
+select * from t limit 900000, 10;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Write:</span><br></pre></td></tr></table></figure>
+select * from t<br>where id &gt; 900000<br>limit 10;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* replace &quot;or&quot; with &quot;in&quot; or &quot;union&quot;</span><br><span class="line">* in</span><br><span class="line">  - if &quot;in&quot; list is too large, it can be slow. The optimizer will “share” the list by copying it to the corresponding columns in all related tables.  </span><br><span class="line">* batch insert</span><br><span class="line">* min and max</span><br></pre></td></tr></table></figure>
 mysql&gt; SELECT MIN(actor_id) FROM sakila.actor WHERE first_name &#x3D; ‘PENELOPE’;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Because there’s no index on first_name, this query performs a table scan. If MySQL scans the primary key, it can theoretically stop after reading the first matching row, because the primary key is strictly ascending and any subsequent row will have a greater actor_id.</span><br><span class="line">Rewrite:</span><br></pre></td></tr></table></figure>
 mysql&gt; SELECT actor_id FROM sakila.actor USE INDEX(PRIMARY)<br>  -&gt; WHERE first_name &#x3D; ‘PENELOPE’ LIMIT 1;<br>&#96;&#96;&#96;</li>
 </ul>
 </li>
 </ul>
+<p>Reference: <a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/high-performance-mysql/9780596101718/ch04.html">https://www.oreilly.com/library/view/high-performance-mysql/9780596101718/ch04.html</a></p>
 
       
     </div>
@@ -1511,177 +1772,6 @@ window_function_name(expression) OVER (<br>[PARTITION BY <expression>[{,<express
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/05/08/Redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/08/Redis/" class="post-title-link" itemprop="url">Redis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-05-08 11:49:20" itemprop="dateCreated datePublished" datetime="2022-05-08T11:49:20-04:00">2022-05-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-06-14 20:42:58" itemprop="dateModified" datetime="2022-06-14T20:42:58-04:00">2022-06-14</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><ul>
-<li>daemonize yes</li>
-<li>port: change 6379 to other</li>
-<li>logfile: change to “redis.log”</li>
-<li>requirepass foobared &#x2F;&#x2F; foobared is the password</li>
-<li>protected-mode no &#x2F;&#x2F;allow remote access</li>
-<li>databases</li>
-<li>bind 0.0.0.0 &#x2F;&#x2F; means allow a computer with any IP to access. Usually should use the IP of the server rather than 0.0.0.0</li>
-</ul>
-<h2 id="redis-cli"><a href="#redis-cli" class="headerlink" title="redis-cli"></a>redis-cli</h2><ul>
-<li>netstat - tulpn | grep redis</li>
-<li>redis-cli -p 6380</li>
-<li>auth foobared</li>
-<li>ping</li>
-<li>exit</li>
-<li>shutdown</li>
-<li>select 0 &#x2F;&#x2F; select database No. 0</li>
-<li>set name lily &#x2F;&#x2F; 设置key&#x3D;name, value&#x3D;lily</li>
-<li>get hello &#x2F;&#x2F; 获得key&#x3D;hello结果</li>
-<li>keys he* &#x2F;&#x2F; 根据Pattern表达式查询符合条件的Key</li>
-<li>dbsize &#x2F;&#x2F; 返回key的总数</li>
-<li>exists a &#x2F;&#x2F; 检查key&#x3D;a是否存在</li>
-<li>del a &#x2F;&#x2F; 删除key&#x3D;a的数据</li>
-<li>expire hello 20 &#x2F;&#x2F; 设置key&#x3D;hello 20秒后过期</li>
-<li>ttl hello &#x2F;&#x2F; 查看key&#x3D;a的过期剩余时间</li>
-<li>keys *</li>
-</ul>
-<h2 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h2><ul>
-<li>String &#x2F;&#x2F; String最大512mb, 建议单个kv不超过100kb</li>
-<li>List</li>
-<li>Hash</li>
-<li>Set</li>
-<li>Zset &#x2F;&#x2F; 有序集合</li>
-</ul>
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>get: get hello 获得key&#x3D;hello结果<br>set: set hello world 设置key&#x3D;hello,value&#x3D;hello<br>mset: mset hello world java best 一次性设置多个值<br>mget: mget hello java 一次性获取多个值<br>del: del hello 删除key&#x3D;hello<br>incr: incr count key值自增1<br>decr: decr count key值自减1<br>incrby: incrby count 99 自增指定步长<br>decrby: decrby count 99 自减指定步长</p>
-<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>hget: <code>hget emp:1 age</code> 获取hash中key&#x3D;age的值<br>hset: <code>hset emp:1 age 23</code> 设置hash中age&#x3D;23<br>hmset: <code>hmset emp:1 age 30 name kaka</code> 设置hash多个值<br>hmget: <code>hmget emp:1 age name</code> 获取hash多个值<br>hgetall: <code>hgetall emp:1</code> 获取hash所有值<br>hdel: <code>hdel emp:1 age</code> 删除user:1的age<br>hexists: <code>hexists emp:1 name</code> 检查是否存在<br>hlen: <code>hlen emp:1</code> 获取指定长度</p>
-<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><ul>
-<li>List列表最大长度为2的32次方-1，可以包含40亿个元素</li>
-</ul>
-<p>rpush listkey c b a - 右侧插入<br>lpush listkey f e d - 左侧插入<br>rpop listkey - 右侧弹出<br>lpop listkey - 左侧弹出<br>llen listkey - 获取长度<br>lrange listkey 0 2 &#x2F;&#x2F; start at 0, end at 2 (included)<br>lrange listkey 0 -1 &#x2F;&#x2F; These offsets can also be negative numbers indicating offsets starting at the end of the list. For example, -1 is the last element of the list, -2 the penultimate, and so on.</p>
-<p>defcba</p>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>smembers set1<br>sadd set1 a<br>sinter set1 set2 &#x2F;&#x2F;交集元素<br>sunion set1 set2 &#x2F;&#x2F; union<br>sdiff set1 set2 &#x2F;&#x2F; in set1 but not in set2</p>
-<h3 id="Zset"><a href="#Zset" class="headerlink" title="Zset"></a>Zset</h3><p>zadd zset1 100 a<br>zadd zset1 101 b<br>zrange zset1 0 -1 withscores&#x2F;&#x2F; print a and b and their scores, -1 means all<br>zrangebyscore zset1 100 103</p>
-<h2 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">2.9</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CacheSample</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CacheSample</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Jedis</span> <span class="variable">jedis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jedis</span>(<span class="string">&quot;192.168.132.144&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            List&lt;Goods&gt; goodsList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Goods&gt;();</span><br><span class="line">            goodsList.add(<span class="keyword">new</span> <span class="title class_">Goods</span>(<span class="number">8818</span>, <span class="string">&quot;红富士苹果&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">3.5f</span>));</span><br><span class="line">            goodsList.add(<span class="keyword">new</span> <span class="title class_">Goods</span>(<span class="number">8819</span>, <span class="string">&quot;进口脐橙&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">5f</span>));</span><br><span class="line">            goodsList.add(<span class="keyword">new</span> <span class="title class_">Goods</span>(<span class="number">8820</span>, <span class="string">&quot;进口香蕉&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">25f</span>));</span><br><span class="line">            jedis.auth(<span class="string">&quot;12345&quot;</span>);</span><br><span class="line">            jedis.select(<span class="number">3</span>);</span><br><span class="line">            <span class="keyword">for</span> (Goods goods : goodsList) &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> JSON.toJSONString(goods);</span><br><span class="line">                System.out.println(json);</span><br><span class="line">                <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;goods:&quot;</span> + goods.getGoodsId();</span><br><span class="line">                jedis.set(key , json);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">CacheSample</span>();</span><br><span class="line">        System.out.printf(<span class="string">&quot;请输入要查询的商品编号：&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">goodsId</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in).next();</span><br><span class="line">        <span class="type">Jedis</span> <span class="variable">jedis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jedis</span>(<span class="string">&quot;192.168.132.144&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            jedis.auth(<span class="string">&quot;12345&quot;</span>);</span><br><span class="line">            jedis.select(<span class="number">3</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;goods:&quot;</span> + goodsId;</span><br><span class="line">            <span class="keyword">if</span>(jedis.exists(key))&#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> jedis.get(key);</span><br><span class="line">                System.out.println(json);</span><br><span class="line">                <span class="type">Goods</span> <span class="variable">g</span> <span class="operator">=</span> JSON.parseObject(json, Goods.class);</span><br><span class="line">                System.out.println(g.getGoodsName());</span><br><span class="line">                System.out.println(g.getPrice());</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;您输入的商品编号不存在，请重新输入！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JedisTestor</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Jedis</span> <span class="variable">jedis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jedis</span>(<span class="string">&quot;192.168.132.144&quot;</span> , <span class="number">6379</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            jedis.auth(<span class="string">&quot;12345&quot;</span>);</span><br><span class="line">            jedis.select(<span class="number">2</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;Redis连接成功&quot;</span>);</span><br><span class="line">            <span class="comment">//字符串</span></span><br><span class="line">            jedis.set(<span class="string">&quot;sn&quot;</span> , <span class="string">&quot;7781-9938&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">sn</span> <span class="operator">=</span> jedis.get(<span class="string">&quot;sn&quot;</span>);</span><br><span class="line">            System.out.println(sn);</span><br><span class="line">            jedis.mset(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;title&quot;</span> , <span class="string">&quot;婴幼儿奶粉&quot;</span> , <span class="string">&quot;num&quot;</span> , <span class="string">&quot;20&quot;</span>&#125;);</span><br><span class="line">            List&lt;String&gt; goods =  jedis.mget(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;sn&quot;</span> , <span class="string">&quot;title&quot;</span> , <span class="string">&quot;num&quot;</span>&#125;);</span><br><span class="line">            System.out.println(goods);</span><br><span class="line">            <span class="type">Long</span> <span class="variable">num</span> <span class="operator">=</span> jedis.incr(<span class="string">&quot;num&quot;</span>);</span><br><span class="line">            System.out.println(num);</span><br><span class="line">            <span class="comment">//Hash</span></span><br><span class="line">            jedis.hset(<span class="string">&quot;student:3312&quot;</span> , <span class="string">&quot;name&quot;</span> , <span class="string">&quot;张晓明&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> jedis.hget(<span class="string">&quot;student:3312&quot;</span> , <span class="string">&quot;name&quot;</span>);</span><br><span class="line">            System.out.println(name);</span><br><span class="line">            Map&lt;String,String&gt; studentMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">            studentMap.put(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;李兰&quot;</span>);</span><br><span class="line">            studentMap.put(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;18&quot;</span>);</span><br><span class="line">            studentMap.put(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;3313&quot;</span>);</span><br><span class="line">            jedis.hmset(<span class="string">&quot;student:3313&quot;</span>, studentMap);</span><br><span class="line">            Map&lt;String,String&gt; smap =  jedis.hgetAll(<span class="string">&quot;student:3313&quot;</span>);</span><br><span class="line">            System.out.println(smap);</span><br><span class="line">            <span class="comment">//List</span></span><br><span class="line">            jedis.del(<span class="string">&quot;letter&quot;</span>);</span><br><span class="line">            jedis.rpush(<span class="string">&quot;letter&quot;</span> , <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;d&quot;</span> , <span class="string">&quot;e&quot;</span> , <span class="string">&quot;f&quot;</span>&#125;);</span><br><span class="line">            jedis.lpush(<span class="string">&quot;letter&quot;</span> ,  <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;c&quot;</span> , <span class="string">&quot;b&quot;</span> , <span class="string">&quot;a&quot;</span>&#125;);</span><br><span class="line">            List&lt;String&gt; letter =  jedis.lrange(<span class="string">&quot;letter&quot;</span> , <span class="number">0</span> , -<span class="number">1</span>);</span><br><span class="line">            jedis.lpop(<span class="string">&quot;letter&quot;</span>);</span><br><span class="line">            jedis.rpop(<span class="string">&quot;letter&quot;</span>);</span><br><span class="line">            letter = jedis.lrange(<span class="string">&quot;letter&quot;</span>, <span class="number">0</span>, -<span class="number">1</span>);</span><br><span class="line">            System.out.println(letter);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/05/07/Example-AOP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/07/Example-AOP/" class="post-title-link" itemprop="url">Example - AOP</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-05-07 22:57:03 / Modified: 22:57:55" itemprop="dateCreated datePublished" datetime="2022-05-07T22:57:03-04:00">2022-05-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Below is how to use AOP to configure log.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.core.JsonProcessingException;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebLogAspect</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(WebLogAspect.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution(public * co.avasta.abc.controller.*.*(..)))</span><span class="string">&quot;)</span></span><br><span class="line"><span class="string">    public void webLog() &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    @Before(&quot;</span>webLog()<span class="string">&quot;)</span></span><br><span class="line"><span class="string">    public void doBefore(JoinPoint joinPoint) &#123;</span></span><br><span class="line"><span class="string">        // log the request</span></span><br><span class="line"><span class="string">        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span></span><br><span class="line"><span class="string">        HttpServletRequest request = attributes.getRequest();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        log.info(&quot;</span>URL: <span class="string">&quot; + request.getRequestURL().toString());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>HTTP_METHOD: <span class="string">&quot; + request.getMethod());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>IP: <span class="string">&quot; + request.getRemoteAddr());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>CLASS_METHOD: <span class="string">&quot; + joinPoint.getSignature().getDeclaringTypeName() + &quot;</span>.<span class="string">&quot; + joinPoint.getSignature().getName());</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>ARGS: <span class="string">&quot; + Arrays.toString(joinPoint.getArgs()));</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    @AfterReturning(returning = &quot;</span>res<span class="string">&quot;, pointcut = &quot;</span>webLog()<span class="string">&quot;)</span></span><br><span class="line"><span class="string">    public void doAfterReturning(Object res) throws JsonProcessingException &#123;</span></span><br><span class="line"><span class="string">        // res to JSON</span></span><br><span class="line"><span class="string">        log.info(&quot;</span>RESPONSE:<span class="string">&quot; + new ObjectMapper().writeValueAsString(res));</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1751,7 +1841,7 @@ window_function_name(expression) OVER (<br>[PARTITION BY <expression>[{,<express
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

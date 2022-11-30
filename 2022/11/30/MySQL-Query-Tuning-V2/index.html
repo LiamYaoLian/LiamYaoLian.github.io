@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Transaction and Lock Use InnoDB (default setting) reduces great hassle. Transaction is implemented by storage engine. If your transaction uses Table A and Table B and Table B’s storage engine does not">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL Query Tuning V2">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/11/30/MySQL-Query-Tuning-V2/index.html">
+<meta property="og:site_name" content="Liam Lian&#39;s Blog">
+<meta property="og:description" content="Transaction and Lock Use InnoDB (default setting) reduces great hassle. Transaction is implemented by storage engine. If your transaction uses Table A and Table B and Table B’s storage engine does not">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-30T15:05:46.000Z">
+<meta property="article:modified_time" content="2022-11-30T19:58:51.931Z">
+<meta property="article:author" content="Liam Lian">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://liamyaolian.github.io/2022/11/30/MySQL-Query-Tuning-V2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>MySQL Query Tuning V2 | Liam Lian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liam Lian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/11/30/MySQL-Query-Tuning-V2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL Query Tuning V2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-30 10:05:46 / Modified: 14:58:51" itemprop="dateCreated datePublished" datetime="2022-11-30T10:05:46-05:00">2022-11-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Transaction-and-Lock"><a href="#Transaction-and-Lock" class="headerlink" title="Transaction and Lock"></a>Transaction and Lock</h1><ul>
+<li><p>Use InnoDB (default setting) reduces great hassle. Transaction is implemented by storage engine. If your transaction uses Table A and Table B and Table B’s storage engine does not support transaction, MySQL does not throw an error and data on Table B will not be rolled back.<br>Note: Lock is release on commit or roll back.</p>
+</li>
+<li><p>Use lock with smaller granularity to allow more concurrency. But more locks consumes more resources. It is a trade off.</p>
+</li>
+<li><p>Retry after deadlock is detected. InnoDB storage engine will notice circular dependencies and return an error instantly. InnoDB rolls back the transaction that has the fewest exclusive row locks.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Transaction 1</span><br><span class="line">START TRANSACTION;</span><br><span class="line">UPDATE StockPrice SET close = 45.50 WHERE stock_id = 4 and date = ‘2020-05-01’;</span><br><span class="line">UPDATE StockPrice SET close = 19.80 WHERE stock_id = 3 and date = ‘2020-05-02’;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Transaction 2</span><br><span class="line">START TRANSACTION;</span><br><span class="line">UPDATE StockPrice SET high = 20.12 WHERE stock_id = 3 and date = &#x27;2020-05-02&#x27;;</span><br><span class="line">UPDATE StockPrice SET high = 47.20 WHERE stock_id = 4 and date = &#x27;2020-05-01&#x27;;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure></li>
+<li><p>If you set AUTOCOMMIT &#x3D; 0, you are always in a transaction until you issue a COMMIT or ROLLBACK. MySQL then starts a new transaction immediately.</p>
+</li>
+<li><p>If You set AUTOCOMMIT &#x3D; 1, use <code>begin</code> and <code>start transaction</code> if one transaction has many queries<br>Note: Certain commands (typically DDL such as ALTER TABLE, but may be others such as LOCK TABLES) cause MySQL to commit the transaction before they execute.</p>
+</li>
+<li><p>Choose the suitable isolation level: READ COMMITTED, READ UNCOMMITTED, REPEATABLE READ, (usually not choose) SERIALIZABLE<br>TODO</p>
+</li>
+<li><p>Understand how MVCC allows most read queries not needing to acquire locks. <code>READ COMMITTED</code> and <code>REPEATABLE READ</code> use MVCC, while <code>READ UNCOMMITTED</code> and <code>SERIALIZABLE</code> do not need it.<br>InnoDB implements MVCC by assigning a transaction ID for each transaction at the first time the transaction reads any data. When a record is modified within that transaction, an undo record that explains how to revert that change is written to the undo log, and the rollback pointer of the transaction is pointed at that undo log record.</p>
+</li>
+<li><p>May need to use explicit locking:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT ... FOR SHARE          // After MySQL 8.0</span><br><span class="line">SELECT ... FOR UPDATE</span><br></pre></td></tr></table></figure>
+<p>TODO</p>
+</li>
+</ul>
+<h1 id="Schema"><a href="#Schema" class="headerlink" title="Schema"></a>Schema</h1><h2 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h2><ol>
+<li>Smaller is usually better than bigger. For example, if <code>TINYINT</code> is sufficient, it is more efficient than <code>INT</code>.</li>
+<li>Estimate conservatively. Realizing the data type is not big enough after the code has been in production is more painful.</li>
+<li>Simple is good. For example, integers are cheaper than characters.</li>
+<li>Avoid <code>null</code> if possible. Set a default value to leverage index.</li>
+<li><code>DECIMAL</code> is precise but more expensive. In some high-volume cases, use a BIGINT instead and store the data as some multiple of the smallest fraction of currency. For example, multiply all dollar amounts by a million and store the result in a BIGINT.</li>
+<li><code>VARCHAR</code> require less storage space than fixed-length types because it uses only as much space as it needs. However, because the rows are variable length, they can grow when you update them, which can cause extra work. If a row grows and no longer fits in its original location, the behavior is storage engine dependent. For example, InnoDB may need to split the page to fit the row into it. It’s usually worth using VARCHAR when the maximum column length is much larger than the average length; when updates to the field are rare, so fragmentation is not a problem; and when you’re using a complex character set such as UTF-8, where each character uses a variable number of bytes of storage.</li>
+<li>Using ENUM instead of a string type. ENUM is 1 or 2 bytes. ENUM is stored as integers as the sequence specified in the definition. Avoid <code>ENUM(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;)</code>. ENUM will be converted to string in a string context. If you want to sort them alphabetically:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT e FROM enum_test ORDER BY FIELD(e, &#x27;apple&#x27;, &#x27;dog&#x27;, &#x27;fish&#x27;);</span><br></pre></td></tr></table></figure></li>
+<li>DATETIME is independent of TIMEZONE, 8 bytes, millisecond-precision, from the year 1000 to the year 9999. TIMESTAMP depends on TIMEZONE, 4 bytes, second-precision, from 1970-1-1 midnight GMT to 2038-1-19. MySQL server, operating system, and client connections all have time zone settings.</li>
+</ol>
+<h2 id="Primary-KEY"><a href="#Primary-KEY" class="headerlink" title="Primary KEY"></a>Primary KEY</h2><ol>
+<li>Once you choose a type for PK, make sure you use the same type in all related tables</li>
+<li>The Smaller, the better</li>
+<li>Integer is usually better than string</li>
+<li>Avoid random number, because values will be distributed over a large space. If you still want to use UUID, convert it into 16-byte numbers with UNHEX() and store them in a BINARY(16) column. You can retrieve the values in hexadecimal format with the HEX() function.</li>
+</ol>
+<h2 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h2><ul>
+<li>If a table have hundreds of columns, even if we only use a few columns, InnoDB will parse all columns, which is expensive.</li>
+</ul>
+<h2 id="Summary-Table"><a href="#Summary-Table" class="headerlink" title="Summary Table"></a>Summary Table</h2><ul>
+<li>To improve performance</li>
+</ul>
+<h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><h2 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B Tree"></a>B Tree</h2><ul>
+<li>Avoid duplicate, redundant, unused indices, because MySQL has to maintain each index separately.</li>
+<li>Use cluster index if possible. Cluster index leaf stores the row. Non-cluster index leaf stores PK.</li>
+<li>The leaf pages can perform better if they are physically sequential, otherwise it’s called “fragmented” and range scans or full index scans are slower. Avoid that with random values such as UUID. To defragment data, you can either run OPTIMIZE TABLE or dump and reload the data.</li>
+<li>Use multicolumn index if possible instead of many indices on single columns (because MySQL needs to do “index merge” for the latter one), and consider:<ul>
+<li>using covering index, which is an index that contains (or “covers”) all the data needed to satisfy a query.</li>
+<li>the left-most rule when deciding the order of columns.</li>
+<li>what sorting is needed in queries. B-tree indexes stores the data in sorted order, and MySQL can exploit that for ORDER BY and GROUP BY. Ordering the results by the index does not work if a column in ORDER BY is not in the index or the order in ORDER BY is not the order of the index. If you need to sort in different directions, a trick is to store a reversed or negated value.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE rental (</span><br><span class="line"> ...</span><br><span class="line"> PRIMARY KEY (rental_id),</span><br><span class="line"> UNIQUE KEY rental_date (rental_date,inventory_id,customer_id),</span><br><span class="line"> KEY idx_fk_inventory_id (inventory_id),</span><br><span class="line"> KEY idx_fk_customer_id (customer_id),</span><br><span class="line"> KEY idx_fk_staff_id (staff_id),</span><br><span class="line"> ...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">... WHERE rental_date = &#x27;2005-05-25&#x27; ORDER BY inventory_id, staff_id;</span><br><span class="line"># does not use index because the ORDER BY refers to a column that isn’t in the index</span><br></pre></td></tr></table></figure>
+The ORDER BY clause needs to form a leftmost prefix of the index unless leading columns are constants.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE rental (</span><br><span class="line"> ...</span><br><span class="line"> PRIMARY KEY (rental_id),</span><br><span class="line"> UNIQUE KEY rental_date (rental_date,inventory_id,customer_id),</span><br><span class="line"> KEY idx_fk_inventory_id (inventory_id),</span><br><span class="line"> KEY idx_fk_customer_id (customer_id),</span><br><span class="line"> KEY idx_fk_staff_id (staff_id),</span><br><span class="line"> ...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; EXPLAIN SELECT rental_id, staff_id FROM sakila.rental</span><br><span class="line">    -&gt; WHERE rental_date = &#x27;2005-05-25&#x27;</span><br><span class="line">    -&gt; ORDER BY inventory_id, customer_id\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line"> type: ref</span><br><span class="line"> possible_keys: rental_date</span><br><span class="line"> key: rental_date</span><br><span class="line"> rows: 1</span><br><span class="line"> Extra: Using where</span><br></pre></td></tr></table></figure>
+If the query joins multiple tables, ordering the results by the index works only when all columns in the ORDER BY clause refer to the first table.</li>
+<li>Assuming there is no sorting and group by, the column that can filter out the most rows should be the leftest.</li>
+</ul>
+</li>
+<li>Consider using prefix to save storage. You must define prefix if you want to index BLOB, TEXT, or very long VARCHAR columns, because MySQL disallows indexing their full length.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE cities ADD KEY (city(7));</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Query-Tuning"><a href="#Query-Tuning" class="headerlink" title="Query Tuning"></a>Query Tuning</h1><h2 id="Slower-to-Fast"><a href="#Slower-to-Fast" class="headerlink" title="Slower to Fast"></a>Slower to Fast</h2><p>constants<br>unique index lookups<br>range scans<br>index scans<br>full table scans</p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ol>
+<li>Avoid <code>SELECT *</code>. Only include columns needed.</li>
+<li>Choose the suitable query size. It is a trade-off between:</li>
+</ol>
+<ul>
+<li>reduce the number of connections established.</li>
+<li>avoid locking for too long if there is a lock.</li>
+</ul>
+<ol start="3">
+<li>Do not perform calculation on index column while filtering. An example that violates this:  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT actor_id FROM actor WHERE actor_id + 1 = 5;</span><br></pre></td></tr></table></figure></li>
+<li>Join</li>
+</ol>
+<ul>
+<li>Avoid join too many tables. Join them in application.</li>
+<li>The table has fewer rows that meet the ON criteria should be the first table.</li>
+<li>Use the column with an index as the join criteria if possible.</li>
+</ul>
+<ol start="5">
+<li>Avoid correlated subqueries:</li>
+</ol>
+<ul>
+<li>Method 1: Replace IN with EXISTS  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM film</span><br><span class="line">  -&gt; WHERE EXISTS(</span><br><span class="line">  -&gt;    SELECT * FROM film_actor WHERE actor_id = 1</span><br><span class="line">  -&gt;       AND film_actor.film_id = film.film_id);</span><br></pre></td></tr></table></figure></li>
+<li>Method 2: Join. But this may not be more efficient because it will join all rows that can be joined first before filtering.</li>
+<li>Method 3: Generate the IN list with GROUP_CONCAT in another query</li>
+</ul>
+<ol start="6">
+<li>Use columns in the same table in GROUP BY and ORDER BY to leverage index. Move the WITH ROLLUP functionality into your application code.</li>
+<li>LIMIT with large offet<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT film_id, description FROM sakila.film ORDER BY title LIMIT 50, 5;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>Method 1:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT film.film_id, film.description</span><br><span class="line">    -&gt; FROM sakila.film</span><br><span class="line">    -&gt;    INNER JOIN (</span><br><span class="line">    -&gt;       SELECT film_id FROM sakila.film</span><br><span class="line">    -&gt;       ORDER BY title LIMIT 50, 5</span><br><span class="line">    -&gt;    ) AS lim USING(film_id);</span><br></pre></td></tr></table></figure></li>
+<li>Method 2: position is indexed<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT film_id, description FROM sakila.film</span><br><span class="line">WHERE position BETWEEN 50 AND 54 ORDER BY position;</span><br></pre></td></tr></table></figure></li>
+<li>Method 3<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM sakila.rental</span><br><span class="line">-&gt; WHERE rental_id &lt; 16030</span><br><span class="line">-&gt; ORDER BY rental_id DESC LIMIT 20;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="8">
+<li>Replace <code>OR</code> with <code>IN</code>. MySQL uses binary search on the <code>IN</code> list. However, <code>IN</code> list that is too long may hurt performance,<br>because the optimizer may copy the list for all related tables (due to a WHERE, ON, or USING clause that sets the column equals to that on another table).</li>
+<li>Union:</li>
+</ol>
+<ul>
+<li>add filtering  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.actor</span><br><span class="line"> ORDER BY last_name)</span><br><span class="line">UNION ALL</span><br><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.customer</span><br><span class="line"> ORDER BY last_name)</span><br><span class="line">LIMIT 20;</span><br></pre></td></tr></table></figure>
+  Should be:  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.actor</span><br><span class="line"> ORDER BY last_name</span><br><span class="line"> LIMIT 20)</span><br><span class="line">UNION ALL</span><br><span class="line">(SELECT first_name, last_name</span><br><span class="line"> FROM sakila.customer</span><br><span class="line"> ORDER BY last_name</span><br><span class="line"> LIMIT 20)</span><br><span class="line">LIMIT 20;</span><br></pre></td></tr></table></figure></li>
+<li>If sorting is not needed, use UNION ALL, because UNION will sort.</li>
+</ul>
+<ol start="10">
+<li><p>MAX() and MIN()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT MIN(actor_id) FROM sakila.actor WHERE first_name = &#x27;PENELOPE&#x27;;</span><br></pre></td></tr></table></figure>
+<p>Can be:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT actor_id FROM sakila.actor USE INDEX(PRIMARY)</span><br><span class="line">    -&gt; WHERE first_name = &#x27;PENELOPE&#x27; LIMIT 1;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Count()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(IF(color = &#x27;blue&#x27;, 1, 0)) AS blue,SUM(IF(color = &#x27;red&#x27;, 1, 0))</span><br><span class="line">AS red FROM items;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/07/MQ/" rel="prev" title="MQ">
+      <i class="fa fa-chevron-left"></i> MQ
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Transaction-and-Lock"><span class="nav-number">1.</span> <span class="nav-text">Transaction and Lock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Schema"><span class="nav-number">2.</span> <span class="nav-text">Schema</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Type"><span class="nav-number">2.1.</span> <span class="nav-text">Data Type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Primary-KEY"><span class="nav-number">2.2.</span> <span class="nav-text">Primary KEY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other"><span class="nav-number">2.3.</span> <span class="nav-text">Other</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary-Table"><span class="nav-number">2.4.</span> <span class="nav-text">Summary Table</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Index"><span class="nav-number">3.</span> <span class="nav-text">Index</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Tree"><span class="nav-number">3.1.</span> <span class="nav-text">B Tree</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-Tuning"><span class="nav-number">4.</span> <span class="nav-text">Query Tuning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Slower-to-Fast"><span class="nav-number">4.1.</span> <span class="nav-text">Slower to Fast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">4.2.</span> <span class="nav-text">Tips</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam Lian</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam Lian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
