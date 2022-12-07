@@ -145,6 +145,380 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/07/MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/07/MySQL/" class="post-title-link" itemprop="url">MySQL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-07 20:25:28" itemprop="dateCreated datePublished" datetime="2022-04-07T20:25:28-04:00">2022-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-21 18:23:05" itemprop="dateModified" datetime="2022-06-21T18:23:05-04:00">2022-06-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><ul>
+<li>server layer + storage engine layer<ul>
+<li><p>server layer</p>
+<ul>
+<li>connector: connects client to server; wait_timeout can decide how long it will wait before disconnecting if the client has not sent a query.</li>
+<li>cache: After MySQL 8.0, not have this.</li>
+<li>analyzer: lexical and syntax analysis</li>
+<li>optimizer: which index to use, which table to be joined first</li>
+<li>executor: execute; update binlog in disk<br>the server layer has functions, stored procedures, trigger, view, etc</li>
+</ul>
+</li>
+<li><p>storage engine: read and store, update redo log</p>
+<ul>
+<li>engines: InnoDb, MyISAM, Memory, etc</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"><span class="comment">/**/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Data-types"><a href="#Data-types" class="headerlink" title="Data types"></a>Data types</h2><h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><ul>
+<li>TINYINT</li>
+<li>INT: 约21亿</li>
+<li>BIGINT</li>
+<li>FLOAT, E38</li>
+<li>DOUBLE, E308</li>
+<li>DECIMAL(m,n): m&lt;&#x3D;65, precise</li>
+</ul>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
+<li>char: 255 char</li>
+<li>varchar: variable length; 理论65535，不允许空字段时最大65531，允许空字段65532</li>
+<li>text: variable length; cannot be PK<ul>
+<li>TINYTEXT: 255</li>
+<li>TEXT: 65535, recommended</li>
+<li>MEDIUMTEXT: 16,777,215</li>
+<li>LONGTEXT: 4,294,967,295(4GB)</li>
+</ul>
+</li>
+<li>ENUM</li>
+<li>SET: SET(‘one’, ‘two’) NOT NULL can have any of these values:   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#x27;one&#x27;</span></span><br><span class="line"><span class="string">&#x27;two&#x27;</span></span><br><span class="line"><span class="string">&#x27;one,two&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Date-and-Time"><a href="#Date-and-Time" class="headerlink" title="Date and Time"></a>Date and Time</h3><ul>
+<li>Year</li>
+<li>Date</li>
+<li>Time</li>
+<li>Datetime: recommended</li>
+<li>Timestamp: converted from the current time zone to UTC for storage, and converted back from UTC to the current time zone for retrieval</li>
+</ul>
+<h2 id="Queries"><a href="#Queries" class="headerlink" title="Queries"></a>Queries</h2><p><img src="/../image/mysql/4.png" alt="undo log and read-view"></p>
+<h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop database (if exists) database_name;</span><br><span class="line">create database database_name;</span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> database.table_name (</span><br><span class="line">column1 datatype [<span class="keyword">constraint</span>] [comment],</span><br><span class="line">column2 datatype [<span class="keyword">constraint</span>] [comment],</span><br><span class="line">column3 datatype [<span class="keyword">constraint</span>] [comment],</span><br><span class="line">INDEX [ index_name ] ( column_name )</span><br><span class="line"><span class="keyword">foreign</span> key (deptno) <span class="keyword">references</span> t_dept(deptno)</span><br><span class="line">....) [comment];</span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> (if <span class="keyword">exists</span>) database.table_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> database.new_table_name</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line">(<span class="keyword">SELECT</span> column1, column2,...</span><br><span class="line"><span class="keyword">FROM</span> existing_table_name</span><br><span class="line"><span class="keyword">WHERE</span> ....);</span><br><span class="line"></span><br><span class="line"><span class="keyword">Show</span> tables;</span><br><span class="line"><span class="keyword">describe</span> table_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name</span><br><span class="line"><span class="keyword">ADD</span> column1 datatype [<span class="keyword">constraint</span>] [COMMENT] ,</span><br><span class="line"><span class="keyword">ADD</span> column2 datatype [<span class="keyword">constraint</span>] [COMMENT] ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name</span><br><span class="line">MODIFY column1 datatype [<span class="keyword">constraint</span>] [COMMENT] ,</span><br><span class="line">MODIFY column2 datatype [<span class="keyword">constraint</span>] [COMMENT] ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name</span><br><span class="line">CHANGE column1 new_column_name1 datatype [<span class="keyword">constraint</span>] [COMMENT] ,</span><br><span class="line">CHANGE column2 new_column_name2 datatype [<span class="keyword">constraint</span>] [COMMENT] ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name</span><br><span class="line"><span class="keyword">DROP</span> column1 ,</span><br><span class="line"><span class="keyword">DROP</span> column2 ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name RENAME new_table_name ;</span><br></pre></td></tr></table></figure>
+<h4 id="constraints"><a href="#constraints" class="headerlink" title="constraints"></a>constraints</h4><ul>
+<li>PRIMARY KEY</li>
+<li>NOT NULL</li>
+<li>UNIQUE</li>
+<li>FOREIGN KEY</li>
+</ul>
+<h3 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h3><ul>
+<li><p>&#x3D;</p>
+</li>
+<li><p>&lt;&gt;, !&#x3D;</p>
+</li>
+<li><p>is null, is not null</p>
+</li>
+<li><p>between and</p>
+</li>
+<li><p>in</p>
+</li>
+<li><p>EXISTS</p>
+<ul>
+<li>EXISTS关键字是把原来在子查询之外的条件判断，写到了子查询的里面<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">查询工资等级3和4级的员工信息</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">select</span> empno, ename, sal, comm</span><br><span class="line"><span class="keyword">from</span> t_emp</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">exists</span></span><br><span class="line">(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_salgrade <span class="keyword">where</span> grade <span class="keyword">in</span> (<span class="number">3</span>, <span class="number">4</span>) <span class="keyword">and</span> sal <span class="keyword">between</span> losal <span class="keyword">and</span> hisal);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>like</p>
+<ul>
+<li>%: zero or more</li>
+<li>_: single</li>
+</ul>
+</li>
+<li><p>regexp</p>
+<ul>
+<li><code>ename regexp &quot;[a-zA-Z]&#123;4&#125;&quot;</code></li>
+</ul>
+</li>
+<li><p>NOT</p>
+</li>
+<li><p>AND</p>
+</li>
+<li><p>OR</p>
+</li>
+<li><p>XOR</p>
+</li>
+<li><p>&amp;</p>
+</li>
+<li><p>|</p>
+</li>
+<li><p>~: bitwise not</p>
+</li>
+<li><p>^: bitwise XOR</p>
+</li>
+<li><p>&lt;&lt;</p>
+</li>
+<li><blockquote>
+<blockquote>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<h4 id="Priority"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</h4><ul>
+<li>() &gt; NOT &gt; And &gt; Or</li>
+</ul>
+<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*IGNORE: only insert records that do not exist*/</span></span><br><span class="line"><span class="keyword">INSERT</span> [ IGNORE ] <span class="keyword">INTO</span> table_name [(column1 ,column2, ...)] <span class="keyword">VALUES</span> (value1, value2, ...);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name （column_name）(</span><br><span class="line"><span class="keyword">SELECT</span> column_name</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> 条件);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> demo.goodsmaster</span><br><span class="line">(itemnumber, barcode, goodsname, specification, unit, price)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">(<span class="number">4</span>,<span class="string">&#x27;0003&#x27;</span>,<span class="string">&#x27;尺子&#x27;</span>,<span class="string">&#x27;三角型&#x27;</span>,<span class="string">&#x27;把&#x27;</span>,<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*MySQL dialect*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name <span class="keyword">SET</span> column1<span class="operator">=</span>value1, column2<span class="operator">=</span>value2, ...... ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>can skip inserting some columns if null allowed or have default values</li>
+<li>ON DUPLICATE: 假设我们要把门店 B 的商品数据，插入到门店 A 的商品表中去，如果有重复的商品编号，就用门店 B 的条码，替换门店 A 的条码，<br>用门店 B 的商品名称，替换门店 A 的商品名称；如果没有重复的编号，就直接把门店 B 的商品数据插入到门店 A 的商品表中。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 书        | 16开          | 本   |      89.00 |</span><br><span class="line">|          2 | 0002    | 笔        | 10支装        | 包   |       5.00 |</span><br><span class="line">|          3 | 0003    | 橡皮      | NULL          | 个   |       3.00 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster1;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 教科书    | NULL          | NULL |      89.00 |</span><br><span class="line">|          4 | 0004    | 馒头      |               |      |       1.50 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO demo.goodsmaster</span><br><span class="line">SELECT *</span><br><span class="line">FROM demo.goodsmaster1 as a</span><br><span class="line">ON DUPLICATE KEY UPDATE barcode = a.barcode,goodsname=a.goodsname;</span><br><span class="line">-- 运行结果如下</span><br><span class="line">mysql&gt; SELECT *</span><br><span class="line">    -&gt; FROM demo.goodsmaster;</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">| itemnumber | barcode | goodsname | specification | unit | salesprice |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">|          1 | 0001    | 教科书    | 16开          | 本   |      89.00 |</span><br><span class="line">|          2 | 0002    | 笔        | 10支装        | 包   |       5.00 |</span><br><span class="line">|          3 | 0003    | 橡皮      | NULL          | 个   |       3.00 |</span><br><span class="line">|          4 | 0004    | 馒头      |               |      |       1.50 |</span><br><span class="line">+------------+---------+-----------+---------------+------+------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/* ignore: if foreign key exists so some records cannot be deleted, will ignore these records  */</span><br><span class="line">DELETE [ IGNORE ] FROM table_name [ LEFT | RIGHT ] JOIN table_name2 ON conditions </span><br><span class="line">WHERE conditions</span><br><span class="line">[ ORDER BY ... ]</span><br><span class="line">[ LIMIT ... ] ;</span><br><span class="line"></span><br><span class="line">/*delete all*/</span><br><span class="line">DELETE FROM demo.goodsmaster; // undo log</span><br><span class="line">Truncate table table_name; // no in undo log</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sequence: from -&gt; where -&gt; order by -&gt; limit -&gt; delete</li>
+</ul>
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">UPDATE table_name</span><br><span class="line">SET 字段名=值</span><br><span class="line">WHERE 条件</span><br><span class="line">[ ORDER BY …… ]</span><br><span class="line">[ LIMIT param ] ; /*can only have one param*/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sequence: from -&gt; where -&gt; order by -&gt; limit -&gt; set</li>
+<li>Don’t update primary key</li>
+<li>因为WHERE子句中的子查询效率非常低，所以我们可以利用表连接的方式来改造UPDATE语句<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表<span class="number">1</span> [ <span class="keyword">LEFT</span> <span class="operator">|</span> <span class="keyword">RIGHT</span> ] <span class="keyword">JOIN</span> 表<span class="number">2</span> <span class="keyword">ON</span> 条件</span><br><span class="line"><span class="keyword">SET</span> 字段<span class="number">1</span> <span class="operator">=</span> 值<span class="number">1</span> , 字段<span class="number">2</span> <span class="operator">=</span> 值<span class="number">2</span> , ... ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">UPDATE</span> 表<span class="number">1</span> , 表<span class="number">2</span></span><br><span class="line"><span class="keyword">SET</span> 字段<span class="number">1</span> <span class="operator">=</span> 值<span class="number">1</span> , 字段<span class="number">2</span> <span class="operator">=</span> 值<span class="number">2</span> , ...</span><br><span class="line"><span class="keyword">WHERE</span> 连接条件 ;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">SELECT * | column_name</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE conditions</span><br><span class="line">GROUP BY column_name</span><br><span class="line">HAVING conditions</span><br><span class="line">ORDER BY column_name</span><br><span class="line">LIMIT offset，row_count</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    [ALL | DISTINCT | DISTINCTROW ]</span><br><span class="line">    [HIGH_PRIORITY]</span><br><span class="line">    [STRAIGHT_JOIN]</span><br><span class="line">    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]</span><br><span class="line">    [SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]</span><br><span class="line">    select_expr [, select_expr] ...</span><br><span class="line">    [into_option]</span><br><span class="line">    [FROM table_references</span><br><span class="line">      [PARTITION partition_list]]</span><br><span class="line">    [WHERE where_condition]</span><br><span class="line">    [GROUP BY &#123;col_name | expr | position&#125;, ... [WITH ROLLUP]]</span><br><span class="line">    [HAVING where_condition]</span><br><span class="line">    [WINDOW window_name AS (window_spec)</span><br><span class="line">        [, window_name AS (window_spec)] ...]</span><br><span class="line">    [ORDER BY &#123;col_name | expr | position&#125;</span><br><span class="line">      [ASC | DESC], ... [WITH ROLLUP]]</span><br><span class="line">    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]</span><br><span class="line">    [into_option]</span><br><span class="line">    [FOR &#123;UPDATE | SHARE&#125;</span><br><span class="line">        [OF tbl_name [, tbl_name] ...]</span><br><span class="line">        [NOWAIT | SKIP LOCKED]</span><br><span class="line">      | LOCK IN SHARE MODE]</span><br><span class="line">    [into_option]</span><br><span class="line"></span><br><span class="line">into_option: &#123;</span><br><span class="line">    INTO OUTFILE &#x27;file_name&#x27;</span><br><span class="line">        [CHARACTER SET charset_name]</span><br><span class="line">        export_options</span><br><span class="line">  | INTO DUMPFILE &#x27;file_name&#x27;</span><br><span class="line">  | INTO var_name [, var_name] ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Windows<ul>
+<li>window functions also operate on a subset of rows, but they do not reduce the number of rows returned by the query<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">window_function_name(expression) OVER (</span><br><span class="line">   [PARTITION BY &lt;expression&gt;[&#123;,&lt;expression&gt;...&#125;]]</span><br><span class="line">   [ORDER BY &lt;expression&gt; [ASC|DESC], [&#123;,&lt;expression&gt;...&#125;]] // how the rows are ordered within a partition</span><br><span class="line">   [frame_unit &#123;&lt;frame_start&gt;|&lt;frame_between&gt;&#125;]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// running total</span><br><span class="line">SUM(total_price) OVER(ORDER BY Sales_Date rows between UNBOUNDED PRECEDING and current row) AS Running_Total</span><br><span class="line">```  </span><br><span class="line">  - A frame is defined with respect to the current row, which allows a frame to move within a partition depending on the position of the current row within its partition.</span><br><span class="line">  - The frame unit specifies the type of relationship between the current row and frame rows. It can be ROWS or RANGE. The offsets of the current row and frame rows are the row numbers if the frame unit is ROWS and row values the frame unit is RANGE.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - The frame_start defines the frame boundary and contains one of the following:</span><br><span class="line">    - UNBOUNDED PRECEDING: frame starts at the first row of the partition.</span><br><span class="line">    - N PRECEDING: a physical N of rows before the first current row. N can be a literal number or an expression that evaluates to a number.</span><br><span class="line">    - CURRENT ROW: the row of the current calculation</span><br><span class="line"></span><br><span class="line">  - The frame_between defines the frame boundary and is as follows:</span><br></pre></td></tr></table></figure>
+BETWEEN frame_boundary_1 AND frame_boundary_2   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  The frame_boundary_1 and frame_boundary_2 can each contain one of the following:</span><br><span class="line">    - frame_start: as mentioned previously.</span><br><span class="line">    - UNBOUNDED FOLLOWING: the frame ends at the final row in the partition.</span><br><span class="line">    - N FOLLOWING: a physical N of rows after the current row.</span><br><span class="line">- If you don’t specify the frame_definition in the OVER clause, then MySQL uses the following frame by default:</span><br></pre></td></tr></table></figure>
+RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  ![windows function](../image/mysql/5.png)</span><br><span class="line">  - Aggregate: Count, Sum, Avg, Min, Max</span><br><span class="line">  - Offset:</span><br><span class="line">    - first_value(column_name)</span><br><span class="line">    - last_value(column_name)</span><br><span class="line">    - lead(&lt;expression&gt;[,offset[, default_value]]): running diff, e.g. y-o-y; If offset is zero, then the LAG() function evaluates the expression for the current row. If you don’t specify the offset, then the LAG() function uses one by default.</span><br><span class="line">    - lag(&lt;expression&gt;[,offset[, default_value]]): running diff, e.g. y-o-y</span><br><span class="line"></span><br><span class="line">  - Rank</span><br><span class="line">    - row_number: Assigns a sequential integer to every row within its partition; application: Removing duplicate rows</span><br><span class="line">    - rank</span><br><span class="line">    - dense_rank</span><br><span class="line"></span><br><span class="line">* distinct</span><br><span class="line">  - If you have null value in the column, select distinct will only show one null value</span><br><span class="line">  - Select multiple columns: MySQL uses the combination of values in these columns to determine the uniqueness of the row in the result set</span><br><span class="line">* Use of an unqualified * with other items in the select list may produce a parse error. To avoid this problem, use a qualified tbl_name.* reference:</span><br></pre></td></tr></table></figure>
+SELECT AVG(score), t1.* FROM t1 …<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">* You need not specify a tbl_name or db_name.tbl_name prefix for a column reference unless the reference would be ambiguous.</span><br><span class="line"></span><br><span class="line">* The INTO clause, if present, can appear in any position indicated by the syntax description, but within a given statement can appear only once, not in multiple positions.</span><br><span class="line"></span><br><span class="line">* column alias:</span><br><span class="line"> - it is good practice to be in the habit of using AS explicitly when specifying column aliases.</span><br><span class="line"> - can be used in GROUP BY, ORDER BY, or HAVING clauses</span><br><span class="line"> - If the column alias contains spaces, you need to place it inside quotes</span><br><span class="line"> - The execution order after select can use the alias name, otherwise no. It is not permissible to refer to a column alias in a WHERE clause, because the column value might not yet be determined when the WHERE clause is executed.</span><br></pre></td></tr></table></figure>
+SELECT CONCAT(‘Jane’,’ ‘,’Doe’) AS ‘Full name’;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* from: table, derived table</span><br></pre></td></tr></table></figure>
+tbl_name [[AS] alias] [index_hint]<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> - derived table must have an alias</span><br><span class="line"> - If you name more than one table, you are performing a join.</span><br><span class="line"> - The use of index hints provides the optimizer with information about how to choose indexes during query processing. For a description of the syntax for specifying these hints, see Section 8.9.4, “Index Hints”.You can use SET max_seeks_for_key=value as an alternative way to force MySQL to prefer key scans instead of table scans. See Section 5.1.8, “Server System Variables”.</span><br><span class="line"></span><br><span class="line">* where</span><br><span class="line">  - old: 筛选掉记录最多的条件写在最左侧</span><br><span class="line"></span><br><span class="line">* GROUP BY</span><br><span class="line">  - permits a WITH ROLLUP modifier. See Section 12.20.2, “GROUP BY Modifiers”.</span><br></pre></td></tr></table></figure>
+SELECT<br>productLine,<br>orderYear,<br>SUM(orderValue) totalOrderValue<br>FROM<br>sales<br>GROUP BY<br>productline,<br>orderYear<br>WITH ROLLUP;<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    ![with rollup](../image/mysql/6.png)</span><br><span class="line">    https://www.mysqltutorial.org/mysql-rollup/</span><br><span class="line">  - The number of dimension column you selected can not larger than that of followed by clause group by</span><br><span class="line">  - GROUP_CONCAT函数可以把分组查询中的某个字段拼接成一个字符串</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* order by</span><br><span class="line">  - asc, desc</span><br><span class="line">  - If ORDER BY occurs within a parenthesized query expression and also is applied in the outer query, the results are undefined and may change in a future version of MySQL.</span><br><span class="line">  - When you use ORDER BY or GROUP BY to sort a column in a SELECT, the server sorts values using only the initial number of bytes indicated by the max_sort_length system variable.</span><br><span class="line"></span><br><span class="line">* limit:</span><br><span class="line"> - start index is 0</span><br><span class="line"> - `limit 1, 2`: 1 means starting from 1 (included, first row is 0); 2 means returning 2 records</span><br><span class="line"> - With one argument, the value specifies the number of rows to return from the beginning of the result set</span><br><span class="line"> - For prepared statements, you can use placeholders.</span><br></pre></td></tr></table></figure>
+ SET @skip&#x3D;1; SET @numrows&#x3D;5;<br> PREPARE STMT FROM ‘SELECT * FROM tbl LIMIT ?, ?’;<br> EXECUTE STMT USING @skip, @numrows; <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> - If LIMIT occurs within a parenthesized query expression and also is applied in the outer query, the results are undefined and may change in a future version of MySQL</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* HAVING</span><br><span class="line">   - The query result includes only groups satisfying the HAVING conditions. (If no GROUP BY is present, all rows implicitly form a single aggregate group.)</span><br><span class="line">   - The WHERE clause specifies conditions on columns in the select list, but cannot refer to aggregate functions.</span><br><span class="line">   - SQL standard: HAVING must reference only columns in the GROUP BY clause or columns used in aggregate functions. Extension: permits HAVING to refer to columns in the SELECT list and columns in outer subqueries. If a HAVING column name is used both in GROUP BY and as an aliased column in the select column list, preference is given to the column in the GROUP BY column</span><br><span class="line"></span><br><span class="line"> * aggregation function</span><br><span class="line">  - AVG: ignore null, 只能用于数字类型，非数字数据统计结果为0</span><br><span class="line">  - COUNT</span><br><span class="line">    - COUNT(*) to count the number of rows in a table</span><br><span class="line">    - COUNT(column) ignores NULL values</span><br><span class="line">  - MAX: ignore null</span><br><span class="line">  - MIN: ignore null</span><br><span class="line">  - SUM: ignore null, 只能用于数字类型，字符类型的统计结果为0，日期类型统计结果是毫秒数相加。</span><br><span class="line">  - for each group</span><br><span class="line">  - can put `Distinct` inside (), such as `count(DISTINCT prod_price)`</span><br><span class="line"></span><br><span class="line"> * For update: ...</span><br><span class="line"> * DISTINCT</span><br><span class="line"> * STRAIGHT_JOIN forces the optimizer to join the tables in the order in which they are listed in the FROM clause.</span><br><span class="line"> * STRAIGHT_JOIN does not apply to any table that the optimizer treats as a const or system table.</span><br><span class="line"> * SQL_BIG_RESULT or SQL_SMALL_RESULT can be used with GROUP BY or DISTINCT to tell the optimizer that the result set has many rows or is small, respectively. For SQL_BIG_RESULT, MySQL directly uses disk-based temporary tables if they are created, and prefers sorting to using a temporary table with a key on the GROUP BY elements. For SQL_SMALL_RESULT, MySQL uses in-memory temporary tables to store the resulting table instead of using sorting. This should not normally be needed.</span><br><span class="line"> * SQL_BUFFER_RESULT forces the result to be put into a temporary table. This helps MySQL free the table locks early and helps in cases where it takes a long time to send the result set to the client. This modifier can be used only for top-level SELECT statements, not for subqueries or following UNION.</span><br><span class="line"> * Named Windows: https://dev.mysql.com/doc/refman/8.0/en/window-functions-named-windows.html</span><br><span class="line"> * Partition: https://dev.mysql.com/doc/refman/8.0/en/partitioning-selection.html</span><br><span class="line"></span><br><span class="line">### Join</span><br><span class="line">* inner join</span><br><span class="line">* left join, right join</span><br><span class="line">  - If there is no match, the columns of the row from the right/left table will contain NULL</span><br><span class="line">* Full (outer) Join</span><br></pre></td></tr></table></figure>
+SELECT * FROM t1<br>LEFT JOIN t2 ON t1.id &#x3D; t2.id<br>UNION ALL<br>SELECT * FROM t1<br>RIGHT JOIN t2 ON t1.id &#x3D; t2.id<br>WHERE t1.id IS NULL<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">* cross join</span><br><span class="line">* self join</span><br><span class="line"></span><br><span class="line">### Case when</span><br><span class="line">```sql</span><br><span class="line">CASE WHEN [compare_value] THEN result       </span><br><span class="line">[WHEN [compare_value] THEN result ...]      </span><br><span class="line">[ELSE result] END (AS new_column)           </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>CASE WHEN case be used in any statement</li>
+</ul>
+<h3 id="union"><a href="#union" class="headerlink" title="union"></a>union</h3><ul>
+<li>union removes duplicates</li>
+<li>union all</li>
+<li>only one order by statement can be used, which is after the final select statement</li>
+</ul>
+<h3 id="function"><a href="#function" class="headerlink" title="function"></a>function</h3><h4 id="Number-1"><a href="#Number-1" class="headerlink" title="Number"></a>Number</h4><ul>
+<li>abs</li>
+<li>round</li>
+<li>floor</li>
+<li>ceil</li>
+<li>power(2,3)</li>
+<li>log(7,3)</li>
+<li>ln(10)</li>
+<li>sqrt(9)</li>
+<li>pi()</li>
+<li>sin</li>
+<li>cos</li>
+<li>tan</li>
+<li>cot</li>
+<li>radians(30): 角度转换弧度</li>
+<li>DEGREES(1): 弧度转换角度<h4 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h4><h5 id="system-time"><a href="#system-time" class="headerlink" title="system time"></a>system time</h5></li>
+<li>now(): yyyy-MM-dd hh:mm:ss</li>
+<li>curdate(): yyyy-MM-dd</li>
+<li>curtime(): hh:mm:ss<h5 id="DATE-FORMAT"><a href="#DATE-FORMAT" class="headerlink" title="DATE_FORMAT"></a>DATE_FORMAT</h5></li>
+<li>DATE_FORMAT(日期, 表达式)<br>%Y 年份<br>%m 月份<br>%d 日期<br>%w 星期(数字)<br>%W 星期(名称)<br>%j 本年第几天<br>%U 本年第几周<br>%h 小时(12)<br>%H 小时(24)<br>%i 分钟<br>%s 秒<br>%r 时间(12)<br>%T 时间(24)<h5 id="DATE-ADD-and-DATEDIFF"><a href="#DATE-ADD-and-DATEDIFF" class="headerlink" title="DATE_ADD() and DATEDIFF"></a>DATE_ADD() and DATEDIFF</h5></li>
+<li>DATE_ADD( 日期 , INTERVAL 15 DAY )</li>
+<li>DATEDIFF ( 日期 , 日期 )<h4 id="String-1"><a href="#String-1" class="headerlink" title="String"></a>String</h4>LOWER<br>UPPER<br>LENGTH<br>SELECT CONCAT(“SQL “, “Tutorial “, “is “, “fun!”) AS ConcatenatedString<br>SELECT INSTR(“W3Schools.com”, “3”) AS MatchPosition: 2<br>SELECT INSERT(“W3Schools.com”, 1, 9, “Example”): Example.com<br>REPLACE(“你好先生”,”先生”,”女士”)<br>SELECT SUBSTR(“SQL Tutorial”, 5, 3) AS ExtractString: Tut<br>SELECT SUBSTRING(“SQL Tutorial”, 5, 3) AS ExtractString: Tut<br>SELECT LPAD(“SQL Tutorial”, 20, “ABC”): ABCABCABSQL Tutorial; Left-pad the string with “ABC”, to a total length of 20.<br>RPAD(“Hello”,10,”*”)<br>TRIM(“ 你好先生 “)<h4 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h4>IFNULL(expresssion, value)<br>IF(expression, value1, value2)</li>
+</ul>
+<h3 id="common-table-expression-or-CTE"><a href="#common-table-expression-or-CTE" class="headerlink" title="common table expression or CTE"></a>common table expression or CTE</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">WITH salesrep AS (</span><br><span class="line">    SELECT</span><br><span class="line">        employeeNumber,</span><br><span class="line">        CONCAT(firstName, &#x27; &#x27;, lastName) AS salesrepName</span><br><span class="line">    FROM</span><br><span class="line">        employees</span><br><span class="line">    WHERE</span><br><span class="line">        jobTitle = &#x27;Sales Rep&#x27;</span><br><span class="line">),</span><br><span class="line">customer_salesrep AS (</span><br><span class="line">    SELECT</span><br><span class="line">        customerName, salesrepName</span><br><span class="line">    FROM</span><br><span class="line">        customers</span><br><span class="line">            INNER JOIN</span><br><span class="line">        salesrep ON employeeNumber = salesrepEmployeeNumber</span><br><span class="line">)</span><br><span class="line">SELECT</span><br><span class="line">    *</span><br><span class="line">FROM</span><br><span class="line">    customer_salesrep</span><br><span class="line">ORDER BY customerName;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WITH RECURSIVE cte_name AS (</span><br><span class="line">    initial_query  -- anchor member</span><br><span class="line">    UNION ALL</span><br><span class="line">    recursive_query -- recursive member that references to the CTE name</span><br><span class="line">)</span><br><span class="line">SELECT * FROM cte_name;</span><br></pre></td></tr></table></figure>
+<p>TODO: <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-recursive-cte/">https://www.mysqltutorial.org/mysql-recursive-cte/</a></p>
+<h3 id="subquery"><a href="#subquery" class="headerlink" title="subquery"></a>subquery</h3><ul>
+<li>can be in “select”, “from”, “where”</li>
+<li>in “from” will have high efficiency, avoid being in “select” or “where”. 查询语句执行的时候要多次的依赖于子查询的结果，这类子查询被<br>称作相关子查询</li>
+<li>多行子查询只能出现在WHERE子句和FROM子句中</li>
+</ul>
+<h3 id="Execution-Order"><a href="#Execution-Order" class="headerlink" title="Execution Order"></a>Execution Order</h3><p>From &gt; join &gt; Where &gt; group by &gt; having &gt; select &gt; distinct &gt; order by &gt; limit</p>
+<h3 id="Prepared-statement"><a href="#Prepared-statement" class="headerlink" title="Prepared statement"></a>Prepared statement</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM products</span><br><span class="line">WHERE productCode = ?;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>When MySQL executes this query with different productcode values, it does not have to fully parse the query. As a result, this helps MySQL execute the query faster, especially when MySQL executes the same query multiple times.</li>
+<li>Since the prepared statement uses placeholders (?), this helps avoid many variants of SQL injection hence make your application more secure.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PREPARE stmt1 FROM</span><br><span class="line">	&#x27;SELECT</span><br><span class="line">   	    productCode,</span><br><span class="line">            productName</span><br><span class="line">	FROM products</span><br><span class="line">        WHERE productCode = ?&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SET @pc = &#x27;S10_1678&#x27;;</span><br><span class="line"></span><br><span class="line">EXECUTE stmt1 USING @pc;</span><br><span class="line"></span><br><span class="line">DEALLOCATE PREPARE stmt1;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Constraint"><a href="#Constraint" class="headerlink" title="Constraint"></a>Constraint</h2><h3 id="PK-vs-FK"><a href="#PK-vs-FK" class="headerlink" title="PK vs FK"></a>PK vs FK</h3><ul>
+<li>PK<ul>
+<li>unique</li>
+<li>not null</li>
+<li>one but can be multiple columns</li>
+<li>can use AUTO_INCREMENT</li>
+<li>Manual assignment: choose the largest ID, add 1 to make the new ID for the new record<ul>
+<li>why: multiple servers, auto_increment will cause duplicates; don’t use business field as PK because the business field may be reused or have duplicates</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>FK<ul>
+<li>primary key in another table</li>
+<li>can be null</li>
+<li>can have more than one FK</li>
+<li>如果形成外键闭环，我们将无法删除任何一张表的记录</li>
+</ul>
+</li>
+</ul>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><ul>
+<li>read-only, no storage</li>
+</ul>
+<h2 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h2><h3 id="General"><a href="#General" class="headerlink" title="General"></a>General</h3><ul>
+<li>connection start and end time, all instructions to server<h3 id="Slow"><a href="#Slow" class="headerlink" title="Slow"></a>Slow</h3></li>
+<li>my.ini, restart after modifying my.ini<h3 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h3><h3 id="binary-log-in-the-server-layer"><a href="#binary-log-in-the-server-layer" class="headerlink" title="binary log in the server layer"></a>binary log in the server layer</h3></li>
+<li>can be used by all engines</li>
+<li>Has statement-based logging: Events contain SQL statements that produce data changes (inserts, updates, deletes)</li>
+<li>append</li>
+<li>sync_binlog &#x3D; 1 to make sure binlog is saved to disk</li>
+<li>show  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">show</span> the log that <span class="keyword">is</span> currently written <span class="keyword">into</span></span><br><span class="line"><span class="keyword">SHOW</span> MASTER STATUS; </span><br><span class="line">  </span><br><span class="line"># <span class="keyword">all</span> logs</span><br><span class="line"><span class="keyword">SHOW</span> <span class="type">BINARY</span> LOGS; </span><br><span class="line">  </span><br><span class="line"># <span class="keyword">all</span> statements</span><br><span class="line"><span class="keyword">SHOW</span> BINLOG EVENTS <span class="keyword">in</span> log_name; </span><br><span class="line">  </span><br><span class="line"># <span class="keyword">create</span> <span class="keyword">and</span> <span class="keyword">open</span> a <span class="keyword">new</span> log</span><br><span class="line">FLUSH <span class="type">BINARY</span> LOGS; </span><br><span class="line">  </span><br><span class="line"># recover</span><br><span class="line">mysql <span class="operator">-</span>u 用户 <span class="operator">-</span>p 密码 数据库名称 <span class="operator">&lt;</span> 备份文件</span><br><span class="line"># <span class="comment">--stop-position=yyy可不写</span></span><br><span class="line">mysqlbinlog –<span class="keyword">start</span><span class="operator">-</span>positon<span class="operator">=</span>xxx <span class="comment">--stop-position=yyy 二进制文件名 | mysql -u 用户 -p </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="keyword">delete</span> <span class="keyword">all</span></span><br><span class="line">RESET MASTER;</span><br><span class="line">  </span><br><span class="line"># 删除比指定二进制日志文件编号小的所有二进制日志文件</span><br><span class="line">PURGE MASTER LOGS <span class="keyword">TO</span> <span class="string">&#x27;GJTECH-PC-bin.000005&#x27;</span>;</span><br><span class="line">  </span><br><span class="line"># backup，备份完成后记录位置，防止修复时难以找到<span class="keyword">start</span><span class="operator">-</span>position</span><br><span class="line">mysqldump <span class="operator">-</span>u 用户 <span class="operator">-</span>p 密码 数据库 <span class="operator">&gt;</span> 备份文件</span><br><span class="line">FLUSH <span class="type">BINARY</span> LOGS;</span><br><span class="line">  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Relay-Bin-Log"><a href="#Relay-Bin-Log" class="headerlink" title="Relay Bin Log"></a>Relay Bin Log</h3></li>
+<li>on slave server, read bin log from master server and write into</li>
+</ul>
+<h3 id="Undo-log"><a href="#Undo-log" class="headerlink" title="Undo log"></a>Undo log</h3><ul>
+<li><p>record what data look like before change, allowing rollback and allowing other transactions to read what data look like before it is changed by this transaction</p>
+</li>
+<li><p>When there are no read-views earlier than this undo log record, it will be deleted.<br><img src="/../image/mysql/2.webp" alt="undo log and read-view"><br>Source: <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/68963">https://time.geekbang.org/column/article/68963</a></p>
+</li>
+<li><p>Long transaction will cause too many undo log records to stay</p>
+</li>
+<li><p>To avoid long transaction, set autocommit&#x3D;1</p>
+</li>
+<li><p>To find long transaction (e.g. 60s):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))&gt;60</span><br><span class="line">```     </span><br><span class="line">* Analyze general log to avoid long transaction issues</span><br><span class="line">* SET_MAX_EXECUTION_TIME  </span><br><span class="line"></span><br><span class="line">### Redo Log in InnoDB</span><br><span class="line">* used to recover modification of unfinished transaction</span><br><span class="line">* Write-ahead logging</span><br><span class="line">  - write to redo log, update memory, then disk</span><br><span class="line">  - when the redo log is full, move to disk to clean some space</span><br><span class="line">* Crash-safe: innodb_flush_log_at_trx_commit = 1</span><br><span class="line"></span><br><span class="line">InnoDB prepares redo log. Executor updates binlog. InnoDB commits redo log.</span><br><span class="line"></span><br><span class="line">### Example: update</span><br><span class="line">1. 执行器找引擎取 ID=2 这一行。ID 是主键，引擎直接用树搜索找到这一行。</span><br><span class="line">2. 如果 ID=2 这一行所在的数据页本来就在内存中，就直接返回给执行器；否则，需要先从磁盘读入内存，然后再返回。</span><br><span class="line">3. 执行器拿到引擎给的行数据，把这个值加上 1，得到新的一行数据，再调用引擎接口写入这行新数据。</span><br><span class="line">4. 引擎将新数据更新到内存中，同时将这个更新操作记录到 redo log 里面，此时 redo log 处于 prepare 状态。然后告知执行器执行完成了，随时可以提交事务。</span><br><span class="line">5. 执行器生成这个操作的 binlog，并把 binlog 写入磁盘。执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改成提交（commit）状态，更新完成。</span><br><span class="line"></span><br><span class="line">### How to restore</span><br><span class="line">* Find the most recent full backup. Then based on binlog records later than the most recent full backup, restore data.</span><br><span class="line">* back up every day or every week? More frequent, more storage, less RTO(Recovery Time Objective).</span><br><span class="line"></span><br><span class="line">## Transaction</span><br><span class="line">* high isolation will lead to low efficiency</span><br><span class="line">* SQL</span><br><span class="line">```SQL</span><br><span class="line">START TRANSACTION ;</span><br><span class="line">SQL语句</span><br><span class="line">[ COMMIT | ROLLBACK ] ;</span><br></pre></td></tr></table></figure>
+<h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3></li>
+<li><p>事务并不会自动帮你处理 SQL 语句执行中的错误，如果你对事务中的某一步数据操作发生的错误不做处理，继续提交的话，仍然会导致数据不一致。</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">START</span> TRANSACTION;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">INSERT</span> <span class="keyword">INTO</span> demo.mytrans <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">5</span>); <span class="comment">-- 这个插入语句出错了</span></span><br><span class="line">ERROR <span class="number">1136</span> (<span class="number">21</span>S01): <span class="keyword">Column</span> count doesn<span class="string">&#x27;t match value count at row 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysql&gt; UPDATE demo.inventory SET invquantity = invquantity - 5 WHERE itemnumber = 1;</span></span><br><span class="line"><span class="string">Query OK, 1 row affected (0.00 sec)    -- 后面的更新语句仍然执行成功了</span></span><br><span class="line"><span class="string">Rows matched: 1 Changed: 1 Warnings: 0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysql&gt; COMMIT;</span></span><br><span class="line"><span class="string">Query OK, 0 rows affected (0.03 sec)   -- 事务提交成功了</span></span><br></pre></td></tr></table></figure>
+<p> 如果发现事务中的某个操作发生错误，要及时使用回滚；</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">INSERT</span> <span class="keyword">INTO</span> demo.mytrans <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">5</span>);</span><br><span class="line">ERROR <span class="number">1136</span> (<span class="number">21</span>S01): <span class="keyword">Column</span> count doesn<span class="string">&#x27;t match value count at row 1</span></span><br><span class="line"><span class="string">mysql&gt; SELECT ROW_COUNT();</span></span><br><span class="line"><span class="string">+-------------+</span></span><br><span class="line"><span class="string">| ROW_COUNT() |</span></span><br><span class="line"><span class="string">+-------------+</span></span><br><span class="line"><span class="string">| -1 |</span></span><br><span class="line"><span class="string">+-------------+</span></span><br><span class="line"><span class="string">1 row in set (0.00 sec)</span></span><br></pre></td></tr></table></figure></li>
+<li><p>行锁是在需要的时候才加上的，等到事务结束时才释放。如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。  </p>
+</li>
+<li><p>Dead lock</p>
+<ul>
+<li>发起死锁检测（默认innodb_deadlock_detect&#x3D;ON），发现死锁后，InnoDB自动回滚死锁链条中的某一个事务，让其他事务得以继续执行。如果并发能够控制住，比如同一行同时最多只有 10 个线程在更新，那么死锁检测的成本很低 </li>
+<li>你可以考虑通过将一行改成逻辑上的多行来减少锁冲突。还是以影院账户为例，可以考虑放在多条记录上，比如 10 个记录，影院的账户总额等于这 10 个记录的值的总和。<br>这样每次要给影院账户加金额的时候，随机选其中一条记录来加。这样每次冲突概率变成原来的 1&#x2F;10，可以减少锁等待个数，也就减少了死锁检测的 CPU 消耗。<h3 id="Isolation-Levels"><a href="#Isolation-Levels" class="headerlink" title="Isolation Levels"></a>Isolation Levels</h3></li>
+</ul>
+</li>
+<li><p><code>SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED</code></p>
+</li>
+<li><p>read uncommitted: no read-view.</p>
+</li>
+<li><p>read committed: a read-view is created when a SQL query of transaction B executes</p>
+</li>
+<li><p>repeatable read: a read-view is created when the transaction B executes “select” so the undo log has data, so data seen in this transaction are the same as what they were when this transaction started.</p>
+</li>
+<li><p>serializable: read and write will add lock. After a transaction finishes, another transaction can execute.<br><img src="/../image/mysql/1.webp" alt="isolation levels"><br>Source: <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/68963">https://time.geekbang.org/column/article/68963</a></p>
+</li>
+</ul>
+<h2 id="导出与备份"><a href="#导出与备份" class="headerlink" title="导出与备份"></a>导出与备份</h2><ul>
+<li>数据导出: 数据<ul>
+<li>SQL文档<ul>
+<li><code>mysqldump -uroot -p [ no-data ] 逻辑库 &gt; 路径</code></li>
+<li>如果业务数据非常多，建议只导出表结构，然后用SELECT INTO OUTFILE把数据导出成文本文档</li>
+</ul>
+</li>
+<li>文本文档</li>
+</ul>
+</li>
+<li>数据备份: 数据文件、日志文件、索引文件等等</li>
+<li>全量备份, 增量备份</li>
+<li>导入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USE demo ;</span><br><span class="line">SOURCE backup.sql ;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="index"><a href="#index" class="headerlink" title="index"></a>index</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX 索引名 ON table_name( 字段 ) ；</span><br><span class="line">ALTER TABLE table_name称 ADD INDEX [ 索引名 ]( 字段 ) ;</span><br><span class="line">SHOW INDEX FROM table_name ;</span><br><span class="line">DROP INDEX index_name ON table_name ;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>different storage engines may have different index implementation.</li>
+<li>Clustered index: defines the physical order in which table records are stored in a database; one clustered index per table; by default is PK</li>
+<li>Secondary index</li>
+<li>Multiple-column index<ul>
+<li>leftmost prefix rule</li>
+<li>if filter a field by a range, the field after this field in the multiple-column index will not be filtered by using the multiple-column index any longer.<br>For example, index is (branchnumber, cashiernumber, itemnumber), <code>branchnumber &gt; 10 AND cashiernumber = 1 AND itemnumber = 100</code>: will use index to filter branchnuber,<br>but when filtering cashiernumber, it will not use the index (branchnumber, cashiernumber)</li>
+</ul>
+</li>
+<li>If there are multiple indexes, MySQL will choose the best</li>
+<li>Don’t create an index on a big field</li>
+</ul>
+<h3 id="InnoDB-index-model"><a href="#InnoDB-index-model" class="headerlink" title="InnoDB index model"></a>InnoDB index model</h3><ul>
+<li>B+ tree<br><img src="/../image/mysql/3.webp" alt="InnoDB index model"></li>
+<li>primary key index (called clustered index in InnoDB): leaves store records</li>
+<li>non primary key index (called secondary index in InnoDB): leaves store primary key values. If search based on non primary key index, will search the B+ tree of the non primary key index first, find the primary key value, and then search the B+ tree of the primary key index.</li>
+<li>index maintenance<ul>
+<li>inserting may cause some records to be moved</li>
+<li>if a data page is full, inserting will create a new data page</li>
+</ul>
+</li>
+<li>Usually using auto increment as the primary key leads to better performance and less storage. However, for the k-v situation, may use a business column as the primary key</li>
+</ul>
+<h2 id="Paradigm"><a href="#Paradigm" class="headerlink" title="Paradigm"></a>Paradigm</h2><ul>
+<li>First: atomic: cannot be separated further</li>
+<li>Second: every record has a unique identifier; every field depends on the full PK rather than part of PK</li>
+<li>Third: cannot have field that depends on non-PK</li>
+<li>Business-first: may not obey paradigm 3</li>
+</ul>
+<h2 id="ER"><a href="#ER" class="headerlink" title="ER"></a>ER</h2><ul>
+<li>One entity -&gt; a table</li>
+<li>M-N -&gt; a table</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/07/Design-Pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1330,134 +1704,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/collection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/collection/" class="post-title-link" itemprop="url">Collection</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-25 14:17:11" itemprop="dateCreated datePublished" datetime="2022-03-25T14:17:11-04:00">2022-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-14 20:52:38" itemprop="dateModified" datetime="2022-04-14T20:52:38-04:00">2022-04-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-fundamental/" itemprop="url" rel="index"><span itemprop="name">Java fundamental</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/../image/collection/collection_framework.png" alt="Collection Framework"></p>
-<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ul>
-<li>ArrayList: Object[]</li>
-<li>Vector: Object[], thread-safe</li>
-<li>LinkedList: doubly-linked</li>
-</ul>
-<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><ul>
-<li>HashSet: based on HashMap; can have null</li>
-<li>LinkedHashSet: extends HashSet, use LinkedHashMap</li>
-<li>TreeSet: RedBlackTree; cannot have null</li>
-</ul>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
-<li>HashMap: if array length &lt; 64, array + linked list, resizes the array, otherwise converts the linked list to RedBlackTree</li>
-<li>LinkedHashMap: extends HashMap, adds a doubly-linked list to save the order of keys</li>
-<li>HashTable: array + linked list; thread-safe</li>
-<li>TreeMap: RedBlackTree</li>
-</ul>
-<h1 id="Thread-safe"><a href="#Thread-safe" class="headerlink" title="Thread-safe"></a>Thread-safe</h1><ul>
-<li>CopyOnWriteArrayList</li>
-<li>ConcurrentLinkedQueue</li>
-<li>BlockingQueue</li>
-<li>ConcurrentHashMap</li>
-<li>ConcurrentSkipListMap</li>
-</ul>
-<h2 id="Why-not-array"><a href="#Why-not-array" class="headerlink" title="Why not array?"></a>Why not array?</h2><ul>
-<li>fixed length</li>
-</ul>
-<h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>Safe: when an element is modified, throws concurrentModificationException</p>
-<h2 id="ArrayList-vs-LinkedList"><a href="#ArrayList-vs-LinkedList" class="headerlink" title="ArrayList vs LinkedList"></a>ArrayList vs LinkedList</h2><ul>
-<li>base structure</li>
-<li>time complexity</li>
-<li>random access: Arrays.binarySearch(arr, val)</li>
-<li>memory: empty array cells vs pointers</li>
-</ul>
-<h2 id="ArrayList-resize"><a href="#ArrayList-resize" class="headerlink" title="ArrayList resize"></a>ArrayList resize</h2><h2 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h2><ul>
-<li><code>Arrays.sort(arr);</code> or <code>sort(T[] a, Comparator&lt;? super T&gt; c)</code></li>
-<li><code>static &lt;T&gt; List&lt;T&gt;    asList(T... a)</code> Returns a fixed-size list backed by the specified array.</li>
-<li><code>Arrays.binarySearch(a, key)</code> or <code>Arrays.binarySearch(a, fromIndex, toIndex, key)</code></li>
-<li><code>static &lt;T&gt; T[] copyOf(T[] original, int newLength)</code> Copies the specified array, truncating or padding with nulls (if necessary) so the copy has the specified length.</li>
-<li><code>copyOfRange(T[] original, int from, int to)</code> Copies the specified range of the specified array into a new array.</li>
-<li><code>toString(Object[] a)</code></li>
-</ul>
-<h2 id="Collection-sort"><a href="#Collection-sort" class="headerlink" title="Collection sort"></a>Collection sort</h2><ul>
-<li><code>Collections.sort(List&lt;T) list)</code></li>
-</ul>
-<h2 id="Comparator-and-Comparable"><a href="#Comparator-and-Comparable" class="headerlink" title="Comparator and Comparable"></a>Comparator and Comparable</h2><ul>
-<li>Comparable接口可以作为实现类的默认排序算法，Comparator接口则用于一个类的扩展排序<h3 id="Comparator"><a href="#Comparator" class="headerlink" title="Comparator"></a>Comparator</h3></li>
-<li><code>int compare(T o1, T o2)</code><h3 id="Comparable"><a href="#Comparable" class="headerlink" title="Comparable"></a>Comparable</h3></li>
-<li><code>int compareTo(T o)</code></li>
-</ul>
-<p>to do: frequently used methods<br>… To be continued</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1523,7 +1773,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
