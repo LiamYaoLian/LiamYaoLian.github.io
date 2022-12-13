@@ -145,6 +145,186 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/19/jQuery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/19/jQuery/" class="post-title-link" itemprop="url">jQuery</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-19 16:46:32" itemprop="dateCreated datePublished" datetime="2022-04-19T16:46:32-04:00">2022-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-23 00:41:47" itemprop="dateModified" datetime="2022-04-23T00:41:47-04:00">2022-04-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><ul>
+<li><p>jQuery(选择器表达式)</p>
+</li>
+<li><p>$(选择器表达式)</p>
+</li>
+<li><p>“*”: all</p>
+</li>
+<li><p>$(“#id”)</p>
+</li>
+<li><p>$(“标签”)</p>
+</li>
+<li><p>$(“.class”)</p>
+</li>
+<li><p>$(“S1, S2, SN”): or</p>
+</li>
+<li><p>$(“ancestor descendant”): 后代</p>
+</li>
+<li><p>$(“ancestor&gt;descendant”): 子</p>
+</li>
+<li><p>$(“prev~siblings”): 兄弟</p>
+</li>
+<li><p>$(“selector[attribute&#x3D;value]”)</p>
+</li>
+<li><p>$(“selector[attribute^&#x3D;value]”): 以某值开头</p>
+</li>
+<li><p>$(“selector[attribute$&#x3D;value]”): 以某值结尾</p>
+</li>
+<li><p>$(“selector[attribute*&#x3D;value]”): 包含某值</p>
+</li>
+<li><p>$(“selector:first”)</p>
+</li>
+<li><p>$(“selector:last”)</p>
+</li>
+<li><p>$(“selector:even”)</p>
+</li>
+<li><p>$(“selector:odd”)</p>
+</li>
+<li><p>$(“selector:eq(n)”)</p>
+</li>
+<li><p>form</p>
+<ul>
+<li>$(“selector:input”)</li>
+<li>$(“selector:text”)</li>
+<li>$(“selector:password”)</li>
+<li>$(“selector:submit”)</li>
+<li>$(“selector:reset”)</li>
+</ul>
+</li>
+<li><p>attr(name|properties|key): 获取或设置元素属性</p>
+</li>
+<li><p>removeAttr(name)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html &gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</span><br><span class="line">&lt;title&gt;操作元素属性&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">.myclass &#123;</span><br><span class="line">	font-style: italic;</span><br><span class="line">	color: darkblue;</span><br><span class="line">&#125;</span><br><span class="line">/* 高亮css类 */</span><br><span class="line">.highlight &#123;</span><br><span class="line">	color: red;</span><br><span class="line">	font-size: 30px;</span><br><span class="line">	background: lightblue;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div class=&quot;section&quot;&gt;</span><br><span class="line">		&lt;h2&gt;jQuery选择器实验室&lt;/h2&gt;</span><br><span class="line">		&lt;input style=&quot;height: 24px&quot; id=&quot;txtSelector&quot; /&gt;</span><br><span class="line">		&lt;button id=&quot;btnSelect&quot; style=&quot;height: 30px&quot;&gt;选择&lt;/button&gt;</span><br><span class="line">		&lt;hr /&gt;</span><br><span class="line">		&lt;div&gt;</span><br><span class="line">			&lt;p id=&quot;welcome&quot;&gt;欢迎来到选择器实验室&lt;/p&gt;</span><br><span class="line">			&lt;ul&gt;</span><br><span class="line">				&lt;li&gt;搜索引擎：&lt;a href=&quot;http://www.baidu.com&quot;&gt;百度&lt;/a&gt; &lt;span&gt; &lt;a</span><br><span class="line">						style=&quot;color: darkgreen&quot; href=&quot;http://www.so.com&quot;&gt;360&lt;/a&gt;</span><br><span class="line">				&lt;/span&gt;</span><br><span class="line">				&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;电子邮箱：&lt;a href=&quot;http://mail.163.com&quot;&gt;网易邮箱&lt;/a&gt; &lt;span&gt; &lt;a</span><br><span class="line">						style=&quot;color: darkgreen&quot; href=&quot;http://mail.qq.com&quot;&gt;QQ邮箱&lt;/a&gt;</span><br><span class="line">				&lt;/span&gt;</span><br><span class="line">				&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;中国名校：&lt;a href=&quot;http://www.tsinghua.edu.cn&quot;&gt;清华大学&lt;/a&gt; &lt;span&gt;</span><br><span class="line">						&lt;a style=&quot;color: darkgreen&quot; href=&quot;https://www.pku.edu.cn/&quot;&gt;北京大学&lt;/a&gt;</span><br><span class="line">				&lt;/span&gt;</span><br><span class="line">				&lt;/li&gt;</span><br><span class="line">			&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">			&lt;span class=&quot;myclass &quot;&gt;我是拥有myclass类的span标签&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">			&lt;p class=&quot;myclass&quot;&gt;我是拥有myclass的p标签&lt;/p&gt;</span><br><span class="line">			&lt;form id=&quot;info&quot; action=&quot;#&quot; method=&quot;get&quot;&gt;</span><br><span class="line">				&lt;div&gt;</span><br><span class="line">					用户名：&lt;input type=&quot;text&quot; name=&quot;uname&quot; value=&quot;admin&quot; /&gt; 密码：&lt;input</span><br><span class="line">						type=&quot;password&quot; name=&quot;upsd&quot; value=&quot;123456&quot; /&gt;</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">				&lt;div&gt;</span><br><span class="line">					婚姻状况： &lt;select id=&quot;marital_status&quot;&gt;</span><br><span class="line">						&lt;option value=&quot;1&quot;&gt;未婚&lt;/option&gt;</span><br><span class="line">						&lt;option value=&quot;2&quot;&gt;已婚&lt;/option&gt;</span><br><span class="line">						&lt;option value=&quot;3&quot;&gt;离异&lt;/option&gt;</span><br><span class="line">						&lt;option value=&quot;4&quot;&gt;丧偶&lt;/option&gt;</span><br><span class="line">					&lt;/select&gt;</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">				&lt;div class=&quot;left clear-left&quot;&gt;</span><br><span class="line">					&lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt; &lt;input type=&quot;reset&quot; value=&quot;重置&quot; /&gt;</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">			&lt;/form&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">		var href_attr =  $(&quot;a[href*=&#x27;163&#x27;]&quot;).attr(&quot;href&quot;);</span><br><span class="line">		alert(href_attr);</span><br><span class="line">		$(&quot;a[href*=&#x27;163&#x27;]&quot;).attr(&quot;href&quot; , &quot;http://www.163.com&quot;); // set href to &quot;http://www.163.com&quot;. all items selected will be set</span><br><span class="line">		var attr = $(&quot;a&quot;).attr(&quot;href&quot;); // if multiple items are selected and use =, will assign the first</span><br><span class="line">		alert(attr);</span><br><span class="line">		$(&quot;a&quot;).removeAttr(&quot;href&quot;); // if multiple items are selected, will remove all</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>css(): 获取或设置匹配元素的样式属性</p>
+</li>
+<li><p>addClass()</p>
+</li>
+<li><p>removeClass()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  $(&quot;a&quot;).css(&quot;color&quot; , &quot;red&quot;);</span><br><span class="line">  $(&quot;a&quot;).css(&#123;&quot;color&quot; : &quot;red&quot; , &quot;font-weight&quot; : &quot;bold&quot; , &quot;font-style&quot; : &quot;italic&quot;&#125;);</span><br><span class="line"></span><br><span class="line">  $(&quot;li&quot;).addClass(&quot;highlight myclass&quot;);</span><br><span class="line">  $(&quot;p&quot;).removeClass(&quot;myclass&quot;);</span><br><span class="line">  var color = $(&quot;a&quot;).css(&quot;color&quot;);</span><br><span class="line">  alert(color);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>val()</p>
+<ul>
+<li>get: <code>$(input[name=&#39;username&#39;]).val()</code></li>
+<li>set: <code>$(input[name=&#39;username&#39;]).val(&quot;admin&quot;)</code></li>
+</ul>
+</li>
+<li><p>text(): get or set text of element</p>
+</li>
+<li><p>html(): get or set html of element</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  $(&quot;input[name=&#x27;uname&#x27;]&quot;).val(&quot;administrator&quot;);</span><br><span class="line">  var v = $(&quot;input[name=&#x27;uname&#x27;]&quot;).val();</span><br><span class="line">  alert(v);</span><br><span class="line">  //text与html方法最大的区别在于对于文本中的html标签是否进行转义</span><br><span class="line">  //$(&quot;span.myclass&quot;).text(&quot;&lt;b&gt;锄禾日当午，汗滴禾下土&lt;/b&gt;&quot;);</span><br><span class="line">  $(&quot;span.myclass&quot;).html(&quot;&lt;b&gt;锄禾日当午，汗滴禾下土&lt;/b&gt;&quot;);</span><br><span class="line"></span><br><span class="line">  var vspan = $(&quot;span.myclass&quot;).text();</span><br><span class="line">  alert(vspan);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>on(“click” , function) - 为选中的页面元素绑定单击事件</p>
+</li>
+<li><p>click(function) - 是绑定事件的简写形式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	//onload是指在页面所有资源加载完成后执行</span><br><span class="line">	window.onload = function()&#123;</span><br><span class="line">		//alert(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//ready()则是在页面dom被浏览器解释完成后执行</span><br><span class="line">	$(document).ready(function()&#123;</span><br><span class="line">		alert(&quot;页面准备就绪&quot;);</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	//简化形式</span><br><span class="line">	$(function()&#123;</span><br><span class="line">		$(&quot;p.myclass&quot;).on(&quot;click&quot; , function()&#123;</span><br><span class="line">			//this: the element on which the event is called</span><br><span class="line">      //in $(this), we are just passing this as a parameter to jQuery.fn.init()</span><br><span class="line">			$(this).css(&quot;background-color&quot; , &quot;yellow&quot;);</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		$(&quot;span.myclass&quot;).click(function()&#123;</span><br><span class="line">			$(this).css(&quot;background-color&quot; , &quot;lightgreen&quot;);</span><br><span class="line">		&#125;)</span><br><span class="line"></span><br><span class="line">		$(&quot;input[name=&#x27;uname&#x27;]&quot;).keypress(function(event)&#123;</span><br><span class="line">			console.log(event);</span><br><span class="line">			if(event.keyCode == 32)&#123;</span><br><span class="line">				$(this).css(&quot;color&quot; , &quot;red&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h2><h3 id="Mouse"><a href="#Mouse" class="headerlink" title="Mouse"></a>Mouse</h3><ul>
+<li>click   </li>
+<li>dblclick   </li>
+<li>mouseenter   </li>
+<li>mouseleave  </li>
+<li>mouseover<h3 id="Keyboard"><a href="#Keyboard" class="headerlink" title="Keyboard"></a>Keyboard</h3></li>
+<li>keypress</li>
+<li>keydown</li>
+<li>keyup<h3 id="Form"><a href="#Form" class="headerlink" title="Form"></a>Form</h3></li>
+<li>submit</li>
+<li>change</li>
+<li>focus<h3 id="Document-x2F-Window"><a href="#Document-x2F-Window" class="headerlink" title="Document &#x2F; Window"></a>Document &#x2F; Window</h3></li>
+<li>load</li>
+<li>resize</li>
+<li>scroll</li>
+<li>unload</li>
+</ul>
+<h2 id="Ready"><a href="#Ready" class="headerlink" title="Ready"></a>Ready</h2><ul>
+<li>$(document).ready(function)</li>
+<li>$(function)</li>
+</ul>
+<h2 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h2><ul>
+<li>Asynchronous JavaScript And XML</li>
+<li>allow to update some without refreshing<h3 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h3></li>
+<li>create XmlHttpReqeust object<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var xmlhttp;</span><br><span class="line">if (window.XMLHttpRequest)</span><br><span class="line">&#123;</span><br><span class="line">// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码</span><br><span class="line">xmlhttp=new XMLHttpRequest();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">// IE6, IE5 浏览器执行代码</span><br><span class="line">xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>send Ajax request<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建请求</span><br><span class="line">// false means async</span><br><span class="line">xmlhttp.open(&quot;GET&quot;,&quot;http://localhost/test?name=admin&quot;, true);</span><br><span class="line">//发送到服务器</span><br><span class="line">xmlhttp.send();</span><br></pre></td></tr></table></figure></li>
+<li>deals with response<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xmlhttp.onreadystatechange = function()</span><br><span class="line">&#123;</span><br><span class="line">  //响应已被接收且服务器处理成功时才执行</span><br><span class="line">  if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200)</span><br><span class="line">  &#123;</span><br><span class="line">  //获取响应体的文本</span><br><span class="line">  var responseText = xmlhttp.responseText;</span><br><span class="line">  //对服务器结果进行处理</span><br><span class="line">  ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Asynchronous-vs-Synchronous"><a href="#Asynchronous-vs-Synchronous" class="headerlink" title="Asynchronous vs Synchronous"></a>Asynchronous vs Synchronous</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	//设置ajax的全局默认值</span><br><span class="line">	$.ajaxSetup(&#123;</span><br><span class="line">		&quot;dataType&quot; : &quot;json&quot;,</span><br><span class="line">		&quot;error&quot; : function(xmlhttp)&#123;</span><br><span class="line">			if(xmlhttp.status == &quot;405&quot;)&#123;</span><br><span class="line">				alert(&quot;无效的请求方式&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	$(function()&#123;</span><br><span class="line">		/*</span><br><span class="line">			1. url</span><br><span class="line">			2. 要发送的参数，可以是字符串也可以是json</span><br><span class="line">			3. 响应处理函数</span><br><span class="line">			4. dataType(可选) 服务器返回的数据类型(text|json|xml|html|script)</span><br><span class="line"></span><br><span class="line">			$.ajax()</span><br><span class="line">		*/</span><br><span class="line">		$.get(&quot;/ajax/news_list&quot; , &#123;&quot;t&quot; : &quot;tiobe&quot;&#125; , function(json)&#123;</span><br><span class="line">			for(var i = 0 ; i &lt; json.length ; i++)&#123;</span><br><span class="line">				$(&quot;#container&quot;).append(&quot;&lt;h1&gt;&quot; + json[i].title + &quot;&lt;/h1&gt;&quot;)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id=&quot;container&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="jQuery-supports-Ajax"><a href="#jQuery-supports-Ajax" class="headerlink" title="jQuery supports Ajax"></a>jQuery supports Ajax</h2><p>$().ajax(options)</p>
+<ul>
+<li>url 发送请求地址</li>
+<li>type: get | post</li>
+<li>data 向服务器传递的参数</li>
+<li>dataType: text | json | xml | html | jsonp| script</li>
+<li>success 接收响应时的处理函数</li>
+<li>error 请求失败时的处理函数<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	//设置ajax的全局默认值</span><br><span class="line">	$.ajaxSetup(&#123;</span><br><span class="line">		&quot;dataType&quot; : &quot;json&quot;,</span><br><span class="line">		&quot;error&quot; : function(xmlhttp)&#123;</span><br><span class="line">			if(xmlhttp.status == &quot;405&quot;)&#123;</span><br><span class="line">				alert(&quot;无效的请求方式&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	$(function()&#123;</span><br><span class="line">		/*</span><br><span class="line">			1. url</span><br><span class="line">			2. 要发送的参数，可以是字符串也可以是json</span><br><span class="line">			3. 响应处理函数</span><br><span class="line">			4. dataType(可选) 服务器返回的数据类型(text|json|xml|html|script)</span><br><span class="line"></span><br><span class="line">			$.ajax()</span><br><span class="line">		*/</span><br><span class="line">		$.get(&quot;/ajax/news_list&quot; , &#123;&quot;t&quot; : &quot;tiobe&quot;&#125; , function(json)&#123;</span><br><span class="line">			for(var i = 0 ; i &lt; json.length ; i++)&#123;</span><br><span class="line">				$(&quot;#container&quot;).append(&quot;&lt;h1&gt;&quot; + json[i].title + &quot;&lt;/h1&gt;&quot;)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id=&quot;container&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	$(function()&#123;</span><br><span class="line">		$.ajax(&#123;</span><br><span class="line">			&quot;url&quot; : &quot;/ajax/news_list&quot;,</span><br><span class="line">			&quot;type&quot; : &quot;get&quot; ,</span><br><span class="line">			&quot;data&quot; : &#123;&quot;t&quot;:&quot;pypl&quot; , &quot;abc&quot;:&quot;123&quot; , &quot;uu&quot;:&quot;777&quot;&#125;,</span><br><span class="line">			//&quot;data&quot; : &quot;t=pypl&amp;abc=123&amp;uu=777&quot; ,</span><br><span class="line">			&quot;dataType&quot; : &quot;json&quot; ,</span><br><span class="line">			&quot;success&quot; : function(json)&#123;</span><br><span class="line">				console.log(json);</span><br><span class="line">				for(var i = 0 ; i &lt; json.length ; i++)&#123;</span><br><span class="line">					$(&quot;#container&quot;).append(&quot;&lt;h1&gt;&quot; + json[i].title + &quot;&lt;/h1&gt;&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;error&quot; : function(xmlhttp , errorText)&#123;</span><br><span class="line">				console.log(xmlhttp);</span><br><span class="line">				console.log(errorText);</span><br><span class="line">				if (xmlhttp.status == &quot;405&quot;) &#123;</span><br><span class="line">					alert(&quot;无效的请求方式&quot;);</span><br><span class="line">				&#125; else if(xmlhttp.status == &quot;404&quot;)&#123;</span><br><span class="line">					alert(&quot;未找到URL资源&quot;);</span><br><span class="line">				&#125; else if(xmlhttp.status == &quot;500&quot;)&#123;</span><br><span class="line">					alert(&quot;服务器内部错误，请联系管理员&quot;);</span><br><span class="line">				&#125; else&#123;</span><br><span class="line">					alert(&quot;产生异常，请联系管理员&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id=&quot;container&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Example-实现二级联动菜单"><a href="#Example-实现二级联动菜单" class="headerlink" title="Example 实现二级联动菜单"></a>Example 实现二级联动菜单</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	$(function()&#123;</span><br><span class="line">		$.ajax(&#123;</span><br><span class="line">			&quot;url&quot; : &quot;/ajax/channel&quot;,</span><br><span class="line">			&quot;data&quot; : &#123;&quot;level&quot; : &quot;1&quot;&#125;,</span><br><span class="line">			&quot;type&quot; : &quot;get&quot; ,</span><br><span class="line">			&quot;dataType&quot; : &quot;json&quot; ,</span><br><span class="line">			&quot;success&quot; : function(json)&#123;</span><br><span class="line">				console.log(json);</span><br><span class="line">				for(var i = 0 ; i &lt; json.length ; i++)&#123;</span><br><span class="line">					var ch = json[i];</span><br><span class="line">					$(&quot;#lv1&quot;).append(&quot;&lt;option value=&#x27;&quot; + ch.code + &quot;&#x27;&gt;&quot; + ch.name + &quot;&lt;/option&gt;&quot;)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	$(function()&#123;</span><br><span class="line">		$(&quot;#lv1&quot;).on(&quot;change&quot; , function()&#123;</span><br><span class="line">			var parent = $(this).val();</span><br><span class="line">			console.log(parent);</span><br><span class="line">			$.ajax(&#123;</span><br><span class="line">				&quot;url&quot; : &quot;/ajax/channel&quot; ,</span><br><span class="line">				&quot;data&quot; : &#123;&quot;level&quot; : &quot;2&quot; , &quot;parent&quot; : parent&#125;,</span><br><span class="line">				&quot;dataType&quot; : &quot;json&quot; ,</span><br><span class="line">				&quot;type&quot; : &quot;get&quot; ,</span><br><span class="line">				&quot;success&quot; : function(json)&#123;</span><br><span class="line">					console.log(json);</span><br><span class="line">					//移除所有lv2下的原始option选项</span><br><span class="line">					$(&quot;#lv2&gt;option&quot;).remove();</span><br><span class="line">					for(var i = 0 ; i &lt; json.length ; i++)&#123;</span><br><span class="line">						var ch = json[i];</span><br><span class="line">						$(&quot;#lv2&quot;).append(&quot;&lt;option value=&#x27;&quot; + ch.code +&quot;&#x27;&gt;&quot; + ch.name + &quot;&lt;/option&gt;&quot;)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;select id=&quot;lv1&quot; style=&quot;width:200px;height:30px&quot;&gt;</span><br><span class="line">	&lt;option selected=&quot;selected&quot;&gt;请选择&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line">&lt;select id=&quot;lv2&quot; style=&quot;width:200px;height:30px&quot;&gt;&lt;/select&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从ajax方法衍生的简化方法"><a href="#从ajax方法衍生的简化方法" class="headerlink" title="从ajax方法衍生的简化方法"></a>从ajax方法衍生的简化方法</h2><p>$.get() 发送Get方式Ajax请求<br>$.post() 发送Post方式Ajax请求<br>$.ajaxSetup() 设置Ajax全局默认值</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/04/17/Java-Web/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2537,63 +2717,6 @@ SELECT * FROM t1<br>LEFT JOIN t2 ON t1.id &#x3D; t2.id<br>UNION ALL<br>SELECT * 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/03/25/Spring-Cloud/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liam Lian">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liam Lian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/Spring-Cloud/" class="post-title-link" itemprop="url">Spring Cloud</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-25 19:03:13" itemprop="dateCreated datePublished" datetime="2022-03-25T19:03:13-04:00">2022-03-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2663,7 +2786,7 @@ SELECT * FROM t1<br>LEFT JOIN t2 ON t1.id &#x3D; t2.id<br>UNION ALL<br>SELECT * 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
