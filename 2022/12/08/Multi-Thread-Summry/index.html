@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Thread every thread has its own method-call stack. Calculate parameters first, push parameters to method-call stack, and then execute method body  Frequently-Used MethodsRunnable void run()Thread impl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multi-Thread Summary">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/12/08/Multi-Thread-Summry/index.html">
+<meta property="og:site_name" content="Liam Lian&#39;s Blog">
+<meta property="og:description" content="Thread every thread has its own method-call stack. Calculate parameters first, push parameters to method-call stack, and then execute method body  Frequently-Used MethodsRunnable void run()Thread impl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liamyaolian.github.io/image/multi-thread/CPU_cache.webp">
+<meta property="article:published_time" content="2022-12-08T22:25:15.785Z">
+<meta property="article:modified_time" content="2022-12-11T01:00:39.654Z">
+<meta property="article:author" content="Liam Lian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liamyaolian.github.io/image/multi-thread/CPU_cache.webp">
+
+<link rel="canonical" href="https://liamyaolian.github.io/2022/12/08/Multi-Thread-Summry/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Multi-Thread Summary | Liam Lian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liam Lian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/12/08/Multi-Thread-Summry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Multi-Thread Summary
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-08 17:25:15" itemprop="dateCreated datePublished" datetime="2022-12-08T17:25:15-05:00">2022-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-10 20:00:39" itemprop="dateModified" datetime="2022-12-10T20:00:39-05:00">2022-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-fundamental/" itemprop="url" rel="index"><span itemprop="name">Java fundamental</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><ul>
+<li>every thread has its own method-call stack. Calculate parameters first, push parameters to method-call stack, and then execute method body<br><img src="/../image/multi-thread/CPU_cache.webp" alt="CPU cache"></li>
+</ul>
+<h1 id="Frequently-Used-Methods"><a href="#Frequently-Used-Methods" class="headerlink" title="Frequently-Used Methods"></a>Frequently-Used Methods</h1><h2 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable"></a>Runnable</h2><ul>
+<li>void run()<h2 id="Thread-implements-Runnable"><a href="#Thread-implements-Runnable" class="headerlink" title="Thread implements Runnable"></a>Thread implements Runnable</h2></li>
+<li>constructors<ul>
+<li>Thread()</li>
+<li>Thread(Runnable target)</li>
+<li>Thread(Runnable target, String name)</li>
+<li>Thread(String name)</li>
+</ul>
+</li>
+<li>void start()  </li>
+<li>void run()<ul>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/difference-between-thread-start-and-thread-run-in-java/#:~:text=Multiple%20invocation%3A%20In%20Java&#39;s%20multi,just%20a%20normal%20method%20calling">https://www.geeksforgeeks.org/difference-between-thread-start-and-thread-run-in-java/#:~:text=Multiple%20invocation%3A%20In%20Java&#39;s%20multi,just%20a%20normal%20method%20calling</a>.</li>
+</ul>
+</li>
+<li>void join(), void join(milliseconds)</li>
+<li>static void sleep(long millis)</li>
+<li>static void yield()<ul>
+<li>A hint to the scheduler that the current thread is willing to yield its current use of a processor.</li>
+</ul>
+</li>
+<li>void interrupt()<ul>
+<li><code>threadToBeInterrupted.interrupt()</code></li>
+<li>t.interrupt() will set interrupt status be to true.</li>
+<li>after being interrupted, usually the thread will throw InterruptedException. Need to determine how to handle that. Throwing InterruptedException will set interrupt status to be false, so we may need to add <code>t.interrupt();</code> in catch block to reset it to be true.<h3 id="Communication"><a href="#Communication" class="headerlink" title="Communication"></a>Communication</h3></li>
+</ul>
+</li>
+<li>wait(), notify(), notifyAll() need to be inside <code>synchronized</code></li>
+<li>wait() will release lock</li>
+<li>notify() will notify randomly</li>
+<li>Sometimes need to use notifyAll() instead of notify(), otherwise the thread needs to be notified may not be notify<h2 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.Callable;</span><br><span class="line">public class ThirdThread implements Callable&lt;String&gt; &#123;</span><br><span class="line">  @override</span><br><span class="line">  public String call() throws Exception &#123;</span><br><span class="line">    String str = &quot;the third way to create a thread&quot;;</span><br><span class="line">    return str;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ThirdThreadTest &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    Callable&lt;String&gt; call = new ThirdThread();</span><br><span class="line">    FutureTask&lt;String&gt; ft = new FutureTask&lt;&gt;(call);</span><br><span class="line">    Thread thread = new Thread(ft);</span><br><span class="line"></span><br><span class="line">    thread.start();</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">      System.out.println(ft.get()); // get the result after the thread finishes, i.e. &quot;the third way to create a thread&quot;</span><br><span class="line">    &#125; catch (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Life-Cycle"><a href="#Life-Cycle" class="headerlink" title="Life Cycle"></a>Life Cycle</h1><ul>
+<li>New</li>
+<li>start() -&gt; Runnable</li>
+<li>Running<ul>
+<li>uses CPU</li>
+<li>will turn into Runnable if time share is used up or yield()</li>
+<li>will turn into Blocked if calls <code>child.join()</code> or <code>child.join(milliseconds)</code>, wait(), <code>t.sleep(milliseconds)</code>, sends I&#x2F;O request</li>
+</ul>
+</li>
+<li>Blocked</li>
+<li>Terminated: after run() finishes or throws an error</li>
+</ul>
+<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><ul>
+<li>When to use<ul>
+<li>each thread needs an object<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class ThreadSafeFormatter &#123;</span><br><span class="line">  // the initial value will be set at the first time get() is called  </span><br><span class="line">  public static ThreadLocal&lt;SimpleDateFormat&gt; dateFormatter</span><br><span class="line">    = ThreadLocal.withInitial(() -&gt; new SimpleDateFormat(&quot;HH:mm:ss&quot;));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>each thread wants to use global variable without the hassle of passing paramters<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class UserContextHolder &#123;</span><br><span class="line"></span><br><span class="line">    public static ThreadLocal&lt;User&gt; holder = new ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Service1 &#123;</span><br><span class="line"></span><br><span class="line">  public void process(String name) &#123;</span><br><span class="line">      User user = new User(&quot;Liam&quot;);</span><br><span class="line">      UserContextHolder.holder.set(user);</span><br><span class="line">      new Service2().process();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Service2 &#123;</span><br><span class="line"></span><br><span class="line">    public void process() &#123;</span><br><span class="line">        User user = UserContextHolder.holder.get();</span><br><span class="line">        ThreadSafeFormatter.dateFormatThreadLocal.get();</span><br><span class="line">        System.out.println(&quot;Service2 has gotten: &quot; + user.name);</span><br><span class="line">        new Service3().process();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Service3 &#123;</span><br><span class="line"></span><br><span class="line">    public void process() &#123;</span><br><span class="line">        User user = UserContextHolder.holder.get();</span><br><span class="line">        System.out.println(&quot;Service3 has gotten: &quot; + user.name);</span><br><span class="line">        UserContextHolder.holder.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>prevent OOM<ul>
+<li>after finishing using ThreadLocal, call <code>void remove()</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="Safety"><a href="#Safety" class="headerlink" title="Safety"></a>Safety</h1><ul>
+<li>need to consider when we will have<ul>
+<li>will change the global variable</li>
+<li>or there is “escaping”:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">final int x;</span><br><span class="line">  // Wrong contructor</span><br><span class="line">  public FinalFieldExample() &#123;</span><br><span class="line">    x = 3;</span><br><span class="line">    y = 4;</span><br><span class="line">    // &quot;escaping&quot;. if the thread reads x through global.obj, it may get 0</span><br><span class="line">    global.obj = this;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>reason: race condition: result depends on timing of execution of threads</li>
+<li>visibility: happens-before<ul>
+<li>order within same thread</li>
+<li>writing volatile (read in and write to memory rather than CPU cache)</li>
+<li>A happens-before B and B happens-before C, then A happens-before C</li>
+<li>For the same lock, locking happends-before unlocking. To make addOne() visible to get():<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class SafeCalc &#123;</span><br><span class="line">  long value = 0L;</span><br><span class="line">  synchronized long get() &#123; return value; &#125;</span><br><span class="line">  synchronized void addOne() &#123; value += 1; &#125;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>a thread changes variable within critical area</li>
+<li>child thread can see operation results of parent thread before the child thread is started by start()</li>
+<li>parent thread calls join(), after child thread finishes, parent thread can see operation results of child thread<h1 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private final Object</span><br><span class="line">  lock = new Object();</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>synchronized</code> will writing thread id into lock object head</li>
+<li>lock should be unchangable and should not be reused (e.g. Integer, String, Boolean will be reused). Ratio of resources to lock should be N : 1.</li>
+</ul>
+<h2 id="Dead-Lock"><a href="#Dead-Lock" class="headerlink" title="Dead Lock"></a>Dead Lock</h2><ul>
+<li>when: occupy and wait, cannot deprive, wait loop</li>
+<li>solution<ul>
+<li>release resources being occupied if the thread cannot get other resources needed</li>
+<li>avoid wait loop. For example, when acquiring resources, start from the resource with smaller id<h2 id="Live-Lock"><a href="#Live-Lock" class="headerlink" title="Live Lock"></a>Live Lock</h2></li>
+</ul>
+</li>
+<li>when: “give way” example</li>
+<li>solution: random</li>
+</ul>
+<h1 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h1><ul>
+<li>No lock or do not lock for too long</li>
+</ul>
+<h1 id="JUC"><a href="#JUC" class="headerlink" title="JUC"></a>JUC</h1><h2 id="ThreadPool"><a href="#ThreadPool" class="headerlink" title="ThreadPool"></a>ThreadPool</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ThreadPoolExecutor(</span><br><span class="line">  int corePoolSize,</span><br><span class="line">  int maximumPoolSize,</span><br><span class="line">  long keepAliveTime,</span><br><span class="line">  TimeUnit unit,</span><br><span class="line">  BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">  ThreadFactory threadFactory,</span><br><span class="line">  RejectedExecutionHandler handler)</span><br></pre></td></tr></table></figure>
+<p>some handers:</p>
+<ul>
+<li>CallerRunsPolicy</li>
+<li>AbortPolicy: default, throws RejectedExecutionException</li>
+<li>DiscardPolicy</li>
+<li>DiscardOldestPolicy</li>
+<li>can custom handler<br>allowCoreThreadTimeOut(boolean value)<br>unbounded LinkedBlockingQueue may cause OOM, should use bounded:<br><code>BlockingQueue workQueue = new LinkedBlockingQueue&lt;&gt;(2);</code></li>
+</ul>
+<ul>
+<li>need to catch exception thrown by execute()</li>
+<li>How many threads<ul>
+<li>CPU-intensive: CPU cores + 1</li>
+<li>I&#x2F;O-intensive: CPU cores * [ 1 +（I&#x2F;O time &#x2F; CPU time）], need stress test. Initial value could be 2 * cores + 1 (<a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing">https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing</a>)</li>
+</ul>
+</li>
+<li>give the thread a meaningful name</li>
+</ul>
+<h2 id="CompletionService"><a href="#CompletionService" class="headerlink" title="CompletionService"></a>CompletionService</h2><ul>
+<li>adding finished task to a blocking queue<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ExecutorCompletionService(Executor executor) // using unbounded LinkedBlockingQueue</span><br><span class="line">ExecutorCompletionService(Executor executor, BlockingQueue&gt; completionQueue)</span><br><span class="line"></span><br><span class="line">Future&lt;V&gt; submit(Callable&lt;V&gt; task);</span><br><span class="line">Future&lt;V&gt; submit(Runnable task, V result);</span><br><span class="line">Future&lt;V&gt; take() throws InterruptedException;</span><br><span class="line">Future&lt;V&gt; poll();</span><br><span class="line">Future&lt;V&gt; poll(long timeout, TimeUnit unit) throws InterruptedException;</span><br></pre></td></tr></table></figure>
+<h2 id="Atomic"><a href="#Atomic" class="headerlink" title="Atomic"></a>Atomic</h2></li>
+<li>when: if only one shared variable<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">  AtomicLong count =</span><br><span class="line">    new AtomicLong(0);</span><br><span class="line">  void add10K() &#123;</span><br><span class="line">    int idx = 0;</span><br><span class="line">    while(idx++ &lt; 10000) &#123;</span><br><span class="line">      count.getAndIncrement();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>primitive<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">getAndIncrement()</span><br><span class="line">getAndDecrement()</span><br><span class="line">incrementAndGet()</span><br><span class="line">decrementAndGet()</span><br><span class="line"></span><br><span class="line">getAndAdd(delta)</span><br><span class="line"></span><br><span class="line">addAndGet(delta)</span><br><span class="line">compareAndSet(expect, update)</span><br><span class="line"></span><br><span class="line">// new value can be calcuated by func</span><br><span class="line">getAndUpdate(func)</span><br><span class="line">updateAndGet(func)</span><br><span class="line">getAndAccumulate(x,func)</span><br><span class="line">accumulateAndGet(x,func)</span><br></pre></td></tr></table></figure></li>
+<li>ABA issue</li>
+<li>AtomicReference, AtomicStampedReference, AtomicMarkableReference<ul>
+<li><code>AtomicStampedReference&lt;T&gt;(value, stamp)</code></li>
+</ul>
+</li>
+<li>AtomicIntegerArray, AtomicLongArray, AtomicReferenceArray</li>
+<li>AtomicIntegerFieldUpdater, AtomicLongFieldUpdater, AtomicReferenceFieldUpdater</li>
+<li>DoubleAccumulator, DoubleAdder, LongAccumulator, LongAdder</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/07/Docker/" rel="prev" title="Docker">
+      <i class="fa fa-chevron-left"></i> Docker
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Thread"><span class="nav-number">1.</span> <span class="nav-text">Thread</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Frequently-Used-Methods"><span class="nav-number">2.</span> <span class="nav-text">Frequently-Used Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Runnable"><span class="nav-number">2.1.</span> <span class="nav-text">Runnable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-implements-Runnable"><span class="nav-number">2.2.</span> <span class="nav-text">Thread implements Runnable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Communication"><span class="nav-number">2.2.1.</span> <span class="nav-text">Communication</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Callable"><span class="nav-number">2.3.</span> <span class="nav-text">Callable</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Life-Cycle"><span class="nav-number">3.</span> <span class="nav-text">Life Cycle</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">4.</span> <span class="nav-text">ThreadLocal</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Safety"><span class="nav-number">5.</span> <span class="nav-text">Safety</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock"><span class="nav-number">6.</span> <span class="nav-text">Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dead-Lock"><span class="nav-number">6.1.</span> <span class="nav-text">Dead Lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Live-Lock"><span class="nav-number">6.2.</span> <span class="nav-text">Live Lock</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Performance"><span class="nav-number">7.</span> <span class="nav-text">Performance</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JUC"><span class="nav-number">8.</span> <span class="nav-text">JUC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadPool"><span class="nav-number">8.1.</span> <span class="nav-text">ThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CompletionService"><span class="nav-number">8.2.</span> <span class="nav-text">CompletionService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Atomic"><span class="nav-number">8.3.</span> <span class="nav-text">Atomic</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam Lian</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam Lian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
