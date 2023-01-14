@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"liamyaolian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1234567DECLARE   &lt;declarations section&gt;BEGIN   &lt;executable command(s)&gt;EXCEPTION   &lt;exception handling&gt;END; 123456789DECLARE   -- variable declaration   message  varchar2(20):&#x3D; &amp;#x27;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PL-SQL">
+<meta property="og:url" content="https://liamyaolian.github.io/2022/12/21/PL-SQL/index.html">
+<meta property="og:site_name" content="Liam Lian&#39;s Blog">
+<meta property="og:description" content="1234567DECLARE   &lt;declarations section&gt;BEGIN   &lt;executable command(s)&gt;EXCEPTION   &lt;exception handling&gt;END; 123456789DECLARE   -- variable declaration   message  varchar2(20):&#x3D; &amp;#x27;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-21T16:54:57.000Z">
+<meta property="article:modified_time" content="2022-12-21T20:25:38.867Z">
+<meta property="article:author" content="Liam Lian">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://liamyaolian.github.io/2022/12/21/PL-SQL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>PL-SQL | Liam Lian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liam Lian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://liamyaolian.github.io/2022/12/21/PL-SQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam Lian">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam Lian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PL-SQL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-21 11:54:57 / Modified: 15:25:38" itemprop="dateCreated datePublished" datetime="2022-12-21T11:54:57-05:00">2022-12-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   &lt;declarations section&gt;</span><br><span class="line">BEGIN</span><br><span class="line">   &lt;executable command(s)&gt;</span><br><span class="line">EXCEPTION</span><br><span class="line">   &lt;exception handling&gt;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   -- variable declaration</span><br><span class="line">   message  varchar2(20):= &#x27;Hello, World!&#x27;;</span><br><span class="line">BEGIN</span><br><span class="line">   /*</span><br><span class="line">   *  PL/SQL executable statement(s)</span><br><span class="line">   */</span><br><span class="line">   dbms_output.put_line(message);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h1 id="Data-types"><a href="#Data-types" class="headerlink" title="Data types"></a>Data types</h1><h2 id="Scalar"><a href="#Scalar" class="headerlink" title="Scalar"></a>Scalar</h2><ul>
+<li>Numeric</li>
+<li>Character</li>
+<li>Boolean</li>
+<li>Datetime</li>
+<li>Null</li>
+</ul>
+<h2 id="Large-Object-LOB"><a href="#Large-Object-LOB" class="headerlink" title="Large Object (LOB)"></a>Large Object (LOB)</h2><p>…</p>
+<h2 id="User-Defined-Subtypes"><a href="#User-Defined-Subtypes" class="headerlink" title="User-Defined Subtypes"></a>User-Defined Subtypes</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   SUBTYPE name IS char(20);</span><br><span class="line">   SUBTYPE message IS varchar2(100);</span><br><span class="line">   salutation name;</span><br><span class="line">   greetings message;</span><br><span class="line">BEGIN</span><br><span class="line">   salutation := &#x27;Reader &#x27;;</span><br><span class="line">   greetings := &#x27;Welcome to the World of PL/SQL&#x27;;</span><br><span class="line">   dbms_output.put_line(&#x27;Hello &#x27; || salutation || greetings);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Composite"><a href="#Composite" class="headerlink" title="Composite"></a>Composite</h2><p>Data items that have internal components that can be accessed individually. For example, collections and records.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>Pointers to other data items</p>
+<h1 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sales number(10, 2);</span><br><span class="line">pi CONSTANT double precision := 3.1415;</span><br><span class="line">name varchar2(25);</span><br><span class="line">greetings varchar2(20) DEFAULT &#x27;Have a Good Day&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   c_id customers.id%type := 1;</span><br><span class="line">   c_name  customers.name%type;</span><br><span class="line">   c_addr customers.address%type;</span><br><span class="line">   c_sal  customers.salary%type;</span><br><span class="line">BEGIN</span><br><span class="line">   SELECT name, address, salary INTO c_name, c_addr, c_sal</span><br><span class="line">   FROM customers</span><br><span class="line">   WHERE id = c_id;  </span><br><span class="line">   dbms_output.put_line</span><br><span class="line">   (&#x27;Customer &#x27; ||c_name || &#x27; from &#x27; || c_addr || &#x27; earns &#x27; || c_sal);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   -- Global variables  </span><br><span class="line">   num1 number := 95;  </span><br><span class="line">   num2 number := 85;  </span><br><span class="line">BEGIN  </span><br><span class="line">   dbms_output.put_line(&#x27;Outer Variable num1: &#x27; || num1);</span><br><span class="line">   dbms_output.put_line(&#x27;Outer Variable num2: &#x27; || num2);</span><br><span class="line">   DECLARE  </span><br><span class="line">      -- Local variables</span><br><span class="line">      num1 number := 195;  </span><br><span class="line">      num2 number := 185;  </span><br><span class="line">   BEGIN  </span><br><span class="line">      dbms_output.put_line(&#x27;Inner Variable num1: &#x27; || num1);</span><br><span class="line">      dbms_output.put_line(&#x27;Inner Variable num2: &#x27; || num2);</span><br><span class="line">   END;  </span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h1><p>**: exponentiation<br>+, -: identity, negation<br>*, &#x2F;<br>+, -, ||<br>comparison<br>NOT<br>AND<br>OR</p>
+<h1 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h1><h2 id="IF-THEN-ELSIF-ELSE"><a href="#IF-THEN-ELSIF-ELSE" class="headerlink" title="IF-THEN-ELSIF-ELSE"></a>IF-THEN-ELSIF-ELSE</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   a number(3) := 100;</span><br><span class="line">BEGIN</span><br><span class="line">   IF ( a = 10 ) THEN</span><br><span class="line">      dbms_output.put_line(&#x27;Value of a is 10&#x27; );</span><br><span class="line">   ELSIF ( a = 20 ) THEN</span><br><span class="line">      dbms_output.put_line(&#x27;Value of a is 20&#x27; );</span><br><span class="line">   ELSIF ( a = 30 ) THEN</span><br><span class="line">      dbms_output.put_line(&#x27;Value of a is 30&#x27; );</span><br><span class="line">   ELSE</span><br><span class="line">       dbms_output.put_line(&#x27;None of the values is matching&#x27;);</span><br><span class="line">   END IF;</span><br><span class="line">   dbms_output.put_line(&#x27;Exact value of a is: &#x27;|| a );  </span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Case"><a href="#Case" class="headerlink" title="Case"></a>Case</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CASE selector</span><br><span class="line">WHEN &#x27;value1&#x27; THEN S1;</span><br><span class="line">WHEN &#x27;value2&#x27; THEN S2;</span><br><span class="line">WHEN &#x27;value3&#x27; THEN S3;</span><br><span class="line">...</span><br><span class="line">ELSE Sn;  -- default case</span><br><span class="line">END CASE;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CASE</span><br><span class="line">WHEN selector = &#x27;value1&#x27; THEN S1;</span><br><span class="line">WHEN selector = &#x27;value2&#x27; THEN S2;</span><br><span class="line">WHEN selector = &#x27;value3&#x27; THEN S3;</span><br><span class="line">...</span><br><span class="line">ELSE Sn;  -- default case</span><br><span class="line">END CASE;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Loop"><a href="#Loop" class="headerlink" title="Loop"></a>Loop</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LOOP</span><br><span class="line">  Sequence of statements;</span><br><span class="line">END LOOP;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">  x number := 10;</span><br><span class="line">BEGIN</span><br><span class="line">  LOOP</span><br><span class="line">    dbms_output.put_line(x);</span><br><span class="line">    x := x + 10;</span><br><span class="line">    IF x &gt; 50 THEN</span><br><span class="line">      exit;</span><br><span class="line">    END IF;</span><br><span class="line">  END LOOP;</span><br><span class="line">  -- after exit, control resumes here</span><br><span class="line">  dbms_output.put_line(&#x27;After Exit x is: &#x27; || x);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">  x number := 10;</span><br><span class="line">BEGIN</span><br><span class="line">  LOOP</span><br><span class="line">    dbms_output.put_line(x);</span><br><span class="line">    x := x + 10;</span><br><span class="line">    exit WHEN x &gt; 50;</span><br><span class="line">    END LOOP;</span><br><span class="line">    -- after exit, control resumes here</span><br><span class="line">    dbms_output.put_line(&#x27;After Exit x is: &#x27; || x);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   a number(2) := 10;</span><br><span class="line">BEGIN</span><br><span class="line">   WHILE a &lt; 20 LOOP</span><br><span class="line">      dbms_output.put_line(&#x27;value of a: &#x27; || a);</span><br><span class="line">      a := a + 1;</span><br><span class="line">   END LOOP;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ECLARE</span><br><span class="line">   i number(1);</span><br><span class="line">   j number(1);</span><br><span class="line">BEGIN</span><br><span class="line">   &lt;&lt; outer_loop &gt;&gt;</span><br><span class="line">   FOR i IN 1..3 LOOP</span><br><span class="line">      &lt;&lt; inner_loop &gt;&gt;</span><br><span class="line">      FOR j IN 1..3 LOOP</span><br><span class="line">         dbms_output.put_line(&#x27;i is: &#x27;|| i || &#x27; and j is: &#x27; || j);</span><br><span class="line">      END loop inner_loop;</span><br><span class="line">   END loop outer_loop;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h2><ul>
+<li>exit</li>
+<li>continue<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CONTINUE;</span><br></pre></td></tr></table></figure></li>
+<li>goto<br>not recommended to use</li>
+</ul>
+<h1 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE varray_type_name IS VARRAY(n) of &lt;element_type&gt;</span><br><span class="line"></span><br><span class="line">TYPE varray_type_name IS VARRAY(n) of &lt;element_type&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   type namesarray IS VARRAY(5) OF VARCHAR2(10);</span><br><span class="line">   type grades IS VARRAY(5) OF INTEGER;</span><br><span class="line">   names namesarray;</span><br><span class="line">   marks grades;</span><br><span class="line">   total integer;</span><br><span class="line">BEGIN</span><br><span class="line">   names := namesarray(&#x27;Kavita&#x27;, &#x27;Pritam&#x27;, &#x27;Ayan&#x27;, &#x27;Rishav&#x27;, &#x27;Aziz&#x27;);</span><br><span class="line">   marks:= grades(98, 97, 78, 87, 92);</span><br><span class="line">   total := names.count;</span><br><span class="line">   dbms_output.put_line(&#x27;Total &#x27;|| total || &#x27; Students&#x27;);</span><br><span class="line">   FOR i in 1 .. total LOOP</span><br><span class="line">      dbms_output.put_line(&#x27;Student: &#x27; || names(i) || &#x27;</span><br><span class="line">      Marks: &#x27; || marks(i));</span><br><span class="line">   END LOOP;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>In Oracle environment, the starting index for varrays is always 1.</p>
+<p>Elements of a varray could also be a %ROWTYPE of any database table or %TYPE of any database table field.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   CURSOR c_customers is</span><br><span class="line">   SELECT  name FROM customers;</span><br><span class="line">   type c_list is varray (6) of customers.name%type;</span><br><span class="line">   name_list c_list := c_list();</span><br><span class="line">   counter integer :=0;</span><br><span class="line">BEGIN</span><br><span class="line">   FOR n IN c_customers LOOP</span><br><span class="line">      counter := counter + 1;</span><br><span class="line">      name_list.extend;</span><br><span class="line">      name_list(counter)  := n.name;</span><br><span class="line">      dbms_output.put_line(&#x27;Customer(&#x27;||counter ||&#x27;):&#x27;||name_list(counter));</span><br><span class="line">   END LOOP;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Procedure"><a href="#Procedure" class="headerlink" title="Procedure"></a>Procedure</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE [OR REPLACE] PROCEDURE procedure_name</span><br><span class="line">[(parameter_name [IN | OUT | IN OUT] type [, ...])]</span><br><span class="line">&#123;IS | AS&#125;</span><br><span class="line">BEGIN</span><br><span class="line">  &lt; procedure_body &gt;</span><br><span class="line">END [procedure_name];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE PROCEDURE greetings</span><br><span class="line">AS</span><br><span class="line">BEGIN</span><br><span class="line">   dbms_output.put_line(&#x27;Hello World!&#x27;);</span><br><span class="line">END;</span><br><span class="line"></span><br><span class="line">EXECUTE greetings;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP PROCEDURE procedure-name;</span><br></pre></td></tr></table></figure>
+<p>The AS keyword is used instead of the IS keyword for creating a standalone procedure.</p>
+<ul>
+<li>in: read-only, default</li>
+<li>out</li>
+<li>in out<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   a number;</span><br><span class="line">PROCEDURE squareNum(x IN OUT number) IS</span><br><span class="line">BEGIN</span><br><span class="line">  x := x * x;</span><br><span class="line">END;  </span><br><span class="line">BEGIN</span><br><span class="line">   a:= 23;</span><br><span class="line">   squareNum(a);</span><br><span class="line">   dbms_output.put_line(&#x27; Square of (23): &#x27; || a);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><p>returns a value</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE [OR REPLACE] FUNCTION function_name</span><br><span class="line">[(parameter_name [IN | OUT | IN OUT] type [, ...])]</span><br><span class="line">RETURN return_datatype</span><br><span class="line">&#123;IS | AS&#125;</span><br><span class="line">BEGIN</span><br><span class="line">   &lt; function_body &gt;</span><br><span class="line">END [function_name];</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   c number(2);</span><br><span class="line">BEGIN</span><br><span class="line">   c := totalCustomers();</span><br><span class="line">   dbms_output.put_line(&#x27;Total no. of Customers: &#x27; || c);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
+<h1 id="cursor"><a href="#cursor" class="headerlink" title="cursor"></a>cursor</h1><p>A cursor holds the rows (one or more) returned by a SQL statement.</p>
+<h2 id="Implicit-Cursors"><a href="#Implicit-Cursors" class="headerlink" title="Implicit Cursors"></a>Implicit Cursors</h2><p>For INSERT operations, the cursor holds the data that needs to be inserted. For UPDATE and DELETE operations, the cursor identifies the rows that would be affected.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DECLARE  </span><br><span class="line">   total_rows number(2);</span><br><span class="line">BEGIN</span><br><span class="line">   UPDATE customers</span><br><span class="line">   SET salary = salary + 500;</span><br><span class="line">   IF sql%notfound THEN</span><br><span class="line">      dbms_output.put_line(&#x27;no customers selected&#x27;);</span><br><span class="line">   ELSIF sql%found THEN</span><br><span class="line">      total_rows := sql%rowcount;</span><br><span class="line">      dbms_output.put_line( total_rows || &#x27; customers selected &#x27;);</span><br><span class="line">   END IF;  </span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Explicit-Cursors"><a href="#Explicit-Cursors" class="headerlink" title="Explicit Cursors"></a>Explicit Cursors</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CURSOR c_customers IS</span><br><span class="line">   SELECT id, name, address FROM customers;</span><br><span class="line"></span><br><span class="line">OPEN c_customers;</span><br><span class="line"></span><br><span class="line">FETCH c_customers INTO c_id, c_name, c_addr;</span><br><span class="line"></span><br><span class="line">CLOSE c_customers;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   c_id customers.id%type;</span><br><span class="line">   c_name customers.name%type;</span><br><span class="line">   c_addr customers.address%type;</span><br><span class="line">   CURSOR c_customers is</span><br><span class="line">      SELECT id, name, address FROM customers;</span><br><span class="line">BEGIN</span><br><span class="line">   OPEN c_customers;</span><br><span class="line">   LOOP</span><br><span class="line">   FETCH c_customers into c_id, c_name, c_addr;</span><br><span class="line">      EXIT WHEN c_customers%notfound;</span><br><span class="line">      dbms_output.put_line(c_id || &#x27; &#x27; || c_name || &#x27; &#x27; || c_addr);</span><br><span class="line">   END LOOP;</span><br><span class="line">   CLOSE c_customers;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h1 id="Record"><a href="#Record" class="headerlink" title="Record"></a>Record</h1><h2 id="Table-Based-Records"><a href="#Table-Based-Records" class="headerlink" title="Table-Based Records"></a>Table-Based Records</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   customer_rec customers%rowtype;</span><br><span class="line">BEGIN</span><br><span class="line">   SELECT * into customer_rec</span><br><span class="line">   FROM customers</span><br><span class="line">   WHERE id = 5;  </span><br><span class="line">   dbms_output.put_line(&#x27;Customer ID: &#x27; || customer_rec.id);</span><br><span class="line">   dbms_output.put_line(&#x27;Customer Name: &#x27; || customer_rec.name);</span><br><span class="line">   dbms_output.put_line(&#x27;Customer Address: &#x27; || customer_rec.address);</span><br><span class="line">   dbms_output.put_line(&#x27;Customer Salary: &#x27; || customer_rec.salary);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Cursor-Based-Records"><a href="#Cursor-Based-Records" class="headerlink" title="Cursor-Based Records"></a>Cursor-Based Records</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   CURSOR customer_cur is</span><br><span class="line">      SELECT id, name, address  </span><br><span class="line">      FROM customers;</span><br><span class="line">   customer_rec customer_cur%rowtype;</span><br><span class="line">BEGIN</span><br><span class="line">   OPEN customer_cur;</span><br><span class="line">   LOOP</span><br><span class="line">      FETCH customer_cur into customer_rec;</span><br><span class="line">      EXIT WHEN customer_cur%notfound;</span><br><span class="line">      DBMS_OUTPUT.put_line(customer_rec.id || &#x27; &#x27; || customer_rec.name);</span><br><span class="line">   END LOOP;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="User-Defined-Records"><a href="#User-Defined-Records" class="headerlink" title="User-Defined Records"></a>User-Defined Records</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">TYPE books IS RECORD</span><br><span class="line">(title  varchar(50),</span><br><span class="line">   author  varchar(50),</span><br><span class="line">   subject varchar(100),</span><br><span class="line">   book_id   number);</span><br><span class="line">book1 books;</span><br><span class="line">book2 books;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   type books is record</span><br><span class="line">      (title varchar(50),</span><br><span class="line">      author varchar(50),</span><br><span class="line">      subject varchar(100),</span><br><span class="line">      book_id number);</span><br><span class="line">   book1 books;</span><br><span class="line">   book2 books;</span><br><span class="line">BEGIN</span><br><span class="line">   -- Book 1 specification</span><br><span class="line">   book1.title  := &#x27;C Programming&#x27;;</span><br><span class="line">   book1.author := &#x27;Nuha Ali &#x27;;  </span><br><span class="line">   book1.subject := &#x27;C Programming Tutorial&#x27;;</span><br><span class="line">   book1.book_id := 6495407;  </span><br><span class="line">   -- Book 2 specification</span><br><span class="line">   book2.title := &#x27;Telecom Billing&#x27;;</span><br><span class="line">   book2.author := &#x27;Zara Ali&#x27;;</span><br><span class="line">   book2.subject := &#x27;Telecom Billing Tutorial&#x27;;</span><br><span class="line">   book2.book_id := 6495700;  </span><br><span class="line"></span><br><span class="line">  -- Print book 1 record</span><br><span class="line">   dbms_output.put_line(&#x27;Book 1 title : &#x27;|| book1.title);</span><br><span class="line">   dbms_output.put_line(&#x27;Book 1 author : &#x27;|| book1.author);</span><br><span class="line">   dbms_output.put_line(&#x27;Book 1 subject : &#x27;|| book1.subject);</span><br><span class="line">   dbms_output.put_line(&#x27;Book 1 book_id : &#x27; || book1.book_id);</span><br><span class="line"></span><br><span class="line">   -- Print book 2 record</span><br><span class="line">   dbms_output.put_line(&#x27;Book 2 title : &#x27;|| book2.title);</span><br><span class="line">   dbms_output.put_line(&#x27;Book 2 author : &#x27;|| book2.author);</span><br><span class="line">   dbms_output.put_line(&#x27;Book 2 subject : &#x27;|| book2.subject);</span><br><span class="line">   dbms_output.put_line(&#x27;Book 2 book_id : &#x27;|| book2.book_id);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   type books is record</span><br><span class="line">      (title  varchar(50),</span><br><span class="line">      author  varchar(50),</span><br><span class="line">      subject varchar(100),</span><br><span class="line">      book_id   number);</span><br><span class="line">   book1 books;</span><br><span class="line">   book2 books;  </span><br><span class="line">PROCEDURE printbook (book books) IS</span><br><span class="line">BEGIN</span><br><span class="line">   dbms_output.put_line (&#x27;Book  title :  &#x27; || book.title);</span><br><span class="line">   dbms_output.put_line(&#x27;Book  author : &#x27; || book.author);</span><br><span class="line">   dbms_output.put_line( &#x27;Book  subject : &#x27; || book.subject);</span><br><span class="line">   dbms_output.put_line( &#x27;Book book_id : &#x27; || book.book_id);</span><br><span class="line">END;</span><br><span class="line"></span><br><span class="line">BEGIN</span><br><span class="line">   -- Book 1 specification</span><br><span class="line">   book1.title  := &#x27;C Programming&#x27;;</span><br><span class="line">   book1.author := &#x27;Nuha Ali &#x27;;  </span><br><span class="line">   book1.subject := &#x27;C Programming Tutorial&#x27;;</span><br><span class="line">   book1.book_id := 6495407;</span><br><span class="line"></span><br><span class="line">   -- Book 2 specification</span><br><span class="line">   book2.title := &#x27;Telecom Billing&#x27;;</span><br><span class="line">   book2.author := &#x27;Zara Ali&#x27;;</span><br><span class="line">   book2.subject := &#x27;Telecom Billing Tutorial&#x27;;</span><br><span class="line">   book2.book_id := 6495700;  </span><br><span class="line"></span><br><span class="line">   -- Use procedure to print book info</span><br><span class="line">   printbook(book1);</span><br><span class="line">   printbook(book2);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   &lt;declarations section&gt;</span><br><span class="line">BEGIN</span><br><span class="line">   &lt;executable command(s)&gt;</span><br><span class="line">EXCEPTION</span><br><span class="line">   &lt;exception handling goes here &gt;</span><br><span class="line">   WHEN exception1 THEN  </span><br><span class="line">      exception1-handling-statements  </span><br><span class="line">   WHEN exception2  THEN  </span><br><span class="line">      exception2-handling-statements  </span><br><span class="line">   WHEN exception3 THEN  </span><br><span class="line">      exception3-handling-statements</span><br><span class="line">   ........</span><br><span class="line">   WHEN others THEN</span><br><span class="line">      exception3-handling-statements</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   c_id customers.id%type := 8;</span><br><span class="line">   c_name customerS.Name%type;</span><br><span class="line">   c_addr customers.address%type;</span><br><span class="line">BEGIN</span><br><span class="line">   SELECT  name, address INTO  c_name, c_addr</span><br><span class="line">   FROM customers</span><br><span class="line">   WHERE id = c_id;  </span><br><span class="line">   DBMS_OUTPUT.PUT_LINE (&#x27;Name: &#x27;||  c_name);</span><br><span class="line">   DBMS_OUTPUT.PUT_LINE (&#x27;Address: &#x27; || c_addr);</span><br><span class="line"></span><br><span class="line">EXCEPTION</span><br><span class="line">   WHEN no_data_found THEN</span><br><span class="line">      dbms_output.put_line(&#x27;No such customer!&#x27;);</span><br><span class="line">   WHEN others THEN</span><br><span class="line">      dbms_output.put_line(&#x27;Error!&#x27;);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   exception_name EXCEPTION;</span><br><span class="line">BEGIN</span><br><span class="line">   IF condition THEN</span><br><span class="line">      RAISE exception_name;</span><br><span class="line">   END IF;</span><br><span class="line">EXCEPTION</span><br><span class="line">   WHEN exception_name THEN</span><br><span class="line">   statement;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="User-defined-exception"><a href="#User-defined-exception" class="headerlink" title="User-defined exception"></a>User-defined exception</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   my-exception EXCEPTION;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   c_id customers.id%type := &amp;cc_id;</span><br><span class="line">   c_name customerS.Name%type;</span><br><span class="line">   c_addr customers.address%type;  </span><br><span class="line">   -- user defined exception</span><br><span class="line">   ex_invalid_id  EXCEPTION;</span><br><span class="line">BEGIN</span><br><span class="line">   IF c_id &lt;= 0 THEN</span><br><span class="line">      RAISE ex_invalid_id;</span><br><span class="line">   ELSE</span><br><span class="line">      SELECT  name, address INTO  c_name, c_addr</span><br><span class="line">      FROM customers</span><br><span class="line">      WHERE id = c_id;</span><br><span class="line">      DBMS_OUTPUT.PUT_LINE (&#x27;Name: &#x27;||  c_name);  </span><br><span class="line">      DBMS_OUTPUT.PUT_LINE (&#x27;Address: &#x27; || c_addr);</span><br><span class="line">   END IF;</span><br><span class="line"></span><br><span class="line">EXCEPTION</span><br><span class="line">   WHEN ex_invalid_id THEN</span><br><span class="line">      dbms_output.put_line(&#x27;ID must be greater than zero!&#x27;);</span><br><span class="line">   WHEN no_data_found THEN</span><br><span class="line">      dbms_output.put_line(&#x27;No such customer!&#x27;);</span><br><span class="line">   WHEN others THEN</span><br><span class="line">      dbms_output.put_line(&#x27;Error!&#x27;);  </span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Pre-defined-exception"><a href="#Pre-defined-exception" class="headerlink" title="Pre-defined exception"></a>Pre-defined exception</h2><p>…</p>
+<h1 id="Triggers"><a href="#Triggers" class="headerlink" title="Triggers"></a>Triggers</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE [OR REPLACE ] TRIGGER trigger_name  </span><br><span class="line">&#123;BEFORE | AFTER | INSTEAD OF &#125;  </span><br><span class="line">&#123;INSERT [OR] | UPDATE [OR] | DELETE&#125;  </span><br><span class="line">[OF col_name]  </span><br><span class="line">ON table_name  </span><br><span class="line">[REFERENCING OLD AS o NEW AS n]  </span><br><span class="line">[FOR EACH ROW]  </span><br><span class="line">WHEN (condition)   </span><br><span class="line">DECLARE</span><br><span class="line">   Declaration-statements</span><br><span class="line">BEGIN  </span><br><span class="line">   Executable-statements</span><br><span class="line">EXCEPTION</span><br><span class="line">   Exception-handling-statements</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TRIGGER display_salary_changes</span><br><span class="line">BEFORE DELETE OR INSERT OR UPDATE ON customers</span><br><span class="line">FOR EACH ROW</span><br><span class="line">WHEN (NEW.ID &gt; 0)</span><br><span class="line">DECLARE</span><br><span class="line">   sal_diff number;</span><br><span class="line">BEGIN</span><br><span class="line">   sal_diff := :NEW.salary  - :OLD.salary;</span><br><span class="line">   dbms_output.put_line(&#x27;Old salary: &#x27; || :OLD.salary);</span><br><span class="line">   dbms_output.put_line(&#x27;New salary: &#x27; || :NEW.salary);</span><br><span class="line">   dbms_output.put_line(&#x27;Salary difference: &#x27; || sal_diff);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE PACKAGE cust_sal AS</span><br><span class="line">   PROCEDURE find_sal(c_id customers.id%type);</span><br><span class="line">END cust_sal;</span><br></pre></td></tr></table></figure>
+<p>All objects placed in the specification are called public objects. Any subprogram not in the package specification but coded in the package body is called a private object.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE PACKAGE BODY cust_sal AS  </span><br><span class="line"></span><br><span class="line">   PROCEDURE find_sal(c_id customers.id%TYPE) IS</span><br><span class="line">   c_sal customers.salary%TYPE;</span><br><span class="line">   BEGIN</span><br><span class="line">      SELECT salary INTO c_sal</span><br><span class="line">      FROM customers</span><br><span class="line">      WHERE id = c_id;</span><br><span class="line">      dbms_output.put_line(&#x27;Salary: &#x27;|| c_sal);</span><br><span class="line">   END find_sal;</span><br><span class="line">END cust_sal;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package_name.element_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   code customers.id%type := &amp;cc_id;</span><br><span class="line">BEGIN</span><br><span class="line">   cust_sal.find_sal(code);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>create specification<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE PACKAGE c_package AS</span><br><span class="line">   -- Adds a customer</span><br><span class="line">   PROCEDURE addCustomer(c_id   customers.id%type,</span><br><span class="line">   c_name customers.Name%type,</span><br><span class="line">   c_age  customers.age%type,</span><br><span class="line">   c_addr customers.address%type,  </span><br><span class="line">   c_sal  customers.salary%type);</span><br><span class="line"></span><br><span class="line">   -- Removes a customer</span><br><span class="line">   PROCEDURE delCustomer(c_id  customers.id%TYPE);</span><br><span class="line">   --Lists all customers</span><br><span class="line">   PROCEDURE listCustomer;</span><br><span class="line"></span><br><span class="line">END c_package;</span><br></pre></td></tr></table></figure></li>
+<li>create body<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE PACKAGE BODY c_package AS</span><br><span class="line">   PROCEDURE addCustomer(c_id  customers.id%type,</span><br><span class="line">      c_name customers.Name%type,</span><br><span class="line">      c_age  customers.age%type,</span><br><span class="line">      c_addr  customers.address%type,  </span><br><span class="line">      c_sal   customers.salary%type)</span><br><span class="line">   IS</span><br><span class="line">   BEGIN</span><br><span class="line">      INSERT INTO customers (id,name,age,address,salary)</span><br><span class="line">         VALUES(c_id, c_name, c_age, c_addr, c_sal);</span><br><span class="line">   END addCustomer;</span><br><span class="line"></span><br><span class="line">   PROCEDURE delCustomer(c_id   customers.id%type) IS</span><br><span class="line">   BEGIN</span><br><span class="line">      DELETE FROM customers</span><br><span class="line">      WHERE id = c_id;</span><br><span class="line">   END delCustomer;  </span><br><span class="line"></span><br><span class="line">   PROCEDURE listCustomer IS</span><br><span class="line">   CURSOR c_customers is</span><br><span class="line">      SELECT  name FROM customers;</span><br><span class="line">   TYPE c_list is TABLE OF customers.Name%type;</span><br><span class="line">   name_list c_list := c_list();</span><br><span class="line">   counter integer :=0;</span><br><span class="line">   BEGIN</span><br><span class="line">      FOR n IN c_customers LOOP</span><br><span class="line">      counter := counter +1;</span><br><span class="line">      name_list.extend;</span><br><span class="line">      name_list(counter) := n.name;</span><br><span class="line">      dbms_output.put_line(&#x27;Customer(&#x27; ||counter|| &#x27;)&#x27;||name_list(counter));</span><br><span class="line">      END LOOP;</span><br><span class="line">   END listCustomer;</span><br><span class="line"></span><br><span class="line">END c_package;</span><br></pre></td></tr></table></figure></li>
+<li>use<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   code customers.id%type:= 8;</span><br><span class="line">BEGIN</span><br><span class="line">   c_package.addcustomer(7, &#x27;Rajnish&#x27;, 25, &#x27;Chennai&#x27;, 3500);</span><br><span class="line">   c_package.addcustomer(8, &#x27;Subham&#x27;, 32, &#x27;Delhi&#x27;, 7500);</span><br><span class="line">   c_package.listcustomer;</span><br><span class="line">   c_package.delcustomer(code);</span><br><span class="line">   c_package.listcustomer;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Collections"><a href="#Collections" class="headerlink" title="Collections"></a>Collections</h1><p>TODO</p>
+<h1 id="Transactions"><a href="#Transactions" class="headerlink" title="Transactions"></a>Transactions</h1><ul>
+<li>A transaction starts when one of the following events take place −<ul>
+<li>The first SQL statement is performed after connecting to the database.</li>
+<li>At each new SQL statement issued after a transaction is completed.</li>
+</ul>
+</li>
+<li>A transaction ends when one of the following events take place −<ul>
+<li>A COMMIT or a ROLLBACK statement is issued.</li>
+<li>A DDL statement, such as CREATE TABLE statement, is issued; because in that case a COMMIT is automatically performed.</li>
+<li>A DML statement fails; in that case a ROLLBACK is automatically performed for undoing that DML statement.</li>
+<li>some others</li>
+</ul>
+</li>
+<li><code>ROLLBACK [TO SAVEPOINT &lt; savepoint_name&gt;]; </code></li>
+<li><code>SAVEPOINT &lt; savepoint_name &gt;;</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)</span><br><span class="line">VALUES (7, &#x27;Rajnish&#x27;, 27, &#x27;HP&#x27;, 9500.00 );</span><br><span class="line"></span><br><span class="line">INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)</span><br><span class="line">VALUES (8, &#x27;Riddhi&#x27;, 21, &#x27;WB&#x27;, 4500.00 );</span><br><span class="line">SAVEPOINT sav1;</span><br><span class="line"></span><br><span class="line">UPDATE CUSTOMERS</span><br><span class="line">SET SALARY = SALARY + 1000;</span><br><span class="line">ROLLBACK TO sav1;</span><br><span class="line"></span><br><span class="line">UPDATE CUSTOMERS</span><br><span class="line">SET SALARY = SALARY + 1000</span><br><span class="line">WHERE ID = 7;</span><br><span class="line">UPDATE CUSTOMERS</span><br><span class="line">SET SALARY = SALARY + 1000</span><br><span class="line">WHERE ID = 8;</span><br><span class="line"></span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure></li>
+<li><code>SET AUTOCOMMIT ON;</code></li>
+</ul>
+<h1 id="OO"><a href="#OO" class="headerlink" title="OO"></a>OO</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE address AS OBJECT</span><br><span class="line">(house_no varchar2(10),</span><br><span class="line"> street varchar2(30),</span><br><span class="line"> city varchar2(20),</span><br><span class="line"> state varchar2(10),</span><br><span class="line"> pincode varchar2(10)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE customer AS OBJECT</span><br><span class="line">(code number(5),</span><br><span class="line"> name varchar2(30),</span><br><span class="line"> contact_no varchar2(12),</span><br><span class="line"> addr address,</span><br><span class="line"> member procedure display</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   residence address;</span><br><span class="line">BEGIN</span><br><span class="line">   residence := address(&#x27;103A&#x27;, &#x27;M.G.Road&#x27;, &#x27;Jaipur&#x27;, &#x27;Rajasthan&#x27;,&#x27;201301&#x27;);</span><br><span class="line">   dbms_output.put_line(&#x27;House No: &#x27;|| residence.house_no);</span><br><span class="line">   dbms_output.put_line(&#x27;Street: &#x27;|| residence.street);</span><br><span class="line">   dbms_output.put_line(&#x27;City: &#x27;|| residence.city);</span><br><span class="line">   dbms_output.put_line(&#x27;State: &#x27;|| residence.state);</span><br><span class="line">   dbms_output.put_line(&#x27;Pincode: &#x27;|| residence.pincode);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE rectangle AS OBJECT</span><br><span class="line">(length number,</span><br><span class="line"> width number,</span><br><span class="line"> member function enlarge( inc number) return rectangle,</span><br><span class="line"> member procedure display,</span><br><span class="line"> map member function measure return number</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE BODY rectangle AS</span><br><span class="line">   MEMBER FUNCTION enlarge(inc number) return rectangle IS</span><br><span class="line">   BEGIN</span><br><span class="line">      return rectangle(self.length + inc, self.width + inc);</span><br><span class="line">   END enlarge;  </span><br><span class="line">   MEMBER PROCEDURE display IS</span><br><span class="line">   BEGIN  </span><br><span class="line">      dbms_output.put_line(&#x27;Length: &#x27;|| length);</span><br><span class="line">      dbms_output.put_line(&#x27;Width: &#x27;|| width);</span><br><span class="line">   END display;  </span><br><span class="line">   MAP MEMBER FUNCTION measure return number IS</span><br><span class="line">   BEGIN</span><br><span class="line">      return (sqrt(length*length + width*width));</span><br><span class="line">   END measure;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   r1 rectangle;</span><br><span class="line">   r2 rectangle;</span><br><span class="line">   r3 rectangle;</span><br><span class="line">   inc_factor number := 5;</span><br><span class="line">BEGIN</span><br><span class="line">   r1 := rectangle(3, 4);</span><br><span class="line">   r2 := rectangle(5, 7);</span><br><span class="line">   r3 := r1.enlarge(inc_factor);</span><br><span class="line">   r3.display;  </span><br><span class="line">   IF (r1 &gt; r2) THEN -- calling measure function</span><br><span class="line">      r1.display;</span><br><span class="line">   ELSE</span><br><span class="line">      r2.display;</span><br><span class="line">   END IF;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE rectangle AS OBJECT</span><br><span class="line">(length number,</span><br><span class="line"> width number,</span><br><span class="line"> member procedure display,</span><br><span class="line"> order member function measure(r rectangle) return number</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE BODY rectangle AS</span><br><span class="line">   MEMBER PROCEDURE display IS</span><br><span class="line">   BEGIN</span><br><span class="line">      dbms_output.put_line(&#x27;Length: &#x27;|| length);</span><br><span class="line">      dbms_output.put_line(&#x27;Width: &#x27;|| width);</span><br><span class="line">   END display;  </span><br><span class="line">   ORDER MEMBER FUNCTION measure(r rectangle) return number IS</span><br><span class="line">   BEGIN</span><br><span class="line">      IF(sqrt(self.length*self.length + self.width*self.width)&gt;</span><br><span class="line">         sqrt(r.length*r.length + r.width*r.width)) then</span><br><span class="line">         return(1);</span><br><span class="line">      ELSE</span><br><span class="line">         return(-1);</span><br><span class="line">      END IF;</span><br><span class="line">   END measure;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   r1 rectangle;</span><br><span class="line">   r2 rectangle;</span><br><span class="line">BEGIN</span><br><span class="line">   r1 := rectangle(23, 44);</span><br><span class="line">   r2 := rectangle(15, 17);</span><br><span class="line">   r1.display;</span><br><span class="line">   r2.display;</span><br><span class="line">   IF (r1 &gt; r2) THEN -- calling measure function</span><br><span class="line">      r1.display;</span><br><span class="line">   ELSE</span><br><span class="line">      r2.display;</span><br><span class="line">   END IF;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Inheritance"><a href="#Inheritance" class="headerlink" title="Inheritance"></a>Inheritance</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE rectangle AS OBJECT</span><br><span class="line">(length number,</span><br><span class="line"> width number,</span><br><span class="line"> member function enlarge( inc number) return rectangle,</span><br><span class="line"> NOT FINAL member procedure display) NOT FINAL</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE BODY rectangle AS</span><br><span class="line">   MEMBER FUNCTION enlarge(inc number) return rectangle IS</span><br><span class="line">   BEGIN</span><br><span class="line">      return rectangle(self.length + inc, self.width + inc);</span><br><span class="line">   END enlarge;  </span><br><span class="line">   MEMBER PROCEDURE display IS</span><br><span class="line">   BEGIN</span><br><span class="line">      dbms_output.put_line(&#x27;Length: &#x27;|| length);</span><br><span class="line">      dbms_output.put_line(&#x27;Width: &#x27;|| width);</span><br><span class="line">   END display;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE tabletop UNDER rectangle</span><br><span class="line">(   </span><br><span class="line">   material varchar2(20),</span><br><span class="line">   OVERRIDING member procedure display</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE BODY tabletop AS</span><br><span class="line">OVERRIDING MEMBER PROCEDURE display IS</span><br><span class="line">BEGIN</span><br><span class="line">   dbms_output.put_line(&#x27;Length: &#x27;|| length);</span><br><span class="line">   dbms_output.put_line(&#x27;Width: &#x27;|| width);</span><br><span class="line">   dbms_output.put_line(&#x27;Material: &#x27;|| material);</span><br><span class="line">END display;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DECLARE</span><br><span class="line">   t1 tabletop;</span><br><span class="line">   t2 tabletop;</span><br><span class="line">BEGIN</span><br><span class="line">   t1:= tabletop(20, 10, &#x27;Wood&#x27;);</span><br><span class="line">   t2 := tabletop(50, 30, &#x27;Steel&#x27;);</span><br><span class="line">   t1.display;</span><br><span class="line">   t2.display;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE TYPE rectangle AS OBJECT</span><br><span class="line">(length number,</span><br><span class="line"> width number,</span><br><span class="line"> NOT INSTANTIABLE NOT FINAL MEMBER PROCEDURE display)  </span><br><span class="line"> NOT INSTANTIABLE NOT FINAL</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/13/Spring-V2/" rel="prev" title="Spring V2">
+      <i class="fa fa-chevron-left"></i> Spring V2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/21/MySQL-Stored-Procedures/" rel="next" title="MySQL Stored Procedures">
+      MySQL Stored Procedures <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-types"><span class="nav-number">1.</span> <span class="nav-text">Data types</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scalar"><span class="nav-number">1.1.</span> <span class="nav-text">Scalar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Large-Object-LOB"><span class="nav-number">1.2.</span> <span class="nav-text">Large Object (LOB)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Defined-Subtypes"><span class="nav-number">1.3.</span> <span class="nav-text">User-Defined Subtypes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Composite"><span class="nav-number">1.4.</span> <span class="nav-text">Composite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable"><span class="nav-number">2.</span> <span class="nav-text">Variable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope"><span class="nav-number">2.1.</span> <span class="nav-text">Scope</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Operator"><span class="nav-number">3.</span> <span class="nav-text">Operator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Condition"><span class="nav-number">4.</span> <span class="nav-text">Condition</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IF-THEN-ELSIF-ELSE"><span class="nav-number">4.1.</span> <span class="nav-text">IF-THEN-ELSIF-ELSE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Case"><span class="nav-number">4.2.</span> <span class="nav-text">Case</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Loop"><span class="nav-number">5.</span> <span class="nav-text">Loop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Label"><span class="nav-number">5.1.</span> <span class="nav-text">Label</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Control"><span class="nav-number">5.2.</span> <span class="nav-text">Control</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Arrays"><span class="nav-number">6.</span> <span class="nav-text">Arrays</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Procedure"><span class="nav-number">7.</span> <span class="nav-text">Procedure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#function"><span class="nav-number">8.</span> <span class="nav-text">function</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cursor"><span class="nav-number">9.</span> <span class="nav-text">cursor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Implicit-Cursors"><span class="nav-number">9.1.</span> <span class="nav-text">Implicit Cursors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explicit-Cursors"><span class="nav-number">9.2.</span> <span class="nav-text">Explicit Cursors</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Record"><span class="nav-number">10.</span> <span class="nav-text">Record</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-Based-Records"><span class="nav-number">10.1.</span> <span class="nav-text">Table-Based Records</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cursor-Based-Records"><span class="nav-number">10.2.</span> <span class="nav-text">Cursor-Based Records</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Defined-Records"><span class="nav-number">10.3.</span> <span class="nav-text">User-Defined Records</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exception"><span class="nav-number">11.</span> <span class="nav-text">Exception</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#User-defined-exception"><span class="nav-number">11.1.</span> <span class="nav-text">User-defined exception</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pre-defined-exception"><span class="nav-number">11.2.</span> <span class="nav-text">Pre-defined exception</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Triggers"><span class="nav-number">12.</span> <span class="nav-text">Triggers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Package"><span class="nav-number">13.</span> <span class="nav-text">Package</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Collections"><span class="nav-number">14.</span> <span class="nav-text">Collections</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transactions"><span class="nav-number">15.</span> <span class="nav-text">Transactions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OO"><span class="nav-number">16.</span> <span class="nav-text">OO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inheritance"><span class="nav-number">16.1.</span> <span class="nav-text">Inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">16.2.</span> <span class="nav-text">Abstract</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam Lian</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam Lian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
